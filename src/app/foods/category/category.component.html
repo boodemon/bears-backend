@@ -1,0 +1,113 @@
+<div class="animated fadeIn">
+  <div class="card">
+      <div class="card-header">
+        <i class="fa fa-user"></i> Category food
+        <div class="pull-right">
+            <button type="button"  (click)="newModal(frmCategory)" class="btn btn-sm btn-primary"><i class="fa fa-plus"></i> New</button>
+            <button type="button" (click)="multiDelete()" class="btn btn-sm btn-danger"><i class="fa fa-trash"></i> Delete</button>
+        </div>
+      </div>
+      
+      <div class="card-body">
+        <table class="table table-sm table-data table-bordered">
+          <thead>
+            <tr>
+              <th><input type="checkbox" [(ngModel)]="selectAll" (change)="onSelectAll()"/></th>
+              <th>Image</th>
+              <th>Name</th>
+              <th>Sort</th>
+              <th>Active</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let row of rows">
+              <td class="text-center">
+                <input type="checkbox" [value]="row.id" [(ngModel)]="row.selected" (change)="checkIfAllSelected()">
+              </td>
+              <td><img src="{{ img_path + row.image }}" class="img-responsive" width="60" *ngIf="row.image != ''"/></td>
+              <td>{{ row.name }}</td>
+              <td>{{ row.category_sort }}</td>
+              <td class="text-center">
+                  <span class="badge badge-success" *ngIf="row.active=='Y'">Active</span>
+                  <span class="badge badge-danger" *ngIf="row.active=='N'">Unactive</span>
+              </td>
+              <td class="action">
+                  <a title="Edit" class="text-primary" (click)="onEdit(frmCategory,row.id)"><i class="icon-note"></i></a>
+                  <a title="Delete" class="text-danger" (click)="onDelete(row.id)"><i class="icon-trash"></i></a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+</div>
+<!-- 
+  ====================================================================================================
+  :: Modal form ::
+  ====================================================================================================
+-->
+
+<ng-template #frmCategory>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">{{frmTitle}}</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <!-- Form category input -->
+    <form enctype="multipart/form-data" class="form-horizontal" [formGroup]="formCate" (ngSubmit)="onSubmit()">
+      <div class="form-group row" *ngIf="img!=''">
+        <label class="col-md-2 form-control-label"></label>
+        <div class="col-md-10">
+          <img src="{{ img_path + img }}" class="img-preview">
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label class="col-md-2 form-control-label">Image : </label>
+        <div class="col-md-10">
+          <input type="file" id="image" (change)="onFileChange($event)" #fileInput />
+          <input type="hidden" id="id" id="id" formControlName="id" />
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label class="col-md-2 form-control-label">Name : </label>
+        <div class="col-md-10">
+        <input type="text" class="form-control" name="name" id="name" formControlName="name" required/>
+        <div *ngIf="formCate.controls['name'].invalid && (formCate.controls['name'].dirty || formCate.controls['name'].touched)" class="alert alert-danger">
+          <div *ngIf="formCate.controls['name'].errors.required">
+            *Please enter category name.
+          </div>
+        </div>
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label class="col-md-2 form-control-label">Sort : </label>
+        <div class="col-md-3">
+          <input type="text" class="form-control" name="category_sort" id="category_sort" formControlName="category_sort"/>
+        </div>
+      </div>
+      
+      <div class="form-group row">
+        <label class="col-md-2 form-control-label">Status : </label>
+        <div class="col-md-10">
+        <label class="checkbox">
+          <input type="checkbox" id="active" formControlName="active" /> Active
+        </label>
+        </div>
+      </div>
+    
+      <div class="form-groups text-right">
+        <button type="submit" class="btn btn-primary" [disabled]="formCate.pristine || formCate.invalid">
+          <i class="fa fa-save"></i> SAVE</button>
+        <button type="button" class="btn btn-default" (click)="modalRef.hide()">
+          <i class="fa fa-save"></i> cancel</button>
+      </div>
+    </form>
+    <!-- /Form category input -->
+  </div>
+</ng-template>

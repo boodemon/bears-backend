@@ -1,0 +1,358 @@
+<div class="animated fadeIn">
+  <div class="card">
+    <div class="card-header">
+      <i class="fa fa-file-text-o"></i> NEW MODEL SPECIFICATION
+      
+      <div class="pull-right">
+        <button type="button"  [routerLink]="['/spec-model']" class="btn btn-sm btn-default">
+          <i class="icon-arrow-left"></i> BACK</button>
+      </div>
+    </div>
+
+    <div class="card-body spec-model-card" >
+        <form class="form-horizontal" (ngsupmit)="onSubmit()" >
+            <div class="form-group row">
+                <label class="col-md-8 form-control-label text-right" for="text-input">DATE </label>
+                <div class="col-md-3">
+                  <input type="text" class="form-control" #dp="bsDatepicker" bsDatepicker [(bsValue)]="bsValue" [bsConfig]="{ dateInputFormat: 'YYYY-MM-DD' }">
+                </div>
+              </div>
+
+              <div class="form-group row">
+                  <label class="col-md-2" for="">SPEC NO. :</label>
+                  <div class="col-md-4">
+                      <ng-autocomplete (selected)="Selected($event)"  class="form-control" [group]="group"></ng-autocomplete>
+                    <!-- <input  class="form-control"  type="text"> -->
+                  </div>
+                  <div class="col-md-4">
+                    <input  class="form-control"  type="text">
+                  </div>
+              </div>
+
+              <div class="form-group row">
+                  <label class="col-md-2" for="">TYPE :</label>
+                  <div class="col-md-4">
+                    <input  class="form-control"  type="text">
+                  </div>
+                  <div class="col-md-4">
+                    <input  class="form-control"  type="text">
+                  </div>
+              </div>
+
+              <div class="form-group row">
+                  <label class="col-md-2" for="">MATERIAL :</label>
+                  <div class="col-md-3">
+                    <input  class="form-control"  type="text">
+                  </div>
+                  <div class="col-md-3">
+                    <input  class="form-control"  type="text">
+                  </div>
+                  <div class="col-md-1">
+                    <input class="form-control"  type="text"/>
+                  </div>
+                  <label>DM<sup>2</sup></label>
+              </div>
+
+              <div class="form-group row">
+                  <label class="col-md-2" for="">COLOR :</label>
+                  <div class="col-md-4">
+                    <input  class="form-control"  type="text">
+                  </div>
+                  <div class="col-md-4">
+                    <input  class="form-control"  type="text">
+                  </div>
+              </div>
+
+              <div class="form-group row">
+                  <label class="col-md-2" for="">FILLER :</label>
+                  <div class="col-md-3">
+                    <input  class="form-control"  type="text">
+                  </div>
+                  <div class="col-md-3">
+                    <input  class="form-control"  type="text">
+                  </div>
+                  <div class="col-md-1">
+                    <input class="form-control"  type="text" />
+                  </div>
+                  <label>DM<sup>2</sup></label>
+              </div>
+
+              <div class="form-group row">
+                  <label class="col-md-2" for="">DOUBLE FILLER :</label>
+                  <div class="col-md-3">
+                    <input  class="form-control"  type="text">
+                  </div>
+                  <div class="col-md-3">
+                    <input  class="form-control"  type="text">
+                  </div>
+                  <div class="col-md-1">
+                    <input class="form-control"  type="text" />
+                  </div>
+                  <label>DM<sup>2</sup></label>
+              </div>
+
+              <div class="form-group row">
+                  <label class="col-md-2" for="">LINING :</label>
+                  <div class="col-md-3">
+                    <input  class="form-control"  type="text">
+                  </div>
+                  <div class="col-md-3">
+                    <input  class="form-control"  type="text">
+                  </div>
+                  <div class="col-md-1">
+                    <input class="form-control"  type="text" />
+                  </div>
+                  <label>DM<sup>2</sup></label>
+              </div>
+
+              <div class="form-group row">
+                  <label class="col-md-2" for="">STITCH :</label>
+                  <div class="col-md-3">
+                    <input  class="form-control"  type="text">
+                  </div>
+                  <div class="col-md-3">
+                    <input  class="form-control"  type="text">
+                  </div>
+                  <div class="col-md-1">
+                    <input class="form-control"  type="text" />
+                  </div>
+                  <label>DM<sup>2</sup></label>
+              </div>
+
+              <div class="form-group row">
+                  <label class="col-md-2" for="">PAINT :</label>
+                  <div class="col-md-4">
+                    <input  class="form-control"  type="text">
+                  </div>
+                  <div class="col-md-4">
+                    <input  class="form-control"  type="text">
+                  </div>
+              </div>
+
+              <div class="form-group row">
+                  <label class="col-md-2" for="">BUCKLE :</label>
+                  <div class="col-md-3">
+                    <input  class="form-control"  type="text">
+                  </div>
+                  <div class="col-md-3">
+                    <input  class="form-control"  type="text">
+                  </div>
+                  <div class="col-md-1">
+                    <input class="form-control"  type="text" />
+                  </div>
+                  <label>DM<sup>2</sup></label>
+              </div>
+
+              <div class="form-group row">
+                  <label class="col-md-2" for="">KEEPER :</label>
+                  <div class="col-md-3">
+                    <input  class="form-control"  type="text">
+                  </div>
+                  <label>TYPE</label>
+                  <div class="col">
+                    <input  class="form-control"  type="text">
+                  </div>
+                  <label>WIDTH</label>
+                  <div class="col">
+                    <input  class="form-control"  type="text">
+                  </div>
+                  <label>mm.</label>
+                  <label class="col text-right" for="">STITCH&nbsp;#</label>
+                  <div class="col">
+                    <input  class="form-control"  type="text">
+                  </div>
+              </div>
+
+              <div class="form-group row">
+                  <label class="col-md-2" for="">KEEPER :</label>
+                  <div class="col-md-3">
+                    <input  class="form-control"  type="text">
+                  </div>
+                  <label>TYPE</label>
+                  <div class="col">
+                    <input  class="form-control"  type="text">
+                  </div>
+                  <label>WIDTH</label>
+                  <div class="col">
+                    <input  class="form-control"  type="text">
+                  </div>
+                  <label>mm.</label>
+                  <label class="col text-right" for="">STITCH&nbsp;#</label>
+                  <div class="col">
+                    <input  class="form-control"  type="text">
+                  </div>
+              </div>
+
+              <div class="form-group row">
+                  <label class="col" for="">PUNCH HOLE KENSAKI :</label>
+                  <div class="col-md-3">
+                    <input  class="form-control"  type="text">
+                  </div>
+                  <label class="col-md-1" for="">DIA.</label>
+                  <div class="col-md-3">
+                    <input  class="form-control"  type="text">
+                  </div>
+                  <label class="col" for="">mm.</label>
+              </div>
+
+              <div class="form-group row">
+                  <label class="col-md-2" for=""></label>
+                  <label class="col" for="">BIJOW:WIDTH</label>
+                  <div class="col-md-2">
+                    <input  class="form-control"  type="text">
+                  </div>
+                  <label class="col" for="">mm.</label>
+                  <label class="col" for="">LENGTH</label>
+                  <div class="col-md-2">
+                    <input  class="form-control"  type="text">
+                  </div>
+                  <label class="col" for="">mm.</label>
+              </div>
+
+              <div class="form-group row">
+                  <label class="col-md-2" for="">SIZE/TIP :</label>
+                  <div class="col-md-4">
+                    <input  class="form-control"  type="text">
+                  </div>
+                  <div class="col-md-4">
+                    <input  class="form-control"  type="text">
+                  </div>
+              </div>
+
+              <div class="form-group row">
+                  <label class="col-md-2" for="">LENGTH :</label>
+                  <div class="col-md-4">
+                    <input  class="form-control"  type="text">
+                  </div>
+                  <div class="col-md-3">
+                    <input  class="form-control"  type="text">
+                  </div>
+                  <label>mm.</label>
+              </div>
+
+              <div class="form-group row">
+                  <label class="col-md-2" for="">TOTAL THICKNESS :</label>
+                  <div class="col-md-4">
+                    <input  class="form-control"  type="text">
+                  </div>
+                  <div class="col-md-3">
+                    <input  class="form-control"  type="text">
+                  </div>
+                  <label>mm.</label>
+              </div>
+
+              <div class="form-group row">
+                  <label class="col-md-2" for="">KANMOTO THICKNESS :</label>
+                  <div class="col-md-4">
+                    <input  class="form-control"  type="text">
+                  </div>
+                  <label>mm.</label>
+                  <label class="col-md-2">EDGE THICKNESS : </label>
+                  <div class="col">
+                    <input  class="form-control"  type="text">
+                  </div>
+                  <label>mm.</label>
+              </div>
+
+              <div class="form-group row">
+                  <label class="col-md-2" for="">PLASTIC PART :</label>
+                  <div class="col-md-4">
+                    <input  class="form-control"  type="text">
+                  </div>
+                  <div class="col-md-4">
+                    <input  class="form-control"  type="text">
+                  </div>
+              </div>
+
+              <div class="form-group row">
+                  <label class="col-md-2" for="">METAL KEEPER :</label>
+                  <div class="col-md-4">
+                    <input  class="form-control"  type="text">
+                  </div>
+                  <div class="col-md-4">
+                    <input  class="form-control"  type="text">
+                  </div>
+              </div>
+
+              <div class="form-group row">
+                  <label class="col-md-2" for="">END PIECE (INSIDE) :</label>
+                  <div class="col-md-4">
+                    <input  class="form-control"  type="text">
+                  </div>
+                  <div class="col-md-4">
+                    <input  class="form-control"  type="text">
+                  </div>
+              </div>
+
+
+              <div class="form-group row">
+                  <label class="col-md-2" for="">END PIECE (OUTSIDE) :</label>
+                  <div class="col-md-4">
+                    <input  class="form-control"  type="text">
+                  </div>
+                  <div class="col-md-4">
+                    <input  class="form-control"  type="text">
+                  </div>
+              </div>
+
+
+              <div class="form-group row">
+                  <label class="col-md-2" for="">EYELET :</label>
+                  <div class="col-md-4">
+                    <input  class="form-control"  type="text">
+                  </div>
+                  <div class="col-md-4">
+                    <input  class="form-control"  type="text">
+                  </div>
+              </div>
+
+
+              <div class="form-group row">
+                  <label class="col-md-2" for="">SPRING BAR :</label>
+                  <div class="col-md-4">
+                    <input  class="form-control"  type="text">
+                  </div>
+                  <div class="col-md-4">
+                    <input  class="form-control"  type="text">
+                  </div>
+              </div>
+
+
+              <div class="form-group row">
+                  <label class="col-md-2" for="">CYLINDER (SS PIPE) :</label>
+                  <div class="col-md-4">
+                    <input  class="form-control"  type="text">
+                  </div>
+                  <div class="col-md-4">
+                    <input  class="form-control"  type="text">
+                  </div>
+              </div>
+
+
+              <div class="form-group row">
+                  <label class="col-md-2" for="">STAMPING :</label>
+                  <div class="col-md-4">
+                    <input  class="form-control"  type="text">
+                  </div>
+                  <div class="col-md-4">
+                    <input  class="form-control"  type="text">
+                  </div>
+              </div>
+              <div class="form-group row">
+                  <label class="col-md-2" for="">REMARK :</label>
+                  <div class="col-md-8">
+                    <textarea name="remarks" rows="8" class="form-control" id="remarks"></textarea>
+                  </div>
+              </div>
+
+          
+            <div class="form-group text-right mt-10">
+              <button type="supmit" class="btn btn-primary"><i class="fa fa-save"></i> SAVE</button>
+              <button type="button" class="btn btn-default" (click)="modalRef.hide()"><i class="fa fa-save"></i> cancel</button>
+            </div>
+            
+          </form>  
+    </div>
+  </div>
+</div>
+    

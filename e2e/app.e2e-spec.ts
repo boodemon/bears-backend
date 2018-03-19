@@ -1,6 +1,6 @@
 import { AppPage } from './app.po';
 
-describe('bears-backend App', () => {
+describe('backend App', () => {
   let page: AppPage;
 
   beforeEach(() => {

@@ -1,0 +1,29 @@
+// Here you can add other styles
+table{
+    thead{
+        th{
+            text-align: center;
+            background:#29363d;
+            color:#fff;
+        }
+        .multicheck{
+            width:40px;
+        }
+    }
+    tbody{
+        tr{
+            .action{
+                text-align: right;
+                width: 120px;
+                a{
+                    font-size: 16px;
+                    padding:2px;
+                    cursor: pointer;
+                }
+            }
+            td{
+                
+            }
+        }
+    }
+}

@@ -1,0 +1,51 @@
+<div class="animated fadeIn">
+  <div class="card">
+      <div class="card-header">
+        <i class="fa fa-user"></i> User Member
+        <div class="pull-right">
+            <button type="button"  (click)="newModal(frmUser)" class="btn btn-sm btn-primary"><i class="fa fa-plus"></i> New</button>
+            <button type="button" (click)="deleteItem" class="btn btn-sm btn-danger"><i class="fa fa-trash"></i> Delete</button>
+        </div>
+      </div>
+      
+      <div class="card-body">
+        <table class="table table-sm table-data table-bordered">
+          <thead>
+            <tr>
+              <th>Username</th>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Tel</th>
+              <th>Facebook</th>
+              <th>Gmail</th>
+              <th>Active</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td><i class="text-success fa fa-time"></i></td>
+              <td><i class="text-success fa fa-time"></i></td>
+              <td class="text-center">
+                  <span class="badge badge-success">Active</span>
+              </td>
+              <td class="action">
+                  <a title="Edit" class="text-primary"><i class="icon-note"></i></a>
+                  <a title="Delete" class="text-danger"><i class="icon-trash"></i></a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+</div>
+<!-- 
+  ====================================================================================================
+  :: Modal form ::
+  ====================================================================================================
+-->
+

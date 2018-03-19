@@ -1,0 +1,130 @@
+<div class="animated fadeIn">
+  <div class="card">
+      <div class="card-header">
+        <i class="fa fa-user"></i> Administrators
+        <div class="pull-right">
+            <button type="button"  (click)="newModal(frmUser)" class="btn btn-sm btn-primary"><i class="fa fa-plus"></i> New</button>
+            <button type="button" (click)="deleteItem" class="btn btn-sm btn-danger"><i class="fa fa-trash"></i> Delete</button>
+        </div>
+      </div>
+      
+      <div class="card-body">
+        <table class="table table-sm table-data table-bordered">
+          <thead>
+            <tr>
+              <th>Username</th>
+              <th>Name</th>
+              <th>Tel</th>
+              <th>Level</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let user of UserList;">
+              <td>{{ user.username }}</td>
+              <td>{{ user.mb_name }}</td>
+              <td>{{ user.mb_tel }}</td>
+              <td>{{ user.mb_level }}</td>
+              <td class="action">
+                  <a title="Edit {{ user.username }}" (click)="updateModal(frmUser,user.id)" class="text-primary"><i class="icon-note"></i></a>
+                  <a title="Delete {{ user.username }}" (click)="deleteUser(user.id)" class="text-danger"><i class="icon-trash"></i></a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+</div>
+<!-- 
+  ====================================================================================================
+  :: Modal form ::
+  ====================================================================================================
+-->
+<ng-template #frmUser>
+ <div class="modal-header">
+   <h4 class="modal-title pull-left">{{frmTitle}}</h4>
+   <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+     <span aria-hidden="true">&times;</span>
+   </button>
+  </div>
+  <div class="modal-body">
+    <form class="form-horizontal" (ngSubmit)="onSubmit()" >
+      <div class="form-group">
+        <label class="control-label">Member ID : </label>
+        <input type="text" class="form-control" [(ngModel)]="udata.mb_id" name="mb_id" />
+        <span class="text-danger">{{ errMb_id }}</span>
+      </div>
+
+      <div class="form-group">
+        <label class="control-label">Username : </label>
+        <input type="text" class="form-control" [(ngModel)]="udata.username" name="username" />
+        <input type="hidden" [(ngModel)]="udata.id" name="userID" />
+        <span class="text-danger">{{ errUsername }}</span>
+      </div>
+
+      <div class="form-group">
+        <label class="control-label">Password : </label>
+        <input type="password" class="form-control" [(ngModel)]="udata.password" name="password" />
+        <span class="text-danger">{{ errPassword }}</span>
+      </div>
+
+      <div class="form-group">
+        <label class="control-label">Confirm Password : </label>
+        <input type="password" class="form-control" [(ngModel)]="conform_password" name="conform_password" />
+        <span class="text-danger">{{ errConfirmPassword }}</span>
+      </div>
+      
+      <div class="form-group">
+        <label class="control-label">Name : </label>
+        <input type="text" class="form-control" [(ngModel)]="udata.mb_name" name="name" />
+        <span class="text-danger">{{ errName }}</span>
+      </div>
+
+      <div class="form-group">
+        <label class="control-label">Position : </label>
+        <input type="text" class="form-control" [(ngModel)]="udata.mb_position" name="mb_position" />
+        <span class="text-danger">{{ errMb_position }}</span>
+      </div>
+
+      <div class="form-group">
+        <label class="control-label">Branch  : </label>
+        <input type="text" class="form-control" [(ngModel)]="udata.mb_branch" name="mb_branch" />
+        <span class="text-danger">{{ errTel }}</span>
+      </div>
+
+      <div class="form-group">
+        <label class="control-label">Tel : </label>
+        <input type="text" class="form-control" [(ngModel)]="udata.mb_tel" name="mb_tel" />
+        <span class="text-danger">{{ errMb_tel }}</span>
+      </div>
+
+      <div class="form-group">
+        <label class="control-label">Level Duty : </label>
+        <select name="mb_level" id="mb_level" [(ngModel)]="udata.mb_level"  class="form-control">
+          <option value="">-- Select User Level --</option>
+            <option value="admin">ADMINISTRATORS</option>
+            <option value="spec-model">SPEC MODEL</option>
+            <option value="purchase">PURCHASE</option>
+            <option value="export">EXPORT</option>
+            <option value="readonly">Read Only</option>
+        </select>
+      </div>
+    
+      <div class="form-group ">
+        <div class="checkbox">
+            <label>
+                <input type="checkbox"  [(ngModel)]="active" name="active" value="Y" /> Active
+            </label>
+        </div>
+      </div>
+    
+      <div class="form-group text-right mt-10">
+        <button type="submit" class="btn btn-primary"><i class="fa fa-save"></i> SAVE</button>
+        <button type="button" class="btn btn-default" (click)="modalRef.hide()"><i class="fa fa-save"></i> cancel</button>
+      </div>
+      
+    </form>  
+  </div>
+</ng-template>
+
+

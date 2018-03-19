@@ -1,0 +1,47 @@
+<nav class="sidebar-nav">
+  <ul class="nav">
+    <li class="nav-item nav-dashboard">
+      <a class="nav-link icon-white" routerLinkActive="active" [routerLink]="['/dashboard']"><i class="icon-speedometer"></i> DASHBOARD</a>
+    </li>
+    <li class="divider"></li>
+    <li class="nav-title">
+      UI Elements
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" routerLinkActive="active" [routerLink]="['/spec-model']"><i class="fa fa-file-text-o"></i> SPEC MODEL</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" routerLinkActive="active" [routerLink]="['/order-sheet']"><i class="fa fa-clone"></i> ORDER SHEET</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" routerLinkActive="active" [routerLink]="['/purchase']"><i class="icon-note"></i> PURCHASE ORDER</a>
+    </li>
+    <li class="nav-item nav-dropdown" routerLinkActive="open" appNavDropdown>
+      <a class="nav-link nav-dropdown-toggle" href="#" appNavDropdownToggle><i class="icon-folder-alt"></i> RAW MATERIALS</a>
+      <ul class="nav-dropdown-items">
+        <li class="nav-item">
+          <a class="nav-link" routerLinkActive="active" [routerLink]="['/raw-material/category']"><i class="icon-arrow-right"></i> CATEGORY</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLinkActive="active" [routerLink]="['/raw-material/stock']"><i class="icon-arrow-right"></i> STOCK</a>
+        </li>
+      </ul>
+    </li>
+
+    <li class="nav-item">
+        <a class="nav-link" routerLinkActive="active" [routerLink]="['/dealer']"><i class="icon-people"></i> DEALER</a>
+    </li>
+
+    <li class="nav-item">
+        <a class="nav-link" routerLinkActive="active" [routerLink]="['/database']"><i class="fa fa-database"></i> DATABASE</a>
+    </li>
+
+    <li class="nav-item">
+        <a class="nav-link" routerLinkActive="active" [routerLink]="['/users']"><i class="icon-user"></i> STAFF USER</a>
+    </li>
+
+    <li class="nav-item">
+        <a class="nav-link" routerLinkActive="active" [routerLink]="['/logout']"><i class="icon-logout"></i> LOGOUT</a>
+    </li>
+  </ul>
+</nav>
