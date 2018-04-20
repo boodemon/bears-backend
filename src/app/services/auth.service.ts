@@ -12,13 +12,15 @@ export class AuthService {
     private http:HttpClient,
     private Router:Router
   ) { }
-
+  path_api(){
+    return 'http://localhost:8000';
+  }
   token(){
     return window.localStorage.getItem('token');
   }
   
-  postLogin(username:string,password:string){
-    return this.http.post( this.API + '/auth/login',{username,password,_method:'POST'});
+  postLogin(param:any=[]){
+    return this.http.post( this.API + '/auth/login',param);
   }
 
   online(){

@@ -18,7 +18,15 @@ const routes:Routes = [
         data:{
           title:'FORM SPEC MODEL'
         }
+      },
+      {
+        path:'form/:id',
+        component:FormModelComponent,
+        data:{
+          title:'MODIFY SPEC MODEL'
+        }
       }
+        
     ],
   }
 ];

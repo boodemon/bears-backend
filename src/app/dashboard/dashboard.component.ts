@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from 'app/services/auth.service';
-import { CategoryService } from 'app/services/category.service';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { FormBuilder } from '@angular/forms';
 
@@ -13,7 +12,6 @@ export class DashboardComponent implements OnInit {
   // constructor( ) { }
   constructor(
     private Auth: AuthService,
-    private category: CategoryService,
     private modalService: BsModalService,
     private fb: FormBuilder
   ) {

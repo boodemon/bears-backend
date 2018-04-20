@@ -1,17 +1,26 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
+import { FormBuilder, FormGroup } from '@angular/forms';
 
 @Component({
   templateUrl: './login.component.html',
   //styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-
-  constructor( private Auth:AuthService, private Router:Router) { 
+  frmAuth:FormGroup;
+  constructor( private Auth:AuthService, private Router:Router,private frm:FormBuilder) { 
     // if( Auth.check() === true ){
     //   Router.navigateByUrl('dashboard');
     // }
+    this.createFrom();
+  }
+  createFrom(){
+    this.frmAuth = this.frm.group({
+      username:[''],
+      password:[''],
+      _methos:['POST']
+    })
   }
   private username:string;
   private password:string;
@@ -23,7 +32,7 @@ export class LoginComponent implements OnInit {
   }
 
   login(){
-    this.Auth.postLogin( this.username, this.password ).subscribe((response)=>{
+    this.Auth.postLogin( this.frmAuth.value ).subscribe((response)=>{
       //console.log('login result : ', response);
       if( response['result'] == 'successful'){
           this.responsding = 'Login successful';

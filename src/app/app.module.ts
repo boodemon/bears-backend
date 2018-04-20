@@ -14,7 +14,7 @@ import { AsideToggleDirective } from './shared/aside.directive';
 import { BreadcrumbsComponent } from './shared/breadcrumb.component';
 import { LoginComponent } from './auth/login/login.component';
 import { AppRoutingModule } from './app-routing.module';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LoadingModule } from 'ngx-loading';
 // Layouts
 import { FullLayoutComponent } from './layouts/full-layout.component';
@@ -25,23 +25,20 @@ import { SidebarExportComponent } from './layouts/sidebar-export.component';
 
 import { SimpleLayoutComponent } from './layouts/simple-layout.component';
 import { ForgotComponent } from './auth/forgot/forgot.component';
-import { OrdersComponent } from './orders/orders.component';
-import { ReportComponent } from './report/report.component';
-import { OrderDetailComponent } from './order-detail/order-detail.component';
-import { PaymentComponent } from './payment/payment.component';
 import { CheckComponent } from './auth/check/check.component';
 
 // Service
 import { UsersService } from './services/users.service';
 import { AuthService } from './services/auth.service';
 import { LogoutComponent } from './Auth/logout/logout.component';
+import { SpeceService} from './services/spece.service';
 
 // Child module //
 import { AppUserModule } from './users/app-user.module';
 import { AppMemberModule } from './member/app-member.module';
-import { AppFoodModule } from './foods/app-food.module';
 import { SelectallDirective } from './directive/selectall.directive';
 import { SpecModelModule } from './spec-model/spec-model.module';
+import { SearchComponent } from './shared/search.component';
 
 
 
@@ -56,10 +53,6 @@ import { SpecModelModule } from './spec-model/spec-model.module';
     FullLayoutComponent,
     SimpleLayoutComponent,
     ForgotComponent,
-    OrdersComponent,
-    ReportComponent,
-    OrderDetailComponent,
-    PaymentComponent,
     CheckComponent,
     LogoutComponent,
     SelectallDirective,
@@ -67,6 +60,7 @@ import { SpecModelModule } from './spec-model/spec-model.module';
     SidebarSpecComponent,
     SidebarPurchaseComponent,
     SidebarExportComponent,
+    SearchComponent,
   ],
   imports: [
     BrowserModule,
@@ -77,12 +71,11 @@ import { SpecModelModule } from './spec-model/spec-model.module';
     TabsModule.forRoot(),
     ChartsModule,
     FormsModule,
+    ReactiveFormsModule,
     AppUserModule,
     AppMemberModule,
-    AppFoodModule,
     SpecModelModule,
-    LoadingModule 
-
+    LoadingModule ,
   ],
   providers: [
     {
@@ -90,7 +83,8 @@ import { SpecModelModule } from './spec-model/spec-model.module';
         useClass: HashLocationStrategy,    
     },
     UsersService,
-    AuthService
+    AuthService,
+    SpeceService
   ],
   bootstrap: [AppComponent]
 })

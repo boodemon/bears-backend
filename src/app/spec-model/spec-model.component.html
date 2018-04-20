@@ -5,6 +5,8 @@
       <div class="pull-right">
         <button type="button"  [routerLink]="['/spec-model/form']" class="btn btn-sm btn-primary">
           <i class="fa fa-plus"></i> New</button>
+        <button type="button"  (click)="onFilter(template)" class="btn btn-sm btn-info">
+          <i class="fa fa-search"></i> Filtter</button>
         <button type="button" (click)="multiDelete()" class="btn btn-sm btn-danger">
           <i class="fa fa-trash"></i> Delete</button>
       </div>
@@ -30,10 +32,17 @@
             </td>
             <td><span class="spec-name">{{  sp.spec_no.name  }}</span><span class="spec-descript">{{ sp.spec_no.descript}}</span></td>
             <td class="action">
-              <a title="Edit" class="text-primary"  [routerLink]="['/spec-model/form/'+sp.id]">
+              <a tooltip="Export to PDF file" class="text-danger" (click)="exportPdf(sp.id)">
+                <i class="fa fa-file-pdf-o"></i>
+              </a>
+              <a tooltip="Export to Sheet file" class="text-success" (click)="exportXls(sp.id)">
+                <i class="fa fa-file-excel-o"></i>
+              </a>
+
+              <a tooltip="Edit" class="text-primary"  [routerLink]="['/spec-model/form/'+sp.id]">
                 <i class="icon-note"></i>
               </a>
-              <a title="Delete" class="text-danger" (click)="onDelete(sp.id)">
+              <a tooltip="Delete" class="text-danger" (click)="onDelete(sp.id)">
                 <i class="icon-trash"></i>
               </a>
             </td>
@@ -43,3 +52,32 @@
     </div>
   </div>
 </div>
+
+<!-- ::
+  :: MODAL SEARCH AND FILTER SPEC MODEL ::
+  ::====================================================::
+ -->
+ 
+<ng-template #template>
+    <div class="modal-header">
+      <h4 class="modal-title pull-left">Search & Filter</h4>
+      <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+        <form class="form-inline" [formGroup]="frmSearch" (ngSubmit)="doSearch()">
+            <div class="form-group">
+            <select class="form-control" formControlName="field">
+              <option ngValue="{{ opt.field }}" *ngFor="let opt of opts; let i = index;">{{  opt.name }}</option>
+            </select>
+            </div>
+            <div class="form-group">
+            <input type="email" class="form-control" formControlName="keywords" placeholder="Keywords">
+            </div>
+            <div class="form-group">
+              <button type="submit" class="btn btn-sm btn-info"><i class="fa fa-search"></i> Filter</button>
+            </div>
+        </form>
+    </div>
+</ng-template> 

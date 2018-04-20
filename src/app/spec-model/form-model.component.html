@@ -10,7 +10,7 @@
     </div>
 
     <div class="card-body spec-model-card" >
-        <form class="form-horizontal" (ngsupmit)="onSubmit()" >
+        <form class="form-horizontal" [formGroup]="frmModel" (ngSubmit)="onSubmit()" >
             <div class="form-group row">
                 <label class="col-md-8 form-control-label text-right" for="text-input">DATE </label>
                 <div class="col-md-3">
@@ -18,127 +18,129 @@
                 </div>
               </div>
 
-              <div class="form-group row">
+              <div class="form-group row" formGroupName="spec">
                   <label class="col-md-2" for="">SPEC NO. :</label>
-                  <div class="col-md-4">
-                      <ng-autocomplete (selected)="Selected($event)"  class="form-control" [group]="group"></ng-autocomplete>
-                    <!-- <input  class="form-control"  type="text"> -->
+                  <div class="col-md-4" dropdown #dropdown="bs-dropdown" [autoClose]="true" [isOpen]="status.isopen" placement="top">
+                      <input type="text" class="form-control" placeholder="Please enter Spec No." id="input-spec" formControlName="name" (keyup)="searchNo()" />
+                      <ul *dropdownMenu class="dropdown-menu" role="menu" aria-labelledby="input-spec">
+                        <li *ngFor="let search of searches; let i = index;" role="menuitem" class="dropdown-item"  (click)="onSpec(i)">{{ search }}</li>
+                      </ul>
                   </div>
                   <div class="col-md-4">
-                    <input  class="form-control"  type="text">
+                    <input  class="form-control" type="text" formControlName="descript" placeholder="">
                   </div>
               </div>
 
-              <div class="form-group row">
+              <div class="form-group row" formGroupName="type">
                   <label class="col-md-2" for="">TYPE :</label>
                   <div class="col-md-4">
-                    <input  class="form-control"  type="text">
+                    <input  class="form-control"  type="text" formControlName="name">
                   </div>
                   <div class="col-md-4">
-                    <input  class="form-control"  type="text">
+                    <input  class="form-control"  type="text" formControlName="descript" >
                   </div>
               </div>
 
-              <div class="form-group row">
+              <div class="form-group row" formGroupName="material">
                   <label class="col-md-2" for="">MATERIAL :</label>
                   <div class="col-md-3">
-                    <input  class="form-control"  type="text">
+                    <input  class="form-control"  type="text" formControlName="name" >
                   </div>
                   <div class="col-md-3">
-                    <input  class="form-control"  type="text">
+                    <input  class="form-control"  type="text" formControlName="descript" >
                   </div>
                   <div class="col-md-1">
-                    <input class="form-control"  type="text"/>
+                    <input class="form-control"  type="text" formControlName="rate" />
                   </div>
                   <label>DM<sup>2</sup></label>
               </div>
 
-              <div class="form-group row">
+              <div class="form-group row" formGroupName="color">
                   <label class="col-md-2" for="">COLOR :</label>
                   <div class="col-md-4">
-                    <input  class="form-control"  type="text">
+                    <input  class="form-control"  type="text" formControlName="name" >
                   </div>
                   <div class="col-md-4">
-                    <input  class="form-control"  type="text">
+                    <input  class="form-control"  type="text" formControlName="descript" >
                   </div>
               </div>
 
-              <div class="form-group row">
+              <div class="form-group row" formGroupName="filler">
                   <label class="col-md-2" for="">FILLER :</label>
                   <div class="col-md-3">
-                    <input  class="form-control"  type="text">
+                    <input  class="form-control"  type="text" formControlName="name" >
                   </div>
                   <div class="col-md-3">
-                    <input  class="form-control"  type="text">
+                    <input  class="form-control"  type="text" formControlName="descript" >
                   </div>
                   <div class="col-md-1">
-                    <input class="form-control"  type="text" />
+                    <input class="form-control"  type="text"  formControlName="rate" />
                   </div>
                   <label>DM<sup>2</sup></label>
               </div>
 
-              <div class="form-group row">
+              <div class="form-group row" formGroupName="double_filler">
                   <label class="col-md-2" for="">DOUBLE FILLER :</label>
                   <div class="col-md-3">
-                    <input  class="form-control"  type="text">
+                    <input  class="form-control"  type="text" formControlName="name" >
                   </div>
                   <div class="col-md-3">
-                    <input  class="form-control"  type="text">
+                    <input  class="form-control"  type="text" formControlName="descript" >
                   </div>
                   <div class="col-md-1">
-                    <input class="form-control"  type="text" />
+                    <input class="form-control"  type="text" formControlName="rate"  />
                   </div>
                   <label>DM<sup>2</sup></label>
               </div>
 
-              <div class="form-group row">
+              <div class="form-group row" formGroupName="lining">
                   <label class="col-md-2" for="">LINING :</label>
                   <div class="col-md-3">
-                    <input  class="form-control"  type="text">
+                    <input  class="form-control"  type="text" formControlName="name" >
                   </div>
                   <div class="col-md-3">
-                    <input  class="form-control"  type="text">
+                    <input  class="form-control"  type="text" formControlName="descript" >
                   </div>
                   <div class="col-md-1">
-                    <input class="form-control"  type="text" />
+                    <input class="form-control"  type="text"  formControlName="rate" />
                   </div>
                   <label>DM<sup>2</sup></label>
               </div>
 
-              <div class="form-group row">
+              <div class="form-group row" formGroupName="stitch">
                   <label class="col-md-2" for="">STITCH :</label>
                   <div class="col-md-3">
-                    <input  class="form-control"  type="text">
+                    <input  class="form-control"  type="text" formControlName="name" >
                   </div>
                   <div class="col-md-3">
-                    <input  class="form-control"  type="text">
+                    <input  class="form-control"  type="text" formControlName="descript" >
                   </div>
                   <div class="col-md-1">
-                    <input class="form-control"  type="text" />
+                    <input class="form-control"  type="text" formControlName="rate"  />
                   </div>
                   <label>DM<sup>2</sup></label>
               </div>
 
-              <div class="form-group row">
+              <div class="form-group row" formGroupName="paint">
                   <label class="col-md-2" for="">PAINT :</label>
                   <div class="col-md-4">
-                    <input  class="form-control"  type="text">
+                    <input  class="form-control"  type="text" formControlName="name" >
                   </div>
                   <div class="col-md-4">
-                    <input  class="form-control"  type="text">
+                    <input  class="form-control"  type="text" formControlName="descript" >
                   </div>
               </div>
 
-              <div class="form-group row">
+              <div class="form-group row" formGroupName="buckle">
                   <label class="col-md-2" for="">BUCKLE :</label>
                   <div class="col-md-3">
-                    <input  class="form-control"  type="text">
+                    <input  class="form-control"  type="text" formControlName="name" >
                   </div>
                   <div class="col-md-3">
-                    <input  class="form-control"  type="text">
+                    <input  class="form-control"  type="text" formControlName="descript" >
                   </div>
                   <div class="col-md-1">
-                    <input class="form-control"  type="text" />
+                    <input class="form-control"  type="text"  formControlName="rate" />
                   </div>
                   <label>DM<sup>2</sup></label>
               </div>
@@ -146,51 +148,51 @@
               <div class="form-group row">
                   <label class="col-md-2" for="">KEEPER :</label>
                   <div class="col-md-3">
-                    <input  class="form-control"  type="text">
+                    <input  class="form-control"  type="text" formControlName="keeper" >
                   </div>
                   <label>TYPE</label>
                   <div class="col">
-                    <input  class="form-control"  type="text">
+                    <input  class="form-control"  type="text" formControlName="keeper_type" >
                   </div>
                   <label>WIDTH</label>
                   <div class="col">
-                    <input  class="form-control"  type="text">
+                    <input  class="form-control"  type="text" formControlName="keeper_width" >
                   </div>
                   <label>mm.</label>
                   <label class="col text-right" for="">STITCH&nbsp;#</label>
                   <div class="col">
-                    <input  class="form-control"  type="text">
+                    <input  class="form-control"  type="text" formControlName="keeper_stitch" >
                   </div>
               </div>
 
               <div class="form-group row">
                   <label class="col-md-2" for="">KEEPER :</label>
                   <div class="col-md-3">
-                    <input  class="form-control"  type="text">
+                    <input  class="form-control"  type="text" formControlName="keeper2" >
                   </div>
                   <label>TYPE</label>
                   <div class="col">
-                    <input  class="form-control"  type="text">
+                    <input  class="form-control"  type="text" formControlName="keeper2_type" >
                   </div>
                   <label>WIDTH</label>
                   <div class="col">
-                    <input  class="form-control"  type="text">
+                    <input  class="form-control"  type="text" formControlName="keeper2_width" >
                   </div>
                   <label>mm.</label>
                   <label class="col text-right" for="">STITCH&nbsp;#</label>
                   <div class="col">
-                    <input  class="form-control"  type="text">
+                    <input  class="form-control"  type="text" formControlName="keeper2_stitch" >
                   </div>
               </div>
 
               <div class="form-group row">
                   <label class="col" for="">PUNCH HOLE KENSAKI :</label>
                   <div class="col-md-3">
-                    <input  class="form-control"  type="text">
+                    <input  class="form-control"  type="text" formControlName="punch_hole_kensaki" >
                   </div>
                   <label class="col-md-1" for="">DIA.</label>
                   <div class="col-md-3">
-                    <input  class="form-control"  type="text">
+                    <input  class="form-control"  type="text" formControlName="punch_hole_dia" >
                   </div>
                   <label class="col" for="">mm.</label>
               </div>
@@ -199,44 +201,44 @@
                   <label class="col-md-2" for=""></label>
                   <label class="col" for="">BIJOW:WIDTH</label>
                   <div class="col-md-2">
-                    <input  class="form-control"  type="text">
+                    <input  class="form-control"  type="text" formControlName="bijow_width" >
                   </div>
                   <label class="col" for="">mm.</label>
                   <label class="col" for="">LENGTH</label>
                   <div class="col-md-2">
-                    <input  class="form-control"  type="text">
+                    <input  class="form-control"  type="text" formControlName="punch_hole_length" >
                   </div>
                   <label class="col" for="">mm.</label>
               </div>
 
-              <div class="form-group row">
+              <div class="form-group row" formGroupName="size_tip">
                   <label class="col-md-2" for="">SIZE/TIP :</label>
                   <div class="col-md-4">
-                    <input  class="form-control"  type="text">
+                    <input  class="form-control"  type="text" formControlName="name" >
                   </div>
                   <div class="col-md-4">
-                    <input  class="form-control"  type="text">
+                    <input  class="form-control"  type="text" formControlName="descript" >
                   </div>
               </div>
 
-              <div class="form-group row">
+              <div class="form-group row" formGroupName="model_length">
                   <label class="col-md-2" for="">LENGTH :</label>
                   <div class="col-md-4">
-                    <input  class="form-control"  type="text">
+                    <input  class="form-control"  type="text" formControlName="name" >
                   </div>
                   <div class="col-md-3">
-                    <input  class="form-control"  type="text">
+                    <input  class="form-control"  type="text" formControlName="descript" >
                   </div>
                   <label>mm.</label>
               </div>
 
-              <div class="form-group row">
+              <div class="form-group row" formGroupName="total_thickness">
                   <label class="col-md-2" for="">TOTAL THICKNESS :</label>
                   <div class="col-md-4">
-                    <input  class="form-control"  type="text">
+                    <input  class="form-control"  type="text" formControlName="name" >
                   </div>
                   <div class="col-md-3">
-                    <input  class="form-control"  type="text">
+                    <input  class="form-control"  type="text" formControlName="rate" >
                   </div>
                   <label>mm.</label>
               </div>
@@ -244,113 +246,110 @@
               <div class="form-group row">
                   <label class="col-md-2" for="">KANMOTO THICKNESS :</label>
                   <div class="col-md-4">
-                    <input  class="form-control"  type="text">
+                    <input  class="form-control"  type="text" formControlName="kanmoto_thickness" >
                   </div>
                   <label>mm.</label>
-                  <label class="col-md-2">EDGE THICKNESS : </label>
+                  <label class="col-md-2 text-right">EDGE THICKNESS : </label>
                   <div class="col">
-                    <input  class="form-control"  type="text">
+                    <input  class="form-control"  type="text" formControlName="edge_thickness" >
                   </div>
                   <label>mm.</label>
               </div>
 
-              <div class="form-group row">
+              <div class="form-group row" formGroupName="matal_part">
                   <label class="col-md-2" for="">PLASTIC PART :</label>
                   <div class="col-md-4">
-                    <input  class="form-control"  type="text">
+                    <input  class="form-control"  type="text" formControlName="name" >
                   </div>
                   <div class="col-md-4">
-                    <input  class="form-control"  type="text">
+                    <input  class="form-control"  type="text" formControlName="descript" >
                   </div>
               </div>
 
-              <div class="form-group row">
+              <div class="form-group row" formGroupName="metal_keeper">
                   <label class="col-md-2" for="">METAL KEEPER :</label>
                   <div class="col-md-4">
-                    <input  class="form-control"  type="text">
+                    <input  class="form-control"  type="text" formControlName="name" >
                   </div>
                   <div class="col-md-4">
-                    <input  class="form-control"  type="text">
+                    <input  class="form-control"  type="text" formControlName="descript" >
                   </div>
               </div>
 
-              <div class="form-group row">
+              <div class="form-group row" formGroupName="end_piece_inside">
                   <label class="col-md-2" for="">END PIECE (INSIDE) :</label>
                   <div class="col-md-4">
-                    <input  class="form-control"  type="text">
+                    <input  class="form-control"  type="text" formControlName="name" >
                   </div>
                   <div class="col-md-4">
-                    <input  class="form-control"  type="text">
+                    <input  class="form-control"  type="text" formControlName="descript" >
                   </div>
               </div>
 
 
-              <div class="form-group row">
+              <div class="form-group row" formGroupName="end_piece_outside">
                   <label class="col-md-2" for="">END PIECE (OUTSIDE) :</label>
                   <div class="col-md-4">
-                    <input  class="form-control"  type="text">
+                    <input  class="form-control"  type="text" formControlName="name" >
                   </div>
                   <div class="col-md-4">
-                    <input  class="form-control"  type="text">
+                    <input  class="form-control"  type="text" formControlName="descript" >
                   </div>
               </div>
 
 
-              <div class="form-group row">
+              <div class="form-group row" formGroupName="eyelet">
                   <label class="col-md-2" for="">EYELET :</label>
                   <div class="col-md-4">
-                    <input  class="form-control"  type="text">
+                    <input  class="form-control"  type="text" formControlName="name" >
                   </div>
                   <div class="col-md-4">
-                    <input  class="form-control"  type="text">
+                    <input  class="form-control"  type="text" formControlName="descript" >
                   </div>
               </div>
 
-
-              <div class="form-group row">
+              <div class="form-group row" formGroupName="spring_bar">
                   <label class="col-md-2" for="">SPRING BAR :</label>
                   <div class="col-md-4">
-                    <input  class="form-control"  type="text">
+                    <input  class="form-control"  type="text" formControlName="name" >
                   </div>
                   <div class="col-md-4">
-                    <input  class="form-control"  type="text">
+                    <input  class="form-control"  type="text" formControlName="descript" >
                   </div>
               </div>
 
 
-              <div class="form-group row">
+              <div class="form-group row" formGroupName="cylinder">
                   <label class="col-md-2" for="">CYLINDER (SS PIPE) :</label>
                   <div class="col-md-4">
-                    <input  class="form-control"  type="text">
+                    <input  class="form-control"  type="text" formControlName="name" >
                   </div>
                   <div class="col-md-4">
-                    <input  class="form-control"  type="text">
+                    <input  class="form-control"  type="text" formControlName="descript" >
                   </div>
               </div>
 
 
-              <div class="form-group row">
+              <div class="form-group row" formGroupName="stamping">
                   <label class="col-md-2" for="">STAMPING :</label>
                   <div class="col-md-4">
-                    <input  class="form-control"  type="text">
+                    <input  class="form-control"  type="text" formControlName="name" >
                   </div>
                   <div class="col-md-4">
-                    <input  class="form-control"  type="text">
+                    <input  class="form-control"  type="text" formControlName="descript" >
                   </div>
               </div>
               <div class="form-group row">
                   <label class="col-md-2" for="">REMARK :</label>
                   <div class="col-md-8">
-                    <textarea name="remarks" rows="8" class="form-control" id="remarks"></textarea>
+                    <textarea name="remarks" rows="8" class="form-control" id="remarks" formControlName="remarks" ></textarea>
                   </div>
               </div>
-
           
             <div class="form-group text-right mt-10">
               <button type="supmit" class="btn btn-primary"><i class="fa fa-save"></i> SAVE</button>
               <button type="button" class="btn btn-default" (click)="modalRef.hide()"><i class="fa fa-save"></i> cancel</button>
             </div>
-            
           </form>  
     </div>
   </div>
