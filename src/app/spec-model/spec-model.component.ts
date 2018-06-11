@@ -3,10 +3,7 @@ import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule} from '@angular/forms';
 import { BsModalService,BsModalRef } from 'ngx-bootstrap';
 import { HttpClient } from '@angular/common/http'
-
 import { AuthService } from '../services/auth.service';
-import { Base } from '../services/app.service';
-
 
 @Component({
   selector: 'app-spec-model',
@@ -17,8 +14,13 @@ export class SpecModelComponent implements OnInit {
   [x: string]: any;
   row:any={};
   rows:any;
-  api = Base.API_URI;
+  api = this.auth.path_api();;
   token = localStorage.getItem('token');
+  filter:boolean=false;
+  field:any=[];
+  page:any=[];
+  cpage:number=1;
+  keyword:string;
   public loading = false;
   selectAll:boolean = false;
   onSelect:boolean = false;
@@ -69,7 +71,7 @@ export class SpecModelComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.getAll();
+    this.getAll('');
     this.auth.online();
     this.frmSearch = this.frm.group({
       field:['spec_no'],
@@ -77,31 +79,42 @@ export class SpecModelComponent implements OnInit {
     });
   }
   
-  getAll(){
+  getAll(param){
     this.loading = true;
-    this.http.get( this.api + '/spec-model?token=' + this.token ).subscribe((data)=>{
-        this.rows = data['data'];
+    let params = '?token=' + this.token;
+        //console.log('param all => ', param);
+    if( param.length > 0)
+        params += param;
+    
+    this.http.get( this.api + '/spec-model' + params ).subscribe((data)=>{
+        this.rows   = data['data'];
+        this.cpage  = data['cpage'];
         this.loading = false;
         console.log('spec model rows ', this.rows );
-
+        for(let p=1; p <= parseInt( data['lpage'] ); p++ ){
+          //console.log('p => ', p);
+          this.page.push( p );
+        }
     },
     err => {
       console.log( err );
       this.loading = false;
     })
   }
+
   onDelete(id){
     if(!confirm('Please confirm delete'))
         return false;
 
     this.http.post( this.api + '/spec-model/'+ id + '?token=' + this.token,{_method:'DELETE'}).subscribe((response)=>{
       if( response['result']== 'successful'){
-        this.getAll();
+        this.getAll('');
       }else{ 
         alert(response['msg']);
       }
     });
   }
+
   multiDelete(){
     if (!confirm('Please confirm delete'))
       return false;
@@ -109,26 +122,25 @@ export class SpecModelComponent implements OnInit {
     let getId:any = [];
     for (var i = 0; i < this.rows.length; i++) {
       if( this.rows[i].selected == true){
-        console.log('rows value : ', this.rows[i] );
+        //console.log('rows value : ', this.rows[i] );
         getId.push( this.rows[i].id );
       }
     }
-    console.log('getId : ', getId ,' join is  ' , getId.join('-') );
+    //console.log('getId : ', getId ,' join is  ' , getId.join('-') );
 
     this.http.post( this.api + '/spec-model/'+  (getId.join('-')) + '?token=' + this.token,{_method:'DELETE'}).subscribe((response) => {
       if (response['result'] == 'successful') {
-        this.getAll();
+        this.getAll('');
       } else {
         alert(response['msg']);
       }
     });
+
   }
-
-
 
   onSelectAll(){
     for (var i = 0; i < this.rows.length; i++) {
-      console.log( i , '( ', this.rows[i].selected ,')');
+      //console.log( i , '( ', this.rows[i].selected ,')');
       this.rows[i].selected = this.selectAll;
     }
   }
@@ -138,39 +150,67 @@ export class SpecModelComponent implements OnInit {
       return item.selected == true;
     })
   }
+
   onFilter(template: TemplateRef<any>){
+    this.filter = false;
     this.modalRef = this.modalService.show(template);
   }
 
   doSearch(){
     console.log( this.frmSearch.value );
     this.rows = [];
-    let search =  '?field=' + this.frmSearch.get('field').value
-               +  '&keywords=' + this.frmSearch.get('keywords').value 
-               +  '&token=' + this.token;
-    this.http.get( this.api + '/spec-model' + search ).subscribe((data)=>{
-        this.rows = data['data'];
-        this.loading = false;
-        console.log('spec model rows ', this.rows );
-
-    },
-    err => {
-      console.log( err );
-      this.loading = false;
-    })
-  this.modalRef.hide();
+    let keyword = this.frmSearch.get('keywords').value;
+    let field = this.frmSearch.get('field').value;
+    if( keyword.length > 0 ){
+      this.page = [];
+        let search =  '?field=' + field
+                  +  '&keywords=' + keyword 
+                  +  '&token=' + this.token;
+        this.http.get( this.api + '/spec-model' + search ).subscribe((data)=>{
+            this.rows = data['data'];
+            this.loading = false;
+            this.cpage  = data['cpage'];
+            for(let p=1; p <= parseInt( data['lpage'] ); p++ ){
+              this.page.push( p );
+            }
+    
+        },
+        err => {
+          console.log( err );
+          this.loading = false;
+        });
+        this.filter = true;
+        let obj = this.opts.find(function(obj){ return obj.field == field });
+        this.field['key'] = obj.field;
+        this.field['name'] = obj.name;
+        this.keyword = keyword;
+    }
+    this.modalRef.hide();
   }
-  exportPdf(id){
-      this.http.get( this.auth.path_api() + '/spec-model/export-pdf/' + id +'?token=' + this.token ).subscribe((res) =>{
 
-      },
-    (err) => {
-      alert('Error !!' + JSON.stringify(err) );
-    })
+  onPage(page){
+    let keyword = this.frmSearch.get('keywords').value;
+    let field = this.frmSearch.get('field').value;
+    let param = '';
+    if( page > 0 && this.page.length >= page ){
+        this.rows = [];
+        if( keyword.length > 0 ){
+            param +=  '&field=' + field
+                      +  '&keywords=' + keyword 
+        }
+        param += '&page=' + page;
+
+        this.page = [];
+        this.getAll(param);
+        window.scroll(0,0);
+    }
   }
+
   exportXls(id){
     this.http.get( this.auth.path_api() + '/spec-model/export-xls/' + id  +'?token=' + this.token ).subscribe((res) =>{
-
+      if( res['code'] == 200){
+        window.location.href = res['file'];
+      }
     },
   (err) => {
     alert('Error !!' + JSON.stringify(err) );

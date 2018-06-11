@@ -1,14 +1,18 @@
 import { Injectable } from '@angular/core';
-import { Base } from '../services/app.service';
 import { HttpClient } from '@angular/common/http';
 import { AuthService} from '../services/auth.service';
 @Injectable()
 export class SpeceService {
-  api = Base.API_URI;
+  api = this.auth.path_api();
   constructor(private http:HttpClient,private auth:AuthService) { }
   token = 'token=' + this.auth.token();
   allSpec(searchText:string){
     return this.http.get( this.api + '/search/model?term=' + searchText + '&token=' + this.auth.token() );
+  }
+
+  onField(fields,terms){
+    let param = { fields:fields,term:terms,token:this.auth.token() };
+    return this.http.post( this.api + '/spec-model/search',param);
   }
 
   onNew(param:any){

@@ -1,4 +1,4 @@
-<header class="app-header navbar">
+<header class="app-header navbar hide-print">
   <button class="navbar-toggler d-lg-none" type="button" appMobileSidebarToggler>&#9776;</button>
   <a class="navbar-brand" href="#"></a>
   <button class="navbar-toggler d-md-down-none" type="button" appSidebarToggler>&#9776;</button>
@@ -15,16 +15,17 @@
       </a>
       <div class="dropdown-menu dropdown-menu-right" *dropdownMenu aria-labelledby="simple-dropdown">
         <a class="dropdown-item" href="#"><i class="fa fa-user"></i> Profile</a>
-        <a class="dropdown-item" href="#"><i class="fa fa-lock"></i> Logout</a>
+        <a class="dropdown-item" [routerLink]="['/logout']"><i class="fa fa-lock"></i> Logout</a>
       </div>
     </li>
   </ul>
 </header>
 
 <div class="app-body">
-  <div class="sidebar">
+  <div class="sidebar hide-print">
     <!-- Insert component sidebar fillter by user level -->
     <app-sidebar-admin *ngIf="user.mb_level=='admin'"></app-sidebar-admin>
+    <app-sidebar-spec *ngIf="user.mb_level=='spec-model'"></app-sidebar-spec>
     <!-- /Insert component sidebar fillter by user level -->
   </div>
 
@@ -32,7 +33,7 @@
   <main class="main">
 
     <!-- Breadcrumb -->
-    <ol class="breadcrumb">
+    <ol class="breadcrumb hide-print">
       <app-breadcrumbs></app-breadcrumbs>
       <!-- Breadcrumb Menu-->
       <app-search></app-search>
@@ -44,7 +45,7 @@
   </main>
 </div>
 
-<footer class="app-footer">
+<footer class="app-footer hide-print">
   <a href="http://www.saiimog.com">Saimok Dev</a> &copy; 2017 creativeLabs.
   <span class="float-right">Powered by <a href="http://coreui.io">CoreUI</a></span>
 </footer>

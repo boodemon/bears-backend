@@ -1,0 +1,75 @@
+@page {
+    size: A4;
+    margin: 0;
+}
+@media print {
+    html, body {
+      width:210mm ;
+      height:297mm ;
+      background:#fff;
+      margin:0;
+      padding:0;
+    }
+    .fadeIn,.animated,.card-body,.app-body{
+        margin:0;
+        padding:0;
+    }
+    p{
+        padding:2px;
+        margin:4px;
+        line-height: .9;
+    }
+    .table{
+        td{
+            padding:6px 8px;
+            font-size:.8em;
+            line-height: 1.15;
+        }
+    }
+    .card{
+        border:0;
+    }
+    .panel-haft{
+        page-break-after: always;
+    }
+    .print-area{
+        page-break-after: always;
+    }
+    /* ... the rest of the rules ... */
+}  
+
+.panel-haft{
+    width:48%;
+    margin-right:2%;
+    display: inline-block;
+    page-break-after: always;
+}
+
+
+table{
+    border-top: 1px solid #000;
+    border-right: 1px solid #000;
+    border-left: 1px solid #000;        
+    border-bottom: 0px solid #000;
+    tbody{
+        tr{
+            td{
+                border-left:0;
+                border-right:0;
+                border-top:0;
+                border-bottom: 1px solid #000;
+                font-size: .75em;
+                padding:0;
+            }
+            td.border-left{
+                border-left:1px solid #000 !important;
+            }
+            td.border-right{
+                border-right:1px solid #000 !important;
+            }
+            td.nounderline{
+                border-bottom:0 !important;
+            }
+        }
+    }
+}

@@ -1,0 +1,108 @@
+<div class="animated fadeIn">
+    <div class="card">
+        <div class="card-header">
+            <i class="fa fa-file-text-o"></i> Materials orders form
+            <span *ngIf="filter===true">[ Filter : {{ field['name'] }} = {{ keyword }} ]</span>
+            <div class="pull-right">
+                <button type="button" (click)="onExport()" class="btn btn-sm btn-outline-success">
+                  <i class="fa fa-file-excel-o"></i> Export</button>
+                <button type="button" (click)="goPrint()" class="btn btn-sm btn-outline-dark">
+                  <i class="icon-printer"></i> Print</button>
+                <button type="button" (click)="goBack()" class="btn btn-sm btn-outline-dark">
+                  <i class="icon-arrow-left"></i> Back</button>
+            </div>
+        </div>
+
+        <div class="card-body">
+          <form (ngSubmit)="onSubmit()">
+            <fieldset  class="">
+              <div class="form-group row">
+                  <label class="col-md-2">P.O. NO</label>
+                  <div class="col-md-4 btn-group"  dropdown #dropdown="bs-dropdown">
+                    <input type="text" class="form-control" id="input-po" dropdownToggle (keyup)="onSearch('po',$event.target.value)"  (focus)="onSearch('po',$event.target.value)" name="po_no">
+                    <ul *dropdownMenu class="dropdown-menu" role="menu" aria-labelledby="input-po">
+                      <li *ngFor="let search of searches; let i = index;" role="menuitem" class="dropdown-item"  (click)="setField('newRow',i,0)">{{ search }}</li>
+                    </ul>
+                  </div>
+              </div>
+              <div class="form-group row">
+                  <label class="col-md-2">SPEC MODEL NO</label>
+                  <div class="col-md-4 btn-group"  dropdown #dropdown="bs-dropdown">
+                    <input  class="form-control"  type="text" id="input-material" dropdownToggle (keyup)="onSearch('spec',$event.target.value)" (focus)="onSearch('spec',$event.target.value)"  name="spec_name">
+                      <ul *dropdownMenu class="dropdown-menu" role="menu" aria-labelledby="input-material">
+                          <li *ngFor="let search of searches; let i = index;" role="menuitem" class="dropdown-item"  (click)="setField('newRow',i,0)">{{ search }}</li>
+                        </ul>
+                  </div>
+                  <div class="col-md-3">
+                    {{ newRow.spec_descript }}
+                  </div>
+              </div>
+              <div class="form-group row">
+                  <label class="col-md-2">DELIVERY</label>
+                  <div class="col-md-2">
+                    <input type="text" class="form-control" name="delivery" [(ngModel)]="newRow.delivery" #dp="bsDatepicker" bsDatepicker [(bsValue)]="bsValue" [bsConfig]="{ dateInputFormat: 'YYYY-MM-DD' }">
+                  </div>
+              </div>
+              <div class="form-group row">
+                  <label class="col-md-2">QUANTITY</label>
+                  <div class="col-md-2">
+                    <input type="number" class="form-control" name="quant">
+                  </div>
+              </div>
+              <div class="form-group row">
+                  <label class="col-md-2"></label>
+                  <div class="col-md-3">
+                    <button class="btn btn-success" type="button" (click)="addRow()" *ngIf="isEdit==false">
+                      <i class="fa fa-plus"></i> ADD
+                    </button>
+                    <button class="btn btn-primary" type="button" (click)="updateRow()" *ngIf="isEdit==true">
+                      <i class="fa fa-plus"></i> UPDATE
+                    </button>
+                  </div>
+              </div>
+          </fieldset>
+          <hr>
+          <div class="row">
+              <div class="col-md-10">
+              </div>
+              <div class="col-md-1 text-right">
+                <label class="switch switch-text switch-pill switch-success-outline-alt pull-right">
+                  <input type="checkbox" class="switch-input" name="head-status" [(ngModel)]="head.status">
+                  <span class="switch-label" data-on="Yes" data-off="No"></span>
+                  <span class="switch-handle"></span>
+                </label>
+              </div>
+              <div class="col-md-1 text-right">
+                  <button type="submit" class="btn btn-primary pull-right">
+                      <i class="fa fa-save"></i> {{ orderId == 0 ? 'SAVE' : 'UPDATE' }}
+                  </button>
+              </div>  
+          </div>
+          </form>      
+          <div class="table-responsive">
+                <table class="table table-berdered">
+                  <thead>
+                      <th >DELIVERY</th>
+                      <th >MODEL</th>
+                      <th >ORDER</th>
+                      <th >TYPE</th>
+                      <th >MATERIAL</th>
+                      <th >COLOR</th>
+                      <th >SIZE</th>
+                      <th >QTY</th>
+                      <th>LINING</th>
+                      <th >FILLER</th>
+                      <th >METAL KEEPER</th>
+                      <th >SPRING BAR</th>
+                      <th >SS PIPE</th>
+                      <th >END PIECE INSIDE</th>
+                      <th >END PIECE OUTSIDE</th>
+                      <th >EYELET</th>
+                      <th >BUCKLE</th>
+                  </thead>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+  

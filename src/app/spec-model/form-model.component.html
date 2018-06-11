@@ -12,142 +12,171 @@
     <div class="card-body spec-model-card" >
         <form class="form-horizontal" [formGroup]="frmModel" (ngSubmit)="onSubmit()" >
             <div class="form-group row">
-                <label class="col-md-8 form-control-label text-right" for="text-input">DATE </label>
-                <div class="col-md-3">
+                <label class="col-sm-8 form-control-label text-right" for="text-input">DATE </label>
+                <div class="col-sm-3">
                   <input type="text" class="form-control" #dp="bsDatepicker" bsDatepicker [(bsValue)]="bsValue" [bsConfig]="{ dateInputFormat: 'YYYY-MM-DD' }">
                 </div>
               </div>
 
               <div class="form-group row" formGroupName="spec">
-                  <label class="col-md-2" for="">SPEC NO. :</label>
-                  <div class="col-md-4" dropdown #dropdown="bs-dropdown" [autoClose]="true" [isOpen]="status.isopen" placement="top">
+                  <label class="col-sm-2" for="">SPEC NO. :</label>
+                  <div class="col-sm-4" dropdown #dropdown="bs-dropdown" placement="top">
                       <input type="text" class="form-control" placeholder="Please enter Spec No." id="input-spec" formControlName="name" (keyup)="searchNo()" />
                       <ul *dropdownMenu class="dropdown-menu" role="menu" aria-labelledby="input-spec">
                         <li *ngFor="let search of searches; let i = index;" role="menuitem" class="dropdown-item"  (click)="onSpec(i)">{{ search }}</li>
                       </ul>
                   </div>
-                  <div class="col-md-4">
+                  <div class="col-sm-4">
                     <input  class="form-control" type="text" formControlName="descript" placeholder="">
                   </div>
               </div>
 
               <div class="form-group row" formGroupName="type">
-                  <label class="col-md-2" for="">TYPE :</label>
-                  <div class="col-md-4">
-                    <input  class="form-control"  type="text" formControlName="name">
+                  <label class="col-sm-2" for="">TYPE :</label>
+                  <div class="col-sm-4"  dropdown #dropdown="bs-dropdown">
+                    <input  class="form-control"  type="text" formControlName="name" id="input-type" dropdownToggle  (keyup)="fieldSearch('type')">
+                    <ul *dropdownMenu class="dropdown-menu" role="menu" aria-labelledby="input-type">
+                      <li *ngFor="let row of terms['type']; let i = index;" role="menuitem" class="dropdown-item"  (click)="onFields('type',i)">{{ row }}</li>
+                    </ul>
                   </div>
-                  <div class="col-md-4">
+                  <div class="col-sm-4">
                     <input  class="form-control"  type="text" formControlName="descript" >
                   </div>
               </div>
 
               <div class="form-group row" formGroupName="material">
-                  <label class="col-md-2" for="">MATERIAL :</label>
-                  <div class="col-md-3">
-                    <input  class="form-control"  type="text" formControlName="name" >
+                  <label class="col-sm-2" for="">MATERIAL :</label>
+                  <div class="col-sm-3" dropdown #dropdown="bs-dropdown">
+                    <input  class="form-control"  type="text" formControlName="name" id="input-material" dropdownToggle (keyup)="fieldSearch('material')">
+                    <ul *dropdownMenu class="dropdown-menu" role="menu" aria-labelledby="input-material">
+                        <li *ngFor="let row of terms['material']; let i = index;" role="menuitem" class="dropdown-item"  (click)="onFields('material',i)">{{ row }}</li>
+                      </ul>
                   </div>
-                  <div class="col-md-3">
+                  <div class="col-sm-3">
                     <input  class="form-control"  type="text" formControlName="descript" >
                   </div>
-                  <div class="col-md-1">
+                  <div class="col-sm-1">
                     <input class="form-control"  type="text" formControlName="rate" />
                   </div>
                   <label>DM<sup>2</sup></label>
               </div>
 
               <div class="form-group row" formGroupName="color">
-                  <label class="col-md-2" for="">COLOR :</label>
-                  <div class="col-md-4">
-                    <input  class="form-control"  type="text" formControlName="name" >
+                  <label class="col-sm-2" for="">COLOR :</label>
+                  <div class="col-sm-4" dropdown #dropdown="bs-dropdown">
+                    <input  class="form-control"  type="text" formControlName="name" dropdownToggle  (keyup)="fieldSearch('color')" >
+                    <ul *dropdownMenu class="dropdown-menu" role="menu" aria-labelledby="input-color">
+                        <li *ngFor="let row of terms['color']; let i = index;" role="menuitem" class="dropdown-item"  (click)="onFields('color',i)">{{ row }}</li>
+                      </ul>
                   </div>
-                  <div class="col-md-4">
+                  <div class="col-sm-4">
                     <input  class="form-control"  type="text" formControlName="descript" >
                   </div>
               </div>
 
               <div class="form-group row" formGroupName="filler">
-                  <label class="col-md-2" for="">FILLER :</label>
-                  <div class="col-md-3">
-                    <input  class="form-control"  type="text" formControlName="name" >
+                  <label class="col-sm-2" for="">FILLER :</label>
+                  <div class="col-sm-3" dropdown #dropdown="bs-dropdown">
+                    <input  class="form-control"  type="text" formControlName="name" dropdownToggle  (keyup)="fieldSearch('filler')" >
+                    <ul *dropdownMenu class="dropdown-menu" role="menu" aria-labelledby="input-filler">
+                        <li *ngFor="let row of terms['filler']; let i = index;" role="menuitem" class="dropdown-item"  (click)="onFields('filler',i)">{{ row }}</li>
+                      </ul>
                   </div>
-                  <div class="col-md-3">
+                  <div class="col-sm-3">
                     <input  class="form-control"  type="text" formControlName="descript" >
                   </div>
-                  <div class="col-md-1">
+                  <div class="col-sm-1">
                     <input class="form-control"  type="text"  formControlName="rate" />
                   </div>
                   <label>DM<sup>2</sup></label>
               </div>
 
               <div class="form-group row" formGroupName="double_filler">
-                  <label class="col-md-2" for="">DOUBLE FILLER :</label>
-                  <div class="col-md-3">
-                    <input  class="form-control"  type="text" formControlName="name" >
+                  <label class="col-sm-2" for="">DOUBLE FILLER :</label>
+                  <div class="col-sm-3" dropdown #dropdown="bs-dropdown">
+                    <input  class="form-control"  type="text" formControlName="name" dropdownToggle  (keyup)="fieldSearch('double_filler')" >
+                    <ul *dropdownMenu class="dropdown-menu" role="menu" aria-labelledby="input-double_filler">
+                        <li *ngFor="let row of terms['double_filler']; let i = index;" role="menuitem" class="dropdown-item"  (click)="onFields('double_filler',i)">{{ row }}</li>
+                      </ul>
                   </div>
-                  <div class="col-md-3">
+                  <div class="col-sm-3">
                     <input  class="form-control"  type="text" formControlName="descript" >
                   </div>
-                  <div class="col-md-1">
+                  <div class="col-sm-1">
                     <input class="form-control"  type="text" formControlName="rate"  />
                   </div>
                   <label>DM<sup>2</sup></label>
               </div>
 
               <div class="form-group row" formGroupName="lining">
-                  <label class="col-md-2" for="">LINING :</label>
-                  <div class="col-md-3">
-                    <input  class="form-control"  type="text" formControlName="name" >
+                  <label class="col-sm-2" for="">LINING :</label>
+                  <div class="col-sm-3" dropdown #dropdown="bs-dropdown">
+                    <input  class="form-control"  type="text" formControlName="name" dropdownToggle  (keyup)="fieldSearch('lining')" >
+                    <ul *dropdownMenu class="dropdown-menu" role="menu" aria-labelledby="input-lining">
+                        <li *ngFor="let row of terms['lining']; let i = index;" role="menuitem" class="dropdown-item"  (click)="onFields('lining',i)">{{ row }}</li>
+                      </ul>
                   </div>
-                  <div class="col-md-3">
+                  <div class="col-sm-3">
                     <input  class="form-control"  type="text" formControlName="descript" >
                   </div>
-                  <div class="col-md-1">
+                  <div class="col-sm-1">
                     <input class="form-control"  type="text"  formControlName="rate" />
                   </div>
                   <label>DM<sup>2</sup></label>
               </div>
 
               <div class="form-group row" formGroupName="stitch">
-                  <label class="col-md-2" for="">STITCH :</label>
-                  <div class="col-md-3">
-                    <input  class="form-control"  type="text" formControlName="name" >
+                  <label class="col-sm-2" for="">STITCH :</label>
+                  <div class="col-sm-3" dropdown #dropdown="bs-dropdown">
+                    <input  class="form-control"  type="text" formControlName="name" dropdownToggle  (keyup)="fieldSearch('stitch')" >
+                    <ul *dropdownMenu class="dropdown-menu" role="menu" aria-labelledby="input-stitch">
+                        <li *ngFor="let row of terms['stitch']; let i = index;" role="menuitem" class="dropdown-item"  (click)="onFields('stitch',i)">{{ row }}</li>
+                      </ul>
                   </div>
-                  <div class="col-md-3">
+                  <div class="col-sm-3">
                     <input  class="form-control"  type="text" formControlName="descript" >
                   </div>
-                  <div class="col-md-1">
+                  <div class="col-sm-1">
                     <input class="form-control"  type="text" formControlName="rate"  />
                   </div>
-                  <label>DM<sup>2</sup></label>
+                  <label>M</label>
               </div>
 
               <div class="form-group row" formGroupName="paint">
-                  <label class="col-md-2" for="">PAINT :</label>
-                  <div class="col-md-4">
-                    <input  class="form-control"  type="text" formControlName="name" >
+                  <label class="col-sm-2" for="">PAINT :</label>
+                  <div class="col-sm-4" dropdown #dropdown="bs-dropdown">
+                    <input  class="form-control"  type="text" formControlName="name" dropdownToggle  (keyup)="fieldSearch('paint')" >
+                    <ul *dropdownMenu class="dropdown-menu" role="menu" aria-labelledby="input-paint">
+                        <li *ngFor="let row of terms['paint']; let i = index;" role="menuitem" class="dropdown-item"  (click)="onFields('paint',i)">{{ row }}</li>
+                    </ul>
                   </div>
-                  <div class="col-md-4">
+                  <div class="col-sm-4">
                     <input  class="form-control"  type="text" formControlName="descript" >
                   </div>
               </div>
 
               <div class="form-group row" formGroupName="buckle">
-                  <label class="col-md-2" for="">BUCKLE :</label>
-                  <div class="col-md-3">
-                    <input  class="form-control"  type="text" formControlName="name" >
+                  <label class="col-sm-2" for="">BUCKLE :</label>
+                  <div class="col-sm-8" dropdown #dropdown="bs-dropdown">
+                    <input  class="form-control"  type="text" formControlName="name" dropdownToggle  (keyup)="fieldSearch('buckle')" >
+                    <ul *dropdownMenu class="dropdown-menu" role="menu" aria-labelledby="input-buckle">
+                        <li *ngFor="let row of terms['buckle']; let i = index;" role="menuitem" class="dropdown-item"  (click)="onFields('buckle',i)">{{ row }}</li>
+                      </ul>
                   </div>
-                  <div class="col-md-3">
+                  <!--
+                  <div class="col-sm-3">
                     <input  class="form-control"  type="text" formControlName="descript" >
                   </div>
-                  <div class="col-md-1">
+                  <div class="col-sm-1">
                     <input class="form-control"  type="text"  formControlName="rate" />
                   </div>
-                  <label>DM<sup>2</sup></label>
+                  <label>SET</label>
+                  -->
               </div>
 
               <div class="form-group row">
-                  <label class="col-md-2" for="">KEEPER :</label>
-                  <div class="col-md-3">
+                  <label class="col-sm-2" for="">KEEPER :</label>
+                  <div class="col-sm-3">
                     <input  class="form-control"  type="text" formControlName="keeper" >
                   </div>
                   <label>TYPE</label>
@@ -166,8 +195,8 @@
               </div>
 
               <div class="form-group row">
-                  <label class="col-md-2" for="">KEEPER :</label>
-                  <div class="col-md-3">
+                  <label class="col-sm-2" for="">KEEPER :</label>
+                  <div class="col-sm-3">
                     <input  class="form-control"  type="text" formControlName="keeper2" >
                   </div>
                   <label>TYPE</label>
@@ -187,69 +216,78 @@
 
               <div class="form-group row">
                   <label class="col" for="">PUNCH HOLE KENSAKI :</label>
-                  <div class="col-md-3">
+                  <div class="col-sm-3">
                     <input  class="form-control"  type="text" formControlName="punch_hole_kensaki" >
                   </div>
-                  <label class="col-md-1" for="">DIA.</label>
-                  <div class="col-md-3">
+                  <label class="col-sm-1" for="">DIA.</label>
+                  <div class="col-sm-3">
                     <input  class="form-control"  type="text" formControlName="punch_hole_dia" >
                   </div>
                   <label class="col" for="">mm.</label>
               </div>
 
               <div class="form-group row">
-                  <label class="col-md-2" for=""></label>
+                  <label class="col-sm-2" for=""></label>
                   <label class="col" for="">BIJOW:WIDTH</label>
-                  <div class="col-md-2">
+                  <div class="col-sm-2">
                     <input  class="form-control"  type="text" formControlName="bijow_width" >
                   </div>
                   <label class="col" for="">mm.</label>
                   <label class="col" for="">LENGTH</label>
-                  <div class="col-md-2">
+                  <div class="col-sm-2">
                     <input  class="form-control"  type="text" formControlName="punch_hole_length" >
                   </div>
                   <label class="col" for="">mm.</label>
               </div>
 
               <div class="form-group row" formGroupName="size_tip">
-                  <label class="col-md-2" for="">SIZE/TIP :</label>
-                  <div class="col-md-4">
-                    <input  class="form-control"  type="text" formControlName="name" >
+                  <label class="col-sm-2" for="">SIZE/TIP :</label>
+                  <div class="col-sm-4" dropdown #dropdown="bs-dropdown">
+                    <input  class="form-control"  type="text" formControlName="name" dropdownToggle  (keyup)="fieldSearch('size_tip')" >
+                    <ul *dropdownMenu class="dropdown-menu" role="menu" aria-labelledby="input-size_tip">
+                        <li *ngFor="let row of terms['size_tip']; let i = index;" role="menuitem" class="dropdown-item"  (click)="onFields('size_tip',i)">{{ row }}</li>
+                      </ul>
                   </div>
-                  <div class="col-md-4">
+                  <div class="col-sm-4">
                     <input  class="form-control"  type="text" formControlName="descript" >
                   </div>
               </div>
 
               <div class="form-group row" formGroupName="model_length">
-                  <label class="col-md-2" for="">LENGTH :</label>
-                  <div class="col-md-4">
-                    <input  class="form-control"  type="text" formControlName="name" >
+                  <label class="col-sm-2" for="">LENGTH :</label>
+                  <div class="col-sm-4" dropdown #dropdown="bs-dropdown">
+                    <input  class="form-control"  type="text" formControlName="name" dropdownToggle  (keyup)="fieldSearch('model_length')" >
+                    <ul *dropdownMenu class="dropdown-menu" role="menu" aria-labelledby="input-model_length">
+                        <li *ngFor="let row of terms['model_length']; let i = index;" role="menuitem" class="dropdown-item"  (click)="onFields('model_length',i)">{{ row }}</li>
+                      </ul>
                   </div>
-                  <div class="col-md-3">
+                  <div class="col-sm-3">
                     <input  class="form-control"  type="text" formControlName="descript" >
                   </div>
                   <label>mm.</label>
               </div>
 
               <div class="form-group row" formGroupName="total_thickness">
-                  <label class="col-md-2" for="">TOTAL THICKNESS :</label>
-                  <div class="col-md-4">
-                    <input  class="form-control"  type="text" formControlName="name" >
+                  <label class="col-sm-2" for="">TOTAL THICKNESS :</label>
+                  <div class="col-sm-4" dropdown #dropdown="bs-dropdown">
+                    <input  class="form-control"  type="text" formControlName="name" dropdownToggle  (keyup)="fieldSearch('total_thickness')" >
+                    <ul *dropdownMenu class="dropdown-menu" role="menu" aria-labelledby="input-total_thickness">
+                        <li *ngFor="let row of terms['total_thickness']; let i = index;" role="menuitem" class="dropdown-item"  (click)="onFields('total_thickness',i)">{{ row }}</li>
+                      </ul>
                   </div>
-                  <div class="col-md-3">
+                  <div class="col-sm-3">
                     <input  class="form-control"  type="text" formControlName="rate" >
                   </div>
                   <label>mm.</label>
               </div>
 
               <div class="form-group row">
-                  <label class="col-md-2" for="">KANMOTO THICKNESS :</label>
-                  <div class="col-md-4">
+                  <label class="col-sm-2" for="">KANMOTO THICKNESS :</label>
+                  <div class="col-sm-4" dropdown #dropdown="bs-dropdown">
                     <input  class="form-control"  type="text" formControlName="kanmoto_thickness" >
                   </div>
                   <label>mm.</label>
-                  <label class="col-md-2 text-right">EDGE THICKNESS : </label>
+                  <label class="col-sm-2 text-right">EDGE THICKNESS : </label>
                   <div class="col">
                     <input  class="form-control"  type="text" formControlName="edge_thickness" >
                   </div>
@@ -257,91 +295,123 @@
               </div>
 
               <div class="form-group row" formGroupName="matal_part">
-                  <label class="col-md-2" for="">PLASTIC PART :</label>
-                  <div class="col-md-4">
-                    <input  class="form-control"  type="text" formControlName="name" >
+                  <label class="col-sm-2" for="">PLASTIC PART :</label>
+                  <div class="col-sm-4" dropdown #dropdown="bs-dropdown">
+                    <input  class="form-control"  type="text" formControlName="name" dropdownToggle  (keyup)="fieldSearch('matal_part')" >
+                    <ul *dropdownMenu class="dropdown-menu" role="menu" aria-labelledby="input-matal_part">
+                        <li *ngFor="let row of terms['matal_part']; let i = index;" role="menuitem" class="dropdown-item"  (click)="onFields('matal_part',i)">{{ row }}</li>
+                      </ul>
                   </div>
-                  <div class="col-md-4">
+                  <div class="col-sm-4">
                     <input  class="form-control"  type="text" formControlName="descript" >
                   </div>
               </div>
 
               <div class="form-group row" formGroupName="metal_keeper">
-                  <label class="col-md-2" for="">METAL KEEPER :</label>
-                  <div class="col-md-4">
-                    <input  class="form-control"  type="text" formControlName="name" >
+                  <label class="col-sm-2" for="">METAL KEEPER :</label>
+                  <div class="col-sm-4" dropdown #dropdown="bs-dropdown">
+                    <input  class="form-control"  type="text" formControlName="name" dropdownToggle  (keyup)="fieldSearch('metal_keeper')" >
+                    <ul *dropdownMenu class="dropdown-menu" role="menu" aria-labelledby="input-material">
+                        <li *ngFor="let row of terms['metal_keeper']; let i = index;" role="menuitem" class="dropdown-item"  (click)="onFields('metal_keeper',i)">{{ row }}</li>
+                      </ul>
                   </div>
-                  <div class="col-md-4">
+                  <div class="col-sm-4">
                     <input  class="form-control"  type="text" formControlName="descript" >
                   </div>
               </div>
 
               <div class="form-group row" formGroupName="end_piece_inside">
-                  <label class="col-md-2" for="">END PIECE (INSIDE) :</label>
-                  <div class="col-md-4">
-                    <input  class="form-control"  type="text" formControlName="name" >
+                  <label class="col-sm-2" for="">END PIECE (INSIDE) :</label>
+                  <div class="col-sm-4" dropdown #dropdown="bs-dropdown">
+                    <input  class="form-control"  type="text" formControlName="name" dropdownToggle  (keyup)="fieldSearch('end_piece_inside')" >
+                    <ul *dropdownMenu class="dropdown-menu" role="menu" aria-labelledby="input-end_piece_inside">
+                        <li *ngFor="let row of terms['end_piece_inside']; let i = index;" role="menuitem" class="dropdown-item"  (click)="onFields('end_piece_inside',i)">{{ row }}</li>
+                      </ul>
                   </div>
-                  <div class="col-md-4">
+                  <div class="col-sm-4">
                     <input  class="form-control"  type="text" formControlName="descript" >
                   </div>
               </div>
 
 
               <div class="form-group row" formGroupName="end_piece_outside">
-                  <label class="col-md-2" for="">END PIECE (OUTSIDE) :</label>
-                  <div class="col-md-4">
-                    <input  class="form-control"  type="text" formControlName="name" >
+                  <label class="col-sm-2" for="">END PIECE (OUTSIDE) :</label>
+                  <div class="col-sm-4" dropdown #dropdown="bs-dropdown">
+                    <input  class="form-control"  type="text" formControlName="name" dropdownToggle  (keyup)="fieldSearch('end_piece_outside')" >
+                    <ul *dropdownMenu class="dropdown-menu" role="menu" aria-labelledby="input-material">
+                        <li *ngFor="let row of terms['end_piece_outside']; let i = index;" role="end_piece_outside" class="dropdown-item"  (click)="onFields('end_piece_outside',i)">{{ row }}</li>
+                      </ul>
                   </div>
-                  <div class="col-md-4">
+                  <div class="col-sm-4">
                     <input  class="form-control"  type="text" formControlName="descript" >
                   </div>
               </div>
 
 
               <div class="form-group row" formGroupName="eyelet">
-                  <label class="col-md-2" for="">EYELET :</label>
-                  <div class="col-md-4">
-                    <input  class="form-control"  type="text" formControlName="name" >
+                  <label class="col-sm col-sm-2" for="">EYELET :</label>
+                  <div class="col-sm col-sm-3" dropdown #dropdown="bs-dropdown">
+                    <input  class="form-control"  type="text" formControlName="name" dropdownToggle  (keyup)="fieldSearch('eyelet')" >
+                    <ul *dropdownMenu class="dropdown-menu" role="menu" aria-labelledby="input-eyelet">
+                        <li *ngFor="let row of terms['eyelet']; let i = index;" role="menuitem" class="dropdown-item"  (click)="onFields('eyelet',i)">{{ row }}</li>
+                      </ul>
                   </div>
-                  <div class="col-md-4">
+                  <div class="col-sm col-sm-3">
                     <input  class="form-control"  type="text" formControlName="descript" >
+                  </div>
+                  <label class="text-right" for="">1QN :</label>
+                  <div class="col-sm">
+                      <input type="text" class="form-control" name="magic_qn" formControlName="magic_qn"> 
+                  </div>
+                  <label class="text-right" for="">2QM :</label>
+                  <div class="col-sm">
+                      <input type="text" class="form-control" name="magic_qm" formControlName="magic_qm" > 
                   </div>
               </div>
 
               <div class="form-group row" formGroupName="spring_bar">
-                  <label class="col-md-2" for="">SPRING BAR :</label>
-                  <div class="col-md-4">
-                    <input  class="form-control"  type="text" formControlName="name" >
+                  <label class="col-sm-2" for="">SPRING BAR :</label>
+                  <div class="col-sm-4" dropdown #dropdown="bs-dropdown">
+                    <input  class="form-control"  type="text" formControlName="name" dropdownToggle  (keyup)="fieldSearch('spring_bar')" >
+                    <ul *dropdownMenu class="dropdown-menu" role="menu" aria-labelledby="input-spring_bar">
+                        <li *ngFor="let row of terms['spring_bar']; let i = index;" role="menuitem" class="dropdown-item"  (click)="onFields('spring_bar',i)">{{ row }}</li>
+                      </ul>
                   </div>
-                  <div class="col-md-4">
+                  <div class="col-sm-4">
                     <input  class="form-control"  type="text" formControlName="descript" >
                   </div>
               </div>
 
 
               <div class="form-group row" formGroupName="cylinder">
-                  <label class="col-md-2" for="">CYLINDER (SS PIPE) :</label>
-                  <div class="col-md-4">
-                    <input  class="form-control"  type="text" formControlName="name" >
+                  <label class="col-sm-2" for="">CYLINDER (SS PIPE) :</label>
+                  <div class="col-sm-4" dropdown #dropdown="bs-dropdown">
+                    <input  class="form-control"  type="text" formControlName="name" dropdownToggle  (keyup)="fieldSearch('cylinder')" >
+                    <ul *dropdownMenu class="dropdown-menu" role="menu" aria-labelledby="input-cylinder">
+                        <li *ngFor="let row of terms['cylinder']; let i = index;" role="menuitem" class="dropdown-item"  (click)="onFields('cylinder',i)">{{ row }}</li>
+                      </ul>
                   </div>
-                  <div class="col-md-4">
+                  <div class="col-sm-4">
                     <input  class="form-control"  type="text" formControlName="descript" >
                   </div>
               </div>
 
 
               <div class="form-group row" formGroupName="stamping">
-                  <label class="col-md-2" for="">STAMPING :</label>
-                  <div class="col-md-4">
-                    <input  class="form-control"  type="text" formControlName="name" >
+                  <label class="col-sm-2" for="">STAMPING :</label>
+                  <div class="col-sm-4" dropdown #dropdown="bs-dropdown">
+                    <input  class="form-control"  type="text" formControlName="name" dropdownToggle  (keyup)="fieldSearch('stamping')" >
+                    <ul *dropdownMenu class="dropdown-menu" role="menu" aria-labelledby="input-stamping">
+                        <li *ngFor="let row of terms['stamping']; let i = index;" role="menuitem" class="dropdown-item"  (click)="onFields('stamping',i)">{{ row }}</li>
+                      </ul>
                   </div>
-                  <div class="col-md-4">
+                  <div class="col-sm-4">
                     <input  class="form-control"  type="text" formControlName="descript" >
                   </div>
               </div>
               <div class="form-group row">
-                  <label class="col-md-2" for="">REMARK :</label>
-                  <div class="col-md-8">
+                  <label class="col-sm-2" for="">REMARK :</label>
+                  <div class="col-sm-8">
                     <textarea name="remarks" rows="8" class="form-control" id="remarks" formControlName="remarks" ></textarea>
                   </div>
               </div>

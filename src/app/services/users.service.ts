@@ -1,14 +1,15 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpClientModule} from '@angular/common/http'
-import { Base } from './app.service';
+import { AuthService } from '../services/auth.service';
 import 'rxjs/add/operator/map';
 
 @Injectable()
 export class UsersService {
-  private API_URI = Base.API_URI;
+  private API_URI = this.auth.path_api();
 
   constructor(
     private http : HttpClient,
+    private auth: AuthService
   ) { }
   token = window.localStorage.getItem('token');
   getAdmin(){

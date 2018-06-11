@@ -7,6 +7,7 @@ import { SpecModelComponent } from './spec-model.component';
 import { ModelRouteModule } from './model-route.module';
 import { FormsModule ,ReactiveFormsModule} from '@angular/forms';
 import { SpeceService } from '../services/spece.service';
+import { PrintModelComponent } from './print-model.component';
 
 @NgModule({
   imports: [
@@ -23,6 +24,7 @@ import { SpeceService } from '../services/spece.service';
   declarations: [
     FormModelComponent,
     SpecModelComponent,
+    PrintModelComponent,
   ],
   providers: [
     SpeceService

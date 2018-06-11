@@ -1,0 +1,39 @@
+<div class="animated fadeIn">
+  <div class="card">
+      <div class="card-header">
+          <i class="fa fa-file-text-o"></i> Materials orders form
+          <span *ngIf="filter===true">[ Filter : {{ field['name'] }} = {{ keyword }} ]</span>
+          <div class="pull-right">
+              <button type="button" (click)="onExport()" class="btn btn-sm btn-outline-success">
+                <i class="fa fa-file-excel-o"></i> Export</button>
+              <button type="button" (click)="goPrint()" class="btn btn-sm btn-outline-dark">
+                <i class="fa fa-printer"></i> Print</button>
+              <button type="button" (click)="goBack()" class="btn btn-sm btn-outline-dark">
+                <i class="icon-arrow-left"></i> Back</button>
+          </div>
+      </div>
+
+      <div class="card-body">
+          <div class="table-responsive">
+              <table class="table table-berdered">
+                <thead>
+                  <tr>
+                    <th rowspan="2">FOR ORDER</th>
+                    <th rowspan="2">FOR MODEL</th>
+                    <th rowspan="2">DESCRIPTION</th>
+                    <th rowspan="2">KMG DATE REQUIRED</th>
+                    <th rowspan="2">CUSTOMER DATE REQUIRED</th>
+                    <th colspan="2">QUANTITY</th>
+                    <th rowspan="2">UNIT PRICE (KH$)</th>
+                    <th rowspan="2">BALANCE QUANTITY</th>
+                    <th rowspan="2">INV. NO.</th>
+                  <tr>
+                    <th>FORCAST</th>
+                    <th>CONFIRM</th>
+                  </tr>
+                </thead>
+              </table>
+          </div>
+      </div>
+  </div>
+</div>

@@ -1,16 +1,16 @@
 import { Injectable } from '@angular/core';
 import {Router} from '@angular/router';
 import {HttpClient, HttpClientModule} from '@angular/common/http';
-import { Base } from './app.service';
 import { AuthService } from './auth.service';
 @Injectable()
 export class CategoryService {
-  api = Base.API_URI;
+  api = this.auth.path_api();
   token = window.localStorage.getItem('token');
 
   constructor(
     private http:HttpClient,
-    private router:Router
+    private router:Router,
+    private auth:AuthService
   ) { }
 
   getAll(){

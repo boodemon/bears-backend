@@ -1,3 +1,28 @@
-<p>
-  sidebar-spec works!
-</p>
+<nav class="sidebar-nav">
+  <ul class="nav">
+    <li class="nav-item nav-dashboard">
+      <a class="nav-link icon-white" routerLinkActive="active" [routerLink]="['/dashboard']"><i class="icon-speedometer"></i> DASHBOARD</a>
+    </li>
+    <li class="divider"></li>
+    <li class="nav-title">
+      UI Elements
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" routerLinkActive="active" [routerLink]="['/spec-model']"><i class="fa fa-file-text-o"></i> SPEC MODEL</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" routerLinkActive="active" [routerLink]="['/spec-sheet']"><i class="fa fa-clone"></i> ORDER SHEET</a>
+    </li>
+
+    <li class="nav-item">
+        <a class="nav-link" routerLinkActive="active" [routerLink]="['/materials/orders']"><i class="icon-doc"></i> MATERIAL ORDER</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" routerLinkActive="active" [routerLink]="['/materials/po']"><i class="icon-docs"></i> MATERIAL PO</a>
+    </li>
+
+    <li class="nav-item">
+        <a class="nav-link" routerLinkActive="active" [routerLink]="['/logout']"><i class="icon-logout"></i> LOGOUT</a>
+    </li>
+  </ul>
+</nav>

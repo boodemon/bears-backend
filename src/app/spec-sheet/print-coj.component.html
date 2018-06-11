@@ -1,0 +1,90 @@
+<div class="animated fadeIn">
+  <div class="card">
+    <div class="card-header hide-print">
+      <i class="fa fa-file-text-o"></i> ORDER SHEET COJ FORM
+      
+      <div class="pull-right">
+        <button type="button"  (click)="onPrint()" class="btn btn-sm btn-default">
+          <i class="icon-printer"></i> print</button>
+      </div>
+    </div>
+
+    <div class="card-body area-print">
+        <h3 class="top-title">ORDER SHEET</h3>
+        <table class="noboder w100p">
+            <tr>
+              <td><strong>ORDER SHEET {{ head.name }}</strong></td>
+              <td><strong>DATE : </strong>{{ head.date | date:'MMM dd, yyyy'  }}</td>
+            </tr>
+        </table>
+      
+              <table class="table table-berdered table-form">
+                <thead>
+                  <tr>
+                      <th rowspan="2">ORDER NO.</th>
+                      <th rowspan="2" class="w10"></th>
+                      <th rowspan="2">TYPE</th>
+                      <th rowspan="2">MATERIAL</th>
+                      <th rowspan="2">COLOR</th>
+                      <th rowspan="2">SIZE</th>
+                      <th rowspan="2">TYPE</th>
+                      <th rowspan="2">QUANT</th>
+                      <th rowspan="2">BUCKLE</th>
+                      <th rowspan="2" class="w120">DELIVERY DATE</th>
+                      <th rowspan="2" colspan="2">MODEL CODE</th>
+                      <th rowspan="2">LINING</th>
+                      <th rowspan="2">FILLER</th>
+                      <th rowspan="2">DBL.FILL</th>
+                      <th rowspan="2">STITCH #NO</th>
+                      <th rowspan="2">PT EG.</th>
+                      <th colspan="2">HOLD</th>
+                      <th colspan="2">KEEPER</th>
+                      <th rowspan="2">P</th>
+                  </tr>
+                  <tr>
+                      <th>K</th>
+                      <th>B</th>
+                      <th>TYPE</th>
+                      <th>ST.</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let field of fields; let i=index">
+                    <td>                      
+                        {{ field.order_prefix }} - {{ field.order_number }}
+                    </td>
+                    <td></td>
+                    <td>{{ field.type }}</td>
+                    <td>{{ field.material }}</td>
+                    <td>{{ field.color }}</td>
+                    <td>{{ field.size }}</td>
+                    <td>{{ field.type2 }}</td>
+                    <td class="text-center">{{ field.quant }}</td>
+                    <td>{{ field.buckle }}</td>
+                    <td>                      
+                        {{ field.deli | date:'MMM dd, yyyy' }}
+                    </td>
+                    <td colspan="2">
+                          {{ field.spec_name }} 
+                    </td>
+                    <td>{{ field.lining }}</td>
+                    <td>{{ field.filler }}</td>
+                    <td>{{ field.dbl_fill }}</td>
+                    <td>{{ field.stitch_no }}</td>
+                    <td>{{ field.pt }}</td>
+                    <td>{{ field.hole_k }}</td>
+                    <td>{{ field.hole_b }}</td>
+                    <td>{{ field.keeper_type }}</td>
+                    <td>{{ field.keeper_st }}</td>
+                    <td>{{ field.p }}</td>
+                  </tr>
+                  <tr>
+                    <td colspan="7" class="noboder"></td>
+                    <td class="double-line text-center">{{ total }}</td>
+                    <td colspan="14" class="noboder"></td>
+                  </tr>
+                </tbody>
+              </table>
+    </div>
+  </div>
+</div>

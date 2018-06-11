@@ -2,6 +2,7 @@
   <div class="card">
     <div class="card-header">
       <i class="fa fa-file-text-o"></i> SPEC MODEL
+      <span *ngIf="filter===true">[ Filter : {{ field['name'] }} = {{ keyword }} ]</span>
       <div class="pull-right">
         <button type="button"  [routerLink]="['/spec-model/form']" class="btn btn-sm btn-primary">
           <i class="fa fa-plus"></i> New</button>
@@ -13,6 +14,7 @@
     </div>
 
     <div class="card-body">
+
       <table class="table table-sm table-data table-bordered">
         <thead>
           <tr>
@@ -20,20 +22,24 @@
               <input type="checkbox" [(ngModel)]="selectAll" (change)="onSelectAll()" />
             </th>
             <th>SPEC NO</th>
+            <th *ngIf="filter===true">{{ field['name'] }}</th>
             <th>Action</th>
           </tr>
         </thead>
         <tbody>
             
 
-          <tr *ngFor="let sp of rows" >
+          <tr *ngFor="let sp of rows; let i = index;" >
             <td class="text-center">
               <input type="checkbox" [value]="sp.id" [(ngModel)]="sp.selected" (change)="checkIfAllSelected()">
             </td>
             <td><span class="spec-name">{{  sp.spec_no.name  }}</span><span class="spec-descript">{{ sp.spec_no.descript}}</span></td>
+            <td *ngIf="filter===true">
+                <span class="spec-name">{{  rows[i][field['key']].name ? rows[i][field['key']].name : rows[i][field['key']] }}</span> 
+            </td>
             <td class="action">
-              <a tooltip="Export to PDF file" class="text-danger" (click)="exportPdf(sp.id)">
-                <i class="fa fa-file-pdf-o"></i>
+              <a tooltip="Print this Spec Model" class="text-dark"  [routerLink]="['/spec-model/print/' + sp.id]">
+                <i class="fa fa-print"></i>
               </a>
               <a tooltip="Export to Sheet file" class="text-success" (click)="exportXls(sp.id)">
                 <i class="fa fa-file-excel-o"></i>
@@ -51,6 +57,17 @@
       </table>
     </div>
   </div>
+  <!-- :: Start paginate panel -->
+  <div class="text-center">
+    <ul class="pagination">
+      <li class="page-item"><a class="page-link" (click)="onPage( cpage-1 )" disabled >Prev</a></li>
+      <li class="page-item {{p == cpage ? 'active':''}}" *ngFor="let p of page; let i=index;">
+          <a class="page-link" (click)="onPage(p)">{{p}}</a>
+      </li>
+      <li class="page-item"><a class="page-link" (click)="onPage( cpage+1 )">Next</a></li>
+    </ul>
+  </div>
+  <!-- :: End paginate panel -->
 </div>
 
 <!-- ::
@@ -73,7 +90,7 @@
             </select>
             </div>
             <div class="form-group">
-            <input type="email" class="form-control" formControlName="keywords" placeholder="Keywords">
+            <input type="text" class="form-control" formControlName="keywords" placeholder="Keywords">
             </div>
             <div class="form-group">
               <button type="submit" class="btn btn-sm btn-info"><i class="fa fa-search"></i> Filter</button>

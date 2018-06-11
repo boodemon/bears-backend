@@ -1,0 +1,29 @@
+.table{
+    thead{
+        tr{
+            th{
+                font-size: .8em;
+                padding:4px;
+                vertical-align: middle;
+            }
+        }
+    }
+    tbody{
+        tr{
+            td{
+                border:1px solid #000;
+                font-size: .85em;
+            }
+        }
+    }
+}
+.form-group{
+    margin-bottom:.1rem;
+}
+hr{
+    margin-top:.5em;
+    margin-bottom:.5em;
+}
+.form-control{
+    padding:4px;
+}

@@ -11,11 +11,9 @@
         <a class="nav-link" routerLinkActive="active" [routerLink]="['/spec-model']"><i class="fa fa-file-text-o"></i> SPEC MODEL</a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" routerLinkActive="active" [routerLink]="['/order-sheet']"><i class="fa fa-clone"></i> ORDER SHEET</a>
+        <a class="nav-link" routerLinkActive="active" [routerLink]="['/spec-sheet']"><i class="fa fa-clone"></i> ORDER SHEET</a>
     </li>
-    <li class="nav-item">
-        <a class="nav-link" routerLinkActive="active" [routerLink]="['/purchase']"><i class="icon-note"></i> PURCHASE ORDER</a>
-    </li>
+    <!--
     <li class="nav-item nav-dropdown" routerLinkActive="open" appNavDropdown>
       <a class="nav-link nav-dropdown-toggle" href="#" appNavDropdownToggle><i class="icon-folder-alt"></i> RAW MATERIALS</a>
       <ul class="nav-dropdown-items">
@@ -27,7 +25,16 @@
         </li>
       </ul>
     </li>
-
+    -->
+    <li class="nav-item">
+        <a class="nav-link" routerLinkActive="active" [routerLink]="['/materials/orders']"><i class="icon-doc"></i> MATERIAL ORDER</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" routerLinkActive="active" [routerLink]="['/materials/po']"><i class="icon-docs"></i> MATERIAL PO</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" routerLinkActive="active" [routerLink]="['/purchase']"><i class="icon-note"></i> PURCHASE ORDER</a>
+    </li>
     <li class="nav-item">
         <a class="nav-link" routerLinkActive="active" [routerLink]="['/dealer']"><i class="icon-people"></i> DEALER</a>
     </li>

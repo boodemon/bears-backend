@@ -1,26 +1,26 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { Base } from './app.service';
 import 'rxjs/add/operator/map';
 
 @Injectable()
 export class AuthService {
-  private API = Base.API_URI; 
 
   constructor(
     private http:HttpClient,
     private Router:Router
   ) { }
   path_api(){
-    return 'http://localhost:8000';
+    return 'http://localhost/2018/bears-kmg/bears-api';
+    //return 'http://ex.saiimog.com/bears/api';
   }
+  
   token(){
     return window.localStorage.getItem('token');
   }
   
   postLogin(param:any=[]){
-    return this.http.post( this.API + '/auth/login',param);
+    return this.http.post( this.path_api() + '/auth/login',param);
   }
 
   online(){
@@ -28,7 +28,7 @@ export class AuthService {
       let auth = window.localStorage.getItem('auth');
       let data:any;
       if (token !== null && token !== '' && token !== undefined ){
-        this.http.get(this.API + '/auth/check?token=' + token )
+        this.http.get(this.path_api() + '/auth/check?token=' + token )
           .subscribe((response)=>{
            // alert('response code : ' + response['code']);
             if( response['code'] != 200){

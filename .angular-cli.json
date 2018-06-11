@@ -53,7 +53,7 @@
     }
   },
   "defaults": {
-    "styleExt": "scss,css",
+    "styleExt": "scss",
     "prefixInterfaces": false
   }
 }

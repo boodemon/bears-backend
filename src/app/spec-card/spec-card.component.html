@@ -1,0 +1,213 @@
+<div class="animated fadeIn">
+    <div class="card">
+      <div class="card-header hide-print">
+        <i class="fa fa-file-text-o"></i> ORDER CARD
+        
+        <div class="pull-right">
+          <button type="button"  (click)="onExport()" class="btn btn-sm btn-outline-success">
+            <i class="fa fa-file-excel-o"></i> Export</button>
+          <button type="button"  (click)="onPrint()" class="btn btn-sm btn-outline-dark">
+            <i class="icon-printer"></i> print</button>
+        </div>
+      </div>
+  
+      <div class="card-body area-print">
+          <div class="panel-haft" *ngFor="let field of fields; let i=index">
+            <p class="text-center"><strong>ORDER CARD</strong></p>
+            <table class="table table-berdered table-form">
+              <tbody>
+                <tr>
+                  <td colspan="2" class="text-center nounderline border-right">
+                    <strong>ORDER NO.</strong>
+                  </td>
+                  <td class="w120 nounderline">เข้างาน</td>
+                  <td class="w25p border-right"></td>
+                  <td class="w120 nounderline">จำนวน ORD.</td>
+                  <td>{{ field.quantity }}</td>
+                </tr>
+                <tr>
+                    <td colspan="2" class="text-center border-right">
+                        {{ field.order_prefix }}-{{ field.order_number }}
+                    </td>
+                    <td class="nounderline">วันที่ตัด</td>
+                    <td class="border-right"></td>
+                    <td class="nounderline">จำนวนเผื่อ</td>
+                    <td class="border-right"></td>
+                </tr>
+                <tr>
+                    <td class="w160 "></td>
+                    <td class="w10 border-right"></td>
+                    <td class="">กำหนดส่ง</td>
+                    <td class="border-right">{{ field.delivery | date: 'MMM dd, yyyy'}}</td>
+                    <td class="">จำนวน ผลิต.</td>
+                    <td class="border-right"></td>
+                  </tr>
+
+
+                  <tr>
+                    <td>SPEC NO.</td>
+                    <td class="w10">:</td>
+                    <td colspan="4">{{ field.spec_no.name }}</td>
+                    <!--
+                    <td colspan="2">{{ field.spec_no.descript }}</td>
+                    -->
+                  </tr>
+                  <tr>
+                    <td>TYPE</td>
+                    <td class="w10">:</td>
+                    <td colspan="2">{{ field.type.name }}</td>
+                    <td colspan="2">{{ field.type.descript }}</td>
+                  </tr>
+                  <tr>
+                    <td>MATERIAL</td>
+                    <td class="w10">:</td>
+                    <td colspan="2">{{ field.material.name }}</td>
+                    <td colspan="2">{{ field.material.descript }}</td>
+                  </tr>
+                  <tr>
+                    <td>COLOR</td>
+                    <td class="w10">:</td>
+                    <td colspan="2">{{ field.color.name }}</td>
+                    <td colspan="2">{{ field.color.descript }}</td>
+                  </tr>
+                  <tr>
+                    <td>FILLER</td>
+                    <td class="w10">:</td>
+                    <td colspan="2">{{ field.filler.name }}</td>
+                    <td colspan="2">{{ field.filler.descript }}</td>
+                  </tr>
+                  <tr>
+                    <td>DOUBLE FILLER</td>
+                    <td class="w10">:</td>
+                    <td colspan="2">{{ field.double_filler.name }}</td>
+                    <td colspan="2">{{ field.double_filler.descript }}</td>
+                  </tr>
+                  <tr>
+                    <td>LINING</td>
+                    <td class="w10">:</td>
+                    <td colspan="2">{{ field.lining.name }}</td>
+                    <td colspan="2">{{ field.lining.descript }}</td>
+                  </tr>
+                  <tr>
+                    <td>STITCH</td>
+                    <td class="w10">:</td>
+                    <td colspan="2">{{ field.stitch.name }}</td>
+                    <td colspan="2">{{ field.stitch.descript }}</td>
+                  </tr>
+                  <tr>
+                    <td>PAINT</td>
+                    <td class="w10">:</td>
+                    <td colspan="2">{{ field.paint.name }}</td>
+                    <td colspan="2">{{ field.paint.descript }}</td>
+                  </tr>
+                  <tr>
+                    <td>BUCKLE</td>
+                    <td class="w10">:</td>
+                    <td colspan="2">{{ field.buckle.name }}</td>
+                    <td colspan="2">{{ field.buckle.descript }}</td>
+                  </tr>
+                  <tr>
+                    <td>KEEPER</td>
+                    <td class="w10">:</td>
+                    <td>{{ field.keeper }}</td>
+                    <td>TYPE: {{ field.keeper_type }} </td>
+                    <td>WIDTH. {{ field.keeper_width }}  MM </td>
+                    <td>STITCH: {{ field.keeper_stich }} </td>
+                  </tr>
+                  <tr>
+                    <td>KEEPER</td>
+                    <td class="w10">:</td>
+                    <td>{{ field.keeper2 }}</td>
+                    <td>TYPE: {{ field.keeper2_type }} </td>
+                    <td>WIDTH. {{ field.keeper2_width }}  MM </td>
+                    <td>STITCH: {{ field.keeper2_stich }} </td>
+                  </tr>
+                  <tr>
+                      <td>PUNCH HOLE</td>
+                      <td class="w10">:</td>
+                      <td colspan="2">KENSAKI : {{ field.punch_hole_kensaki }}</td>
+                      <td colspan="2">DIA : {{ field.punch_hole_dia }}</td>
+                  </tr>
+                  <tr>
+                      <td></td>
+                      <td class="w10">:</td>
+                      <td colspan="2">BIJOW WIDTH : {{ field.bijow_width }}</td>
+                      <td colspan="2">LENGTH : {{ field.punch_hole_length }} </td>
+                  </tr>
+                  <tr>
+                      <td>SIZE/TIP</td>
+                      <td class="w10">:</td>
+                      <td colspan="2">{{ field.size_tip.name }}</td>
+                      <td colspan="2">{{ field.size_tip.descript }}</td>
+                    </tr>
+                  <tr>
+                      <td>LENGTH</td>
+                      <td class="w10">:</td>
+                      <td colspan="2">{{ field.model_length.name }}</td>
+                      <td colspan="2">{{ field.model_length.descript }}</td>
+                    </tr>
+                  <tr>
+                      <td>TOTAL THICKNESS</td>
+                      <td class="w10">:</td>
+                      <td colspan="2">{{ field.total_thickness.name }}</td>
+                      <td colspan="2">{{ field.total_thickness.descript }}</td>
+                    </tr>
+                  <tr>
+                      <td>KANMOTO THICKNESS</td>
+                      <td class="w10">:</td>
+                      <td colspan="4">{{ field.kanmoto_thickness }}</td>
+                    </tr>
+                  <tr>
+                      <td>PLASTIC PART</td>
+                      <td class="w10">:</td>
+                      <td colspan="2">{{ field.matal_part ? field.matal_part.name : '-' }}</td>
+                      <td colspan="2">{{ field.matal_part ? field.matal_part.descript : ''  }}</td>
+                    </tr>
+                  <tr>
+                      <td>MATAL KEEPER</td>
+                      <td class="w10">:</td>
+                      <td colspan="2">{{ field.metal_keeper ? field.metal_keeper.name : '-' }}</td>
+                      <td colspan="2">{{ field.metal_keeper ? field.metal_keeper.descript : '' }}</td>
+                    </tr>
+                  <tr>
+                      <td>END PRICE(INSIDE)</td>
+                      <td class="w10">:</td>
+                      <td colspan="2">{{ field.end_piece_inside ? field.end_piece_inside.name : '-' }}</td>
+                      <td colspan="2">{{ field.end_piece_inside ? field.end_piece_inside.descript : '' }}</td>
+                    </tr>
+                  <tr>
+                      <td>END PRICE(OUTSIDE)</td>
+                      <td class="w10">:</td>
+                      <td colspan="2">{{ field.end_piece_outside ? field.end_piece_outside.name : '-' }}</td>
+                      <td colspan="2">{{ field.end_piece_outside ? field.end_piece_outside.descript : '' }}</td>
+                    </tr>
+                  <tr>
+                      <td>EYELET</td>
+                      <td class="w10">:</td>
+                      <td colspan="2">{{ field.eyelet ? field.eyelet.name : '-' }}</td>
+                      <td colspan="2">{{ field.eyelet ? field.eyelet.descript : '-' }}</td>
+                    </tr>
+                  <tr>
+                      <td>SPRING BAR</td>
+                      <td class="w10">:</td>
+                      <td colspan="2">{{ field.spring_bar.name }}</td>
+                      <td colspan="2">{{ field.spring_bar.descript }}</td>
+                    </tr>
+                  <tr>
+                      <td>CYLINDER (SS PIPE)</td>
+                      <td class="w10">:</td>
+                      <td colspan="2">{{ field.cylinder.name }}</td>
+                      <td colspan="2">{{ field.cylinder.descript }}</td>
+                    </tr>
+                  <tr>
+                      <td>STAMPING</td>
+                      <td class="w10">:</td>
+                      <td colspan="2">{{ field.stamping.name }}</td>
+                      <td colspan="2">{{ field.stamping.descript }}</td>
+                    </tr>
+                </tbody>
+            </table>
+          </div>
+      </div>
+    </div>
+  </div>

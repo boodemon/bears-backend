@@ -1,0 +1,32 @@
+@page {
+    size: US-Legal landscape;
+    margin: 5mm;
+}
+@media print {
+    html, body {
+        margin-top: 5mm;
+        margin-right: 5mm;
+        margin-bottom: .5cm;
+        margin-left: 5mm;
+        background:transparent;
+    }
+    .table{
+        th{
+            color:#000000;
+            border:1px solid #000;
+        }
+        tbody{
+            tr{
+                td{
+                    padding:4px;
+                    font-size: .85em !important;
+                }
+            }
+        }
+    }
+
+    .card{
+        border:0;
+    }
+    /* ... the rest of the rules ... */
+}

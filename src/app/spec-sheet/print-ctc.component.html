@@ -1,0 +1,80 @@
+<div class="animated fadeIn">
+    <div class="card">
+      <div class="card-header hide-print">
+        <i class="fa fa-file-text-o"></i> ORDER SHEET PRINT FORM
+        
+        <div class="pull-right">
+          <button type="button"  (click)="onPrint()" class="btn btn-sm btn-default">
+            <i class="icon-printer"></i> print</button>
+        </div>
+      </div>
+  
+      <div class="card-body area-print">
+          <h3 class="top-title">ORDER SHEET</h3>
+              <table class="noboder w100p">
+                  <tr>
+                    <td><strong>ORDER SHEET {{ head.name }}</strong></td>
+                    <td><strong>DATE : </strong>{{ head.date | date:'MMM dd, yyyy'  }}</td>
+                    <td><strong>P.O.NO. : </strong>{{ head.po_no }}</td>
+                  </tr>
+              </table>
+        
+                <table class="table table-berdered table-form">
+                  <thead>
+                    <tr>
+                      <th rowspan="2">ORDER NO.</th>
+                      <th rowspan="2" class="">BAND CODE</th>
+                      <th rowspan="2">DELIVERY</th>
+                      <th rowspan="2">TYPE</th>
+                      <th rowspan="2">QUANTITY</th>
+                      <th rowspan="2">SIZE</th>
+                      <th rowspan="2">MATERIAL/COLOUR</th>
+                      <th rowspan="2">LINING</th>
+                      <th colspan="2">MAGIC TAP</th>
+                      <th rowspan="2">KEEPER</th>
+                      <th rowspan="2">STITCH</th>
+                      <th rowspan="2">METAL PART/P</th>
+                      <th rowspan="2">SPRING BAR</th>
+                      <th rowspan="2">CYLINDER</th>
+                      <th rowspan="2">BUCKLE</th>
+                  </tr>
+                  <tr>
+                      <th>1QN</th>
+                      <th>2QM</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let field of fields; let i=index">
+                      <td>                      
+                          {{ field.order_prefix }} - {{ field.order_number }}
+                      </td>
+                      <td>
+                        {{ field.spec_name }} 
+                      </td>
+                      <td>                      
+                        {{ field.deli | date:'dd MMM yyyy' }}
+                      </td>
+                      <td>{{ field.type }}</td>
+                      <td class="text-center">{{ field.quant }}</td>
+                      <td>{{ field.size }}</td>
+                      <td class="text-center">{{ field.material }}<span *ngIf="field.material!=''&&field.color!=''">/</span>{{ field.color }}</td>
+                      <td>{{ field.lining }}</td>
+                      <td class="text-center">{{ field.magic_qn }}</td>
+                      <td class="text-center">{{ field.magic_qm }}</td>
+                      <td>{{ field.keeper }}</td>
+                      <td>{{ field.stitch_no }}</td>
+                      <td>{{ field.matal_part }}</td>
+                      <td>{{ field.spring_bar }}</td>
+                      <td>{{ field.cylinder }}</td>
+                      <td>{{ field.buckle }}</td>
+                    </tr>
+                    <tr>
+                      <td colspan="4" class="noboder"></td>
+                      <td class="double-line text-center">{{ total }}</td>
+                      <td colspan="11" class="noboder"></td>
+                    </tr>
+                  </tbody>
+                </table>
+      </div>
+    </div>
+  </div>

@@ -52,6 +52,20 @@ const routes: Routes = [
           title:'SPEC MODEL'
         }
       },
+      {
+        path: 'spec-sheet',
+        loadChildren:'./spec-sheet/sheet-module.module#SheetModuleModule',
+        data : {
+          title:'SPEC ORDER SHEET'
+        }
+      },
+      {
+        path: 'materials',
+        loadChildren:'./materials/materials.module#MaterialsModule',
+        data : {
+          title:'MATERIALS ORDER'
+        }
+      },
 
       {
         path:'users',

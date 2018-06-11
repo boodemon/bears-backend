@@ -1,0 +1,53 @@
+@page {
+    size: A4;
+    margin: 5mm;
+}
+@media print {
+    html, body {
+      width: 210mm;
+      height: 297mm;
+      background:#fff;
+    }
+    .table{
+        td{
+            padding:4px;
+        }
+    }
+    .card{
+        border:0;
+    }
+    /* ... the rest of the rules ... */
+}    
+
+
+.table{
+    border:0 !important;
+    td{
+        border:0;
+    }
+    tr{
+        td:first-child{
+            font-weight: bold;
+        }
+    }
+}
+.form-group{
+    border-bottom: 1px solid #000;
+}
+.title{
+    text-align: center;
+    text-decoration: underline;
+}
+.no-line{
+    border:0!important;
+}
+.underline{
+    border-bottom: 1px solid #000 !important;
+}
+.w10{width:10px !important; text-align: center;}
+.w20{width:20px !important;}
+.w120{width:120px !important;}
+.w180{width:180px !important;}
+.w220{width:220px !important;}
+.w320{width:320px !important;}
+.w420{width:420px !important;}

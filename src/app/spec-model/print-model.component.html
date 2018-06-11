@@ -1,0 +1,228 @@
+<div class="animated fadeIn">
+    <div class="card">
+      <div class="card-header hide-print">
+        
+        <div class="pull-right no-print">
+          <button type="button"  [routerLink]="['/spec-model']" class="btn btn-sm btn-default">
+            <i class="icon-arrow-left"></i> BACK
+          </button>
+          <button type="button"  (click)="onPrint()" class="btn btn-sm btn-default">
+            <i class="icon-printer"></i> Print
+          </button>
+        </div>
+      </div>
+  
+      <div class="card-body area-print spec-model-card" >
+              <h3 class="title">NEW MODEL SPECIFICATION</h3>
+              <table class="table" *ngFor="let model of models">
+                <tr>
+                  <td class="w180"></td>
+                  <td class="w10"></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td class="w420 underline" colspan="4"> DATE {{ model.create_date | date:'dd MMM yyyy' }} </td>
+                </tr>
+                <tr class="underline">
+                  <td>SPEC&nbsp;NO.</td>
+                  <td class="w10">:</td>
+                  <td class="" colspan="4">{{ model.spec_no.name }}</td>
+                  <td class="" colspan="3">{{ model.spec_no.descript }}</td>
+                </tr>
+                <tr class="underline">
+                  <td>TYPE</td>
+                  <td class="w10">:</td>
+                  <td class="" colspan="4">{{ model.type.name }}</td>
+                  <td class="" colspan="3">{{ model.type.descript }}</td>
+                </tr>
+                <tr class="underline">
+                  <td>MATERIAL</td>
+                  <td class="w10">:</td>
+                  <td class="" colspan="2">{{ model.material.name }}</td>
+                  <td class="" colspan="2">{{ model.material.descript }}</td>
+                  <td class="" colspan="2">{{ model.material.rate }}</td>
+                  <td class="w20">DM<sup>2</sup></td>
+                </tr>
+                <tr class="underline">
+                  <td>COLOR</td>
+                  <td class="w10">:</td>
+                  <td class="" colspan="4">{{ model.color.name }}</td>
+                  <td class="" colspan="3">{{ model.color.descript }}</td>
+                </tr>
+                <tr class="underline">
+                  <td>FILLER</td>
+                  <td class="w10">:</td>
+                  <td class="" colspan="2">{{ model.filler.name }}</td>
+                  <td class="" colspan="2">{{ model.filler.descript }}</td>
+                  <td class="" colspan="2">{{ model.filler.rate }}</td>
+                  <td class="">DM<sup>2</sup></td>
+                </tr>
+                <tr class="underline">
+                  <td>DOUBLE&nbsp;FILLER</td>
+                  <td class="w10">:</td>
+                  <td class="" colspan="2">{{ model.double_filler.name }}</td>
+                  <td class="" colspan="2">{{ model.double_filler.descript }}</td>
+                  <td class="" colspan="2">{{ model.double_filler.rate }}</td>
+                  <td class="">DM<sup>2</sup></td>
+                </tr>
+                <tr class="underline">
+                  <td>LINING</td>
+                  <td class="w10">:</td>
+                  <td class="" colspan="3">{{ model.lining.name }}</td>
+                  <td class="" colspan="2">{{ model.lining.descript }}</td>
+                  <td class="">{{ model.lining.rate }}</td>
+                  <td class="">DM<sup>2</sup></td>
+                </tr>
+                <tr class="underline">
+                  <td>STITCH</td>
+                  <td class="w10">:</td>
+                  <td class="" colspan="2">{{ model.stitch.name }}</td>
+                  <td class="" colspan="2">{{ model.stitch.descript }}</td>
+                  <td class="" colspan="2">{{ model.stitch.rate }}</td>
+                  <td class="">M</td>
+                </tr>
+                <tr class="underline">
+                  <td>PAINT</td>
+                  <td class="w10">:</td>
+                  <td class="" colspan="4">{{ model.paint.name }}</td>
+                  <td class="" colspan="3">{{ model.paint.descript }}</td>
+                </tr>
+                <tr class="underline">
+                  <td>BUCKLE</td>
+                  <td class="w10">:</td>
+                  <td class="" colspan="7">{{ model.buckle.name }}</td>
+                  <!--
+                  <td class="" colspan="2">{{ model.buckle.descript }}</td>
+                  <td class="">{{ model.buckle.rate }}</td>
+                  <td class="">SET</td>
+                  -->
+                </tr>
+                <tr class="underline">
+                  <td>KEEPER</td>
+                  <td class="w10">:</td>
+                  <td class="">{{ model.keeper }}</td>
+                  <td class="">TYPE</td>
+                  <td class="">{{ model.keeper_type }}</td>
+                  <td class="">WIDTH</td>
+                  <td class="">{{ model.keeper_width }}</td>
+                  <td class="">mm.</td>
+                  <td class="">STITCH&nbsp;# {{ model.keeper_stitch }}</td>
+                </tr>
+                <tr class="underline">
+                  <td>KEEPER</td>
+                  <td class="w10">:</td>
+                  <td class="">{{ model.keeper2 }}</td>
+                  <td class="">TYPE</td>
+                  <td class="">{{ model.keeper2_type }}</td>
+                  <td class="">WIDTH</td>
+                  <td class="">{{ model.keeper2_width }}</td>
+                  <td class="">mm.</td>
+                  <td class="">STITCH&nbsp;# {{ model.keeper2_stitch }}</td>
+                </tr>
+                <tr class="underline">
+                  <td>PUNCH&nbsp;HOLE </td>
+                  <td colspan="2">KENSAKI : </td>
+                  <td class="">{{ model.punch_hole_kensaki }}</td>
+                  <td class="">DIA.</td>
+                  <td class="">{{ model.punch_hole_dia }}</td>
+                  <td class="">mm.</td>
+                  <td class=""></td>
+                  <td class=""></td>
+                </tr>
+                <tr class="underline">
+                  <td></td>
+                  <td class="w10"></td>
+                  <td class="">BIJOW:WIDTH</td>
+                  <td class="">{{ model.bijow_width }}</td>
+                  <td class="">mm.</td>
+                  <td class="">LENGTH</td>
+                  <td class="">{{ model.punch_hole_length }}</td>
+                  <td class="">mm.</td>
+                  <td class=""></td>
+                </tr>
+                <tr class="underline">
+                  <td>SIZE/TIP</td>
+                  <td class="w10">:</td>
+                  <td class="" colspan="4">{{ model.size_tip.name }}</td>
+                  <td class="" colspan="3">{{ model.size_tip.descript }}</td>
+                </tr>
+                <tr class="underline">
+                  <td>LENGTH</td>
+                  <td class="w10">:</td>
+                  <td class="" colspan="3">{{ model.model_length.name }}</td>
+                  <td class="" colspan="3">{{ model.model_length.descript }}</td>
+                  <td class="">mm.</td>
+                </tr>
+                <tr class="underline">
+                  <td>TOTAL&nbsp;THICKNESS</td>
+                  <td class="w10">:</td>
+                  <td class="" colspan="3">{{ model.total_thickness.name }}</td>
+                  <td class="" colspan="3">{{ model.total_thickness.rate }}</td>
+                  <td class="">mm.</td>
+                </tr>
+                <tr class="underline">
+                  <td>KANMOTO&nbsp;THICKNESS</td>
+                  <td class="w10">:</td>
+                  <td class="">{{ model.kanmoto_thickness }}&nbsp;mm.</td>
+                  <td class="" colspan="5">EDGE THICKNESS&nbsp;:&nbsp;{{ model.edge_thickness }}</td>
+                  <td class="">mm.</td>
+                </tr>
+                <tr class="underline">
+                  <td>PLASTIC&nbsp;PART</td>
+                  <td class="w10">:</td>
+                  <td class="" colspan="4">{{ model.matal_part.name }}</td>
+                  <td class="" colspan="3">{{ model.matal_part.descript }}</td>
+                </tr>
+                <tr class="underline">
+                  <td>METAL&nbsp;KEEPER</td>
+                  <td class="w10">:</td>
+                  <td class="" colspan="4">{{ model.metal_keeper.name }}</td>
+                  <td class="" colspan="3">{{ model.metal_keeper.descript }}</td>
+                </tr>
+                <tr class="underline">
+                  <td>END&nbsp;PIECE&nbsp;(INSIDE)</td>
+                  <td class="w10">:</td>
+                  <td class="" colspan="4">{{ model.end_piece_inside.name }}</td>
+                  <td class="" colspan="3">{{ model.end_piece_inside.descript }}</td>
+                </tr>
+                <tr class="underline">
+                  <td>END&nbsp;PIECE&nbsp;(OUTSIDE)</td>
+                  <td class="w10">:</td>
+                  <td class="" colspan="4">{{ model.end_piece_outside.name }}</td>
+                  <td class="" colspan="3">{{ model.end_piece_outside.descript }}</td>
+                </tr>
+                <tr class="underline">
+                  <td>EYELET</td>
+                  <td class="w10">:</td>
+                  <td class="" colspan="3">{{ model.eyelet.name }} {{ model.eyelet.descript }}</td>
+                  <td class="" colspan="2">1QN : {{ model.magic_qn }}</td>
+                  <td class="" colspan="2">2QM : {{ model.magic_qm }}</td>
+                </tr>
+                <tr class="underline">
+                  <td>SPRING&nbsp;BAR </td>
+                  <td class="w10">:</td>
+                  <td class="" colspan="4">{{ model.spring_bar.name }}</td>
+                  <td class="" colspan="3">{{ model.spring_bar.descript }}</td>
+                </tr>
+                <tr class="underline">
+                  <td>CYLINDER&nbsp;(SS PIPE)</td>
+                  <td class="w10">:</td>
+                  <td class="" colspan="4">{{ model.cylinder.name }}</td>
+                  <td class="" colspan="3">{{ model.cylinder.descript }}</td>
+                </tr>
+                <tr class="underline">
+                  <td>STAMPING</td>
+                  <td class="w10">:</td>
+                  <td class="" colspan="4">{{ model.stamping.name }}</td>
+                  <td class="" colspan="3">{{ model.stamping.descript }}</td>
+                </tr>
+                <tr class="underline">
+                  <td>REMARK</td>
+                  <td class="w10">:</td>
+                  <td class="" colspan="7" [innerHTML]="model.remarks">{{ model.remarks }}</td>
+                </tr>
+              </table>
+
+      </div>
+    </div>
+  </div>  

@@ -39,8 +39,10 @@ import { AppMemberModule } from './member/app-member.module';
 import { SelectallDirective } from './directive/selectall.directive';
 import { SpecModelModule } from './spec-model/spec-model.module';
 import { SearchComponent } from './shared/search.component';
-
-
+import { SheetModuleModule } from './spec-sheet/sheet-module.module';
+import { ReportComponent } from './report/report.component';
+import { MaterialsModule } from './materials/materials.module';
+import { MaterialsService } from './services/materials.service';
 
 @NgModule({
   declarations: [
@@ -61,6 +63,7 @@ import { SearchComponent } from './shared/search.component';
     SidebarPurchaseComponent,
     SidebarExportComponent,
     SearchComponent,
+    ReportComponent
   ],
   imports: [
     BrowserModule,
@@ -75,7 +78,9 @@ import { SearchComponent } from './shared/search.component';
     AppUserModule,
     AppMemberModule,
     SpecModelModule,
-    LoadingModule ,
+    LoadingModule,
+    SheetModuleModule,
+    MaterialsModule,
   ],
   providers: [
     {
@@ -84,7 +89,8 @@ import { SearchComponent } from './shared/search.component';
     },
     UsersService,
     AuthService,
-    SpeceService
+    SpeceService,
+    MaterialsService
   ],
   bootstrap: [AppComponent]
 })

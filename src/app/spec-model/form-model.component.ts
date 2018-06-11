@@ -18,10 +18,15 @@ export class FormModelComponent implements OnInit {
   bsValue: Date = new Date();
   searchField: FormControl; 
   searches: string[] = []; 
-  frmModel:FormGroup;
   specModel:any=[];
+  terms:string[] = [];
+  frmModel:FormGroup;
+  fields:any=[];
   specId:number = 0;
-  status: { isopen: boolean } = { isopen: false };
+  statusfeild:any;
+  magic_qm:boolean = false;
+  magic_qn:boolean = false;
+  status: { isopen: boolean,fieldopen:boolean } = { isopen: false ,fieldopen:false};
   constructor( 
     private frm:FormBuilder, 
     private auth:AuthService,
@@ -39,6 +44,17 @@ export class FormModelComponent implements OnInit {
   }
 
   
+
+  subEyelet(){
+    return new FormGroup({
+        id : new FormControl(''),
+        name : new FormControl(''),
+        descript: new FormControl(''),
+        rate: new FormControl(''),
+        magic_qm: new FormControl(''),
+        magic_qn: new FormControl
+    });
+  }
 
   subNode(){
     return new FormGroup({
@@ -66,6 +82,19 @@ export class FormModelComponent implements OnInit {
         'rate' : (node.rate !== undefined && node.rate !== null && node.rate !== '') ? node.rate : ''
       }
     }
+  }
+
+  setvalEyelet(node){
+    console.log('node result => ', JSON.stringify(node.eyelet) ,' = ', node.eyelet );
+    
+      return {
+        'id' : (node.eyelet !== null && (node.eyelet.id !== undefined && node.eyelet.id !== null && node.eyelet.id !== '' ))? node.eyelet.id : '',
+        'name' : (node.eyelet !== null && (node.eyelet.name !== undefined && node.eyelet.name !== null && node.eyelet.name !== '' ))? node.eyelet.name : '',
+        'descript' : (node.eyelet !== null && (node.eyelet.descript !== undefined && node.eyelet.descript !== null && node.eyelet.descript !== '')) ? node.eyelet.descript : '',
+        'rate' : (node.eyelet !== null && (node.eyelet.rate !== undefined && node.eyelet.rate !== null && node.eyelet.rate !== '')) ? node.eyelet.rate : '',
+        'magic_qm' : node.magic_qm,
+        'magic_qn' : node.magic_qn
+      }
   }
 
   createForm(){
@@ -111,7 +140,7 @@ export class FormModelComponent implements OnInit {
       'metal_keeper' :  this.subNode() ,
       'end_piece_inside' :  this.subNode() ,
       'end_piece_outside' :  this.subNode() ,
-      'eyelet' :  this.subNode() ,
+      'eyelet' :  this.subEyelet() ,
       'spring_bar' :  this.subNode() ,
       'cylinder' :  this.subNode() ,
       'stamping' :  this.subNode() ,
@@ -133,6 +162,7 @@ export class FormModelComponent implements OnInit {
           console.log('response => ', res );
           this.specModel = res['data'];
           this.onSpec(0);
+
         },
       (err)=> { console.log( err )
       });
@@ -164,6 +194,37 @@ export class FormModelComponent implements OnInit {
           this.status.isopen = false;
         }
   }
+
+  fieldSearch(fields=''){
+    let term    =   this.frmModel.get( fields ).get('name').value;
+    console.log('field search ',fields, ' | ', term );
+    if( term.length >= 1 && term !== null){
+    this.spec.onField(fields,term).subscribe((res)=>{
+      let data = res['data'];
+      this.fields = data;
+      this.terms[fields] = [];
+      for(let x = 0; x < data.length; x++){
+        let field = data[x][fields];
+        this.terms[fields].push(field['name'] + '  ' + field['descript'] );
+      }
+    },
+    (err)=>{
+      alert('Error!!'+ JSON.stringify(err) );
+    });
+    }else{
+      this.terms[fields] = [];
+    }
+  }
+
+
+  onFields(fields,idx){
+    let item = this.fields[idx][fields];
+    console.log('fields => ', fields ,' | idx => ', idx,' item => ', item);
+    this.frmModel.get(fields).setValue( this.setvalNode(item) );
+    this.status.fieldopen = false;
+  }
+
+
   onSpec(idx){
           
           let item = this.specModel[idx];
@@ -205,7 +266,7 @@ export class FormModelComponent implements OnInit {
           this.frmModel.get('metal_keeper').setValue( this.setvalNode(item.metal_keeper) );
           this.frmModel.get('end_piece_inside').setValue( this.setvalNode(item.end_piece_inside) );
           this.frmModel.get('end_piece_outside').setValue( this.setvalNode(item.end_piece_outside) );
-          this.frmModel.get('eyelet').setValue( this.setvalNode(item.eyelet) );
+          this.frmModel.get('eyelet').setValue( this.setvalEyelet(item) );
           this.frmModel.get('spring_bar').setValue( this.setvalNode(item.spring_bar) );
           this.frmModel.get('cylinder').setValue( this.setvalNode(item.cylinder) );
           this.frmModel.get('stamping').setValue( this.setvalNode(item.stamping) );

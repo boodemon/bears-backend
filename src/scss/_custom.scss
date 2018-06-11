@@ -1,10 +1,12 @@
 // Here you can add other styles
-table{
+table,.table{
     thead{
         th{
             text-align: center;
             background:#29363d;
             color:#fff;
+            border:1px solid #fff;
+            padding:4px;
         }
         .multicheck{
             width:40px;
@@ -14,15 +16,17 @@ table{
         tr{
             .action{
                 text-align: right;
-                width: 120px;
+                width: 140px;
                 a{
-                    font-size: 16px;
-                    padding:2px;
+                    font-size: 1.3em;
+                    padding:4px;
                     cursor: pointer;
+                    text-decoration: none;
                 }
             }
             td{
-                
+                padding:4px;
+                vertical-align: middle;
             }
         }
     }
@@ -31,4 +35,115 @@ table{
     position: absolute;
     right: 60px;
     top: 10px;
+}
+.page-link, .pagination-datatables{
+    li{ 
+        a{
+            cursor: pointer;
+            color:#20a8d8;
+            text-decoration: none;
+            cursor: pointer;
+        }
+    }
+}  
+.pagination{ 
+    li{ 
+        a{
+            cursor: pointer;
+            color:#20a8d8;
+            text-decoration: none;
+        }
+    }
+}
+/* :: FORM SHEET */
+.table-form{
+    thead{
+        tr{
+            th{
+                font-size: .8em;
+                padding:4px;
+                vertical-align: middle;
+            }
+        }
+    }
+    tbody{
+        tr{
+            td{
+                border:1px solid #000;
+                padding:4px;
+                font-size: .85em;
+
+                input[type="text"]{
+                    padding:4px;
+                }
+                button {
+                    padding:4px 10px;
+                }
+            }
+            .field-action{
+                min-width: 60px;
+                a{
+                    padding:4px;
+                    font-size:1.2em;
+                    text-decoration: none;
+                    cursor: pointer;
+                }
+            }
+        }
+    }
+}
+/* :: END FORM SHEET */
+.top-title{
+    text-align: center;
+}
+@media print{
+    .hide-print{
+        display:none;
+    }
+    .table-form{
+        thead{
+            tr{
+                th{
+                    color:#000000;
+                }
+            }
+        }
+    }
+    .fadeIn,.animated,.card-body,.app-body,.card{
+        margin:0 !important;
+        padding:0 !important;
+    }
+}
+.icon-status{
+    font-size:1.4em;
+}
+.upper{text-transform: uppercase;}
+.w10{width:10px !important; text-align: center;}
+.w20{width:20px !important;}
+.w60{width:60px !important;}
+.w80{width:80px !important;}
+.w100{width:100px !important;}
+.w120{width:120px !important;}
+.w140{width:140px !important;}
+.w160{width:160px !important;}
+.w180{width:180px !important;}
+.w220{width:220px !important;}
+.w320{width:320px !important;}
+.w420{width:420px !important;}
+
+.w10p{ width:10% !important;}
+.w25p{ width:25% !important;}
+.w50p{ width:50% !important;}
+.w75p{ width:75% !important;}
+.w100p{ width:100% !important;}
+/* :: BORDER STYLE ::*/
+.noboder{
+    border:0 !important;
+}
+.double-line{
+    border-bottom: 4px double #000 !important;
+
+}
+.hide{
+    display: none;
 }
