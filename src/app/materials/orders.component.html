@@ -6,8 +6,10 @@
             <div class="pull-right">
                 <button type="button"  [routerLink]="['/materials/orders/form']" class="btn btn-sm btn-primary">
                   <i class="fa fa-plus"></i> New</button>
+                <!--
                 <button type="button"  (click)="onFilter(template)" class="btn btn-sm btn-info">
                   <i class="fa fa-search"></i> Filtter</button>
+                -->
                 <button type="button" (click)="multiDelete()" class="btn btn-sm btn-danger">
                   <i class="fa fa-trash"></i> Delete</button>
             </div>
@@ -15,7 +17,50 @@
 
         <div class="card-body">
             <div class="table-responsive">
-                
+                <table class="table table-sm table-data table-bordered">
+                    <thead>
+                      <tr>
+                        <th class="multicheck">
+                          <input type="checkbox" [(ngModel)]="selectAll" (change)="onSelectAll()" />
+                        </th>
+                        <th>CREATE</th>
+                        <th class="w120">DATA</th>
+                        <th>USER</th>
+                        <th class="w120">STATUS</th>
+                        <th class="w120">Action</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let row of rows; let i=index;">
+                            <td class="text-center">
+                                <input type="checkbox" [value]="row.id" [(ngModel)]="row.selected" (change)="checkIfAllSelected()">
+                            </td>
+                            <td>{{ row.created_at }}</td>
+                            <td class="text-center">{{  row.detail }}</td>
+                            <td>{{  row.user.mb_name }}</td>
+                            <td class="text-center">
+                                    <a [routerLink]="['/materials/orders/form/'+ row.id]" class="text-danger" *ngIf="row.status!=1" ><i class="text-danger fa fa-circle fa-2x"></i></a>
+                                    <i class="text-success fa fa-circle  fa-2x" *ngIf="row.status==1"></i>
+            
+                            </td>
+                            <td class="action">
+                                <a tooltip="Print this Materials Order" class="text-dark"  [routerLink]="['/materials/orders/form/' + row.id +'/print']">
+                                    <i class="fa fa-print"></i>
+                                  </a>
+                                  <a tooltip="Export to Materials Order" class="text-success" (click)="onExport(row.id)">
+                                    <i class="fa fa-file-excel-o"></i>
+                                  </a>
+                    
+                                  <a tooltip="Edit" class="text-primary"  [routerLink]="['/materials/orders/form/'+ row.id]">
+                                    <i class="icon-note"></i>
+                                  </a>
+                                  <a tooltip="Delete" class="text-danger" (click)="onDelete(row.id)">
+                                    <i class="icon-trash"></i>
+                                  </a>
+                            </td>
+                        </tr>
+                    </tbody>
+                    </table>
             </div>
         </div>
     </div>

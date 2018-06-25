@@ -14,22 +14,135 @@
       </div>
 
       <div class="card-body">
+          <form (ngSubmit)="onSubmit()" class="hide-print">
+              <fieldset  class="{{ isActive === true ? 'hide':'' }}">
+                <div class="form-group row">
+                    <label class="col-md-2">FOR ORDER</label>
+                    <div class="col-md-2">
+                      <input type="text" class="form-control" name="delivery" [(ngModel)]="newRow.delivery" #dp="bsDatepicker" bsDatepicker [(bsValue)]="bsValue" [bsConfig]="{ dateInputFormat: 'YYYY-MM-DD' }">
+                    </div>
+                </div>
+  
+                <div class="form-group row">
+                    <label class="col-md-2">FOR MODEL</label>
+                    <div class="col-md-4 btn-group"  dropdown #dropdown="bs-dropdown">
+                      <input  class="form-control" autocomplete="off"  type="text" id="input-material" dropdownToggle (keyup)="onSearch('spec',$event.target.value)" (focus)="onSearch('spec',$event.target.value)"  name="spec_name" [(ngModel)]="newRow.spec_name">
+                        <ul *dropdownMenu class="dropdown-menu" role="menu" aria-labelledby="input-material">
+                            <li *ngFor="let search of searches; let i = index;" role="menuitem" class="dropdown-item"  (click)="setField('newRow',i,0)">{{ search }}</li>
+                          </ul>
+                    </div>
+                    <div class="col-md-3">
+                      {{ newRow.spec_descript }}
+                    </div>
+                </div>              
+                
+                <div class="form-group row">
+                    <label class="col-md-2">ORDER</label>
+                    <div class="col-md-4 btn-group"  dropdown #dropdown="bs-dropdown">
+                      <input type="text" autocomplete="off" class="form-control" id="input-order" dropdownToggle (keyup)="onSearch('order',$event.target.value)"  (focus)="onSearch('po',$event.target.value)" name="order" [(ngModel)]="newRow.order">
+                      <ul *dropdownMenu class="dropdown-menu" role="menu" aria-labelledby="input-order">
+                        <li *ngFor="let search of searches; let i = index;" role="menuitem" class="dropdown-item"  (click)="setField('newRow',i,0)">{{ search }}</li>
+                      </ul>
+                    </div>
+                </div>
+  
+                <div class="form-group row">
+                    <label class="col-md-2">KMG DATE REQUIRED</label>
+                    <div class="col-md-2">
+                      <input type="number" class="form-control" name="quantity" [(ngModel)]="newRow.quantity">
+                    </div>
+                </div>
+  
+                <div class="form-group row">
+                    <label class="col-md-2">CUSTOMER DATE REQUIRED</label>
+                    <div class="col-md-2">
+                      <input type="number" class="form-control" name="quantity" [(ngModel)]="newRow.quantity">
+                    </div>
+                </div>
+  
+                <div class="form-group row">
+                    <label class="col-md-2">QUANTITY</label>
+                    <div class="col-md-2">
+                      <input type="number" class="form-control" name="quantity" [(ngModel)]="newRow.quantity">
+                    </div>
+                </div>
+  
+                <div class="form-group row">
+                    <label class="col-md-2">UNIT PRICE (KH$)</label>
+                    <div class="col-md-2">
+                      <input type="number" class="form-control" name="quantity" [(ngModel)]="newRow.quantity">
+                    </div>
+                </div>
+  
+                <div class="form-group row">
+                    <label class="col-md-2">IMPORT INVOICE</label>
+                    <div class="col-md-2">
+                      <input type="number" class="form-control" name="quantity" [(ngModel)]="newRow.quantity">
+                    </div>
+                </div>
+  
+                <div class="form-group row">
+                    <label class="col-md-2">DATE</label>
+                    <div class="col-md-2">
+                      <input type="number" class="form-control" name="quantity" [(ngModel)]="newRow.quantity">
+                    </div>
+                </div>
+  
+                <div class="form-group row">
+                    <label class="col-md-2">BALANCE QUANTITY</label>
+                    <div class="col-md-2">
+                      <input type="number" class="form-control" name="quantity" [(ngModel)]="newRow.quantity">
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label class="col-md-2"></label>
+                    <div class="col-md-3">
+                      <button class="btn btn-success" type="button" (click)="addRow()" *ngIf="isEdit==false">
+                        <i class="fa fa-plus"></i> ADD
+                      </button>
+                      <button class="btn btn-primary" type="button" (click)="updateRow()" *ngIf="isEdit==true">
+                        <i class="fa fa-plus"></i> UPDATE
+                      </button>
+                      <button class="btn btn-outline-dark" type="button" (click)="clearRow()">
+                        <i class="fa fa-repeat"></i> CLEAR
+                      </button>
+                    </div>
+                </div>
+            <hr>
+            </fieldset>
+            <div class="row">
+                <div class="col-md-10">
+                </div>
+                <div class="col-md-1 text-right">
+                  <label class="switch switch-text switch-pill switch-success-outline-alt pull-right">
+                    <input type="checkbox" class="switch-input" name="head-status" [(ngModel)]="isActive">
+                    <span class="switch-label" data-on="Yes" data-off="No"></span>
+                    <span class="switch-handle"></span>
+                  </label>
+                </div>
+                <div class="col-md-1 text-right">
+                    <button type="submit" class="btn btn-primary pull-right">
+                        <i class="fa fa-save"></i> {{ orderId == 0 ? 'SAVE' : 'UPDATE' }}
+                    </button>
+                </div>  
+            </div>
+          </form>   
+
           <div class="table-responsive">
               <table class="table table-berdered">
                 <thead>
                   <tr>
-                    <th rowspan="2">FOR ORDER</th>
-                    <th rowspan="2">FOR MODEL</th>
-                    <th rowspan="2">DESCRIPTION</th>
-                    <th rowspan="2">KMG DATE REQUIRED</th>
-                    <th rowspan="2">CUSTOMER DATE REQUIRED</th>
-                    <th colspan="2">QUANTITY</th>
-                    <th rowspan="2">UNIT PRICE (KH$)</th>
-                    <th rowspan="2">BALANCE QUANTITY</th>
-                    <th rowspan="2">INV. NO.</th>
-                  <tr>
-                    <th>FORCAST</th>
-                    <th>CONFIRM</th>
+                    <th>FOR ORDER</th>
+                    <th>FOR MODEL</th>
+                    <th>DESCRIPTION</th>
+                    <th>KMG DATE REQUIRED</th>
+                    <th>CUSTOMER DATE REQUIRED</th>
+                    <th>QUANTITY</th>
+                    <th>UNIT PRICE (KH$)</th>
+                    <th>IMPORT INVOICE</th>
+                    <th>DATE</th>
+                    <th>BALANCE QUANTITY</th>
                   </tr>
                 </thead>
               </table>

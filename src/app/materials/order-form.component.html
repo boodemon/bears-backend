@@ -1,34 +1,32 @@
 <div class="animated fadeIn">
     <div class="card">
-        <div class="card-header">
+        <div class="card-header hide-print">
             <i class="fa fa-file-text-o"></i> Materials orders form
             <span *ngIf="filter===true">[ Filter : {{ field['name'] }} = {{ keyword }} ]</span>
             <div class="pull-right">
                 <button type="button" (click)="onExport()" class="btn btn-sm btn-outline-success">
                   <i class="fa fa-file-excel-o"></i> Export</button>
-                <button type="button" (click)="goPrint()" class="btn btn-sm btn-outline-dark">
+                <button type="button" (click)="onPrint()" class="btn btn-sm btn-outline-dark">
                   <i class="icon-printer"></i> Print</button>
                 <button type="button" (click)="goBack()" class="btn btn-sm btn-outline-dark">
                   <i class="icon-arrow-left"></i> Back</button>
             </div>
         </div>
 
-        <div class="card-body">
-          <form (ngSubmit)="onSubmit()">
-            <fieldset  class="">
+        <div class="card-body area-print">
+          <form (ngSubmit)="onSubmit()" class="hide-print">
+            <fieldset  class="{{ isActive === true ? 'hide':'' }}">
               <div class="form-group row">
-                  <label class="col-md-2">P.O. NO</label>
-                  <div class="col-md-4 btn-group"  dropdown #dropdown="bs-dropdown">
-                    <input type="text" class="form-control" id="input-po" dropdownToggle (keyup)="onSearch('po',$event.target.value)"  (focus)="onSearch('po',$event.target.value)" name="po_no">
-                    <ul *dropdownMenu class="dropdown-menu" role="menu" aria-labelledby="input-po">
-                      <li *ngFor="let search of searches; let i = index;" role="menuitem" class="dropdown-item"  (click)="setField('newRow',i,0)">{{ search }}</li>
-                    </ul>
+                  <label class="col-md-2">DELIVERY</label>
+                  <div class="col-md-2">
+                    <input type="text" class="form-control" name="delivery" [(ngModel)]="newRow.delivery" #dp="bsDatepicker" bsDatepicker [(bsValue)]="bsValue" [bsConfig]="{ dateInputFormat: 'YYYY-MM-DD' }">
                   </div>
               </div>
+
               <div class="form-group row">
-                  <label class="col-md-2">SPEC MODEL NO</label>
+                  <label class="col-md-2">MODEL</label>
                   <div class="col-md-4 btn-group"  dropdown #dropdown="bs-dropdown">
-                    <input  class="form-control"  type="text" id="input-material" dropdownToggle (keyup)="onSearch('spec',$event.target.value)" (focus)="onSearch('spec',$event.target.value)"  name="spec_name">
+                    <input  class="form-control" autocomplete="off"  type="text" id="input-material" dropdownToggle (keyup)="onSearch('spec',$event.target.value)" (focus)="onSearch('spec',$event.target.value)"  name="spec_name" [(ngModel)]="newRow.spec_name">
                       <ul *dropdownMenu class="dropdown-menu" role="menu" aria-labelledby="input-material">
                           <li *ngFor="let search of searches; let i = index;" role="menuitem" class="dropdown-item"  (click)="setField('newRow',i,0)">{{ search }}</li>
                         </ul>
@@ -36,17 +34,23 @@
                   <div class="col-md-3">
                     {{ newRow.spec_descript }}
                   </div>
-              </div>
+              </div>              
+              
               <div class="form-group row">
-                  <label class="col-md-2">DELIVERY</label>
-                  <div class="col-md-2">
-                    <input type="text" class="form-control" name="delivery" [(ngModel)]="newRow.delivery" #dp="bsDatepicker" bsDatepicker [(bsValue)]="bsValue" [bsConfig]="{ dateInputFormat: 'YYYY-MM-DD' }">
+                  <label class="col-md-2">ORDER</label>
+                  <div class="col-md-4 btn-group"  dropdown #dropdown="bs-dropdown">
+                    <input type="text" autocomplete="off" class="form-control" id="input-order" dropdownToggle (keyup)="onSearch('order',$event.target.value)"  (focus)="onSearch('po',$event.target.value)" name="order" [(ngModel)]="newRow.order">
+                    <ul *dropdownMenu class="dropdown-menu" role="menu" aria-labelledby="input-order">
+                      <li *ngFor="let search of searches; let i = index;" role="menuitem" class="dropdown-item"  (click)="setField('newRow',i,0)">{{ search }}</li>
+                    </ul>
                   </div>
               </div>
+
+
               <div class="form-group row">
                   <label class="col-md-2">QUANTITY</label>
                   <div class="col-md-2">
-                    <input type="number" class="form-control" name="quant">
+                    <input type="number" class="form-control" name="quantity" [(ngModel)]="newRow.quantity">
                   </div>
               </div>
               <div class="form-group row">
@@ -58,16 +62,19 @@
                     <button class="btn btn-primary" type="button" (click)="updateRow()" *ngIf="isEdit==true">
                       <i class="fa fa-plus"></i> UPDATE
                     </button>
+                    <button class="btn btn-outline-dark" type="button" (click)="clearRow()">
+                      <i class="fa fa-repeat"></i> CLEAR
+                    </button>
                   </div>
               </div>
-          </fieldset>
           <hr>
+          </fieldset>
           <div class="row">
               <div class="col-md-10">
               </div>
               <div class="col-md-1 text-right">
                 <label class="switch switch-text switch-pill switch-success-outline-alt pull-right">
-                  <input type="checkbox" class="switch-input" name="head-status" [(ngModel)]="head.status">
+                  <input type="checkbox" class="switch-input" name="head-status" [(ngModel)]="isActive">
                   <span class="switch-label" data-on="Yes" data-off="No"></span>
                   <span class="switch-handle"></span>
                 </label>
@@ -80,26 +87,58 @@
           </div>
           </form>      
           <div class="table-responsive">
-                <table class="table table-berdered">
+                <table class="table table-berdered table-form">
                   <thead>
-                      <th >DELIVERY</th>
-                      <th >MODEL</th>
-                      <th >ORDER</th>
+                      <th colspan="2" *ngIf="!isActive">DELIVERY</th>
+                      <th *ngIf="isActive">DELIVERY</th>
+                      <th class="w120">MODEL</th>
+                      <th class="w120">ORDER</th>
                       <th >TYPE</th>
                       <th >MATERIAL</th>
                       <th >COLOR</th>
                       <th >SIZE</th>
                       <th >QTY</th>
-                      <th>LINING</th>
+                      <th >LINING</th>
                       <th >FILLER</th>
                       <th >METAL KEEPER</th>
                       <th >SPRING BAR</th>
                       <th >SS PIPE</th>
-                      <th >END PIECE INSIDE</th>
-                      <th >END PIECE OUTSIDE</th>
+                      <th class="w120">END PIECE INSIDE</th>
+                      <th class="w120">END PIECE OUTSIDE</th>
                       <th >EYELET</th>
-                      <th >BUCKLE</th>
+                      <th class="w220">BUCKLE</th>
                   </thead>
+                  <tbody>
+                    <tr *ngFor="let field of fields; let i=index;">
+                      <td class="field-action" *ngIf="!isActive">
+                        <a (click)="removeRow(i)" class="text-danger"><i class="fa fa-minus"></i></a>
+                        <a (click)="editRow(i)" class="text-primary"><i class="fa fa-edit"></i></a>
+                      </td>
+                      <td class="w120">                      
+                          {{ field.delivery | date:'dd MMM yyyy' }}
+                      </td>
+                      <td>                      
+                          {{ field.spec_name }}
+                      </td>
+                      <td>                      
+                          {{ field.order }}
+                      </td>
+                      <td>{{ field.type }}</td>
+                      <td>{{ field.material }}</td>
+                      <td>{{ field.color }}</td>
+                      <td>{{ field.size }}</td>
+                      <td class="text-center">{{ field.quantity }}</td>
+                      <td>{{ field.lining }}</td>
+                      <td>{{ field.filler }}</td>
+                      <td>{{ field.metal_keeper }}</td>
+                      <td>{{ field.spring_bar }}</td>
+                      <td>{{ field.cylinder }}</td>
+                      <td>{{ field.end_piece_inside }}</td>
+                      <td>{{ field.end_piece_outside }}</td>
+                      <td>{{ field.eyelet }}</td>
+                      <td>{{ field.buckle }}</td>
+                    </tr>
+                  </tbody>
                 </table>
             </div>
         </div>

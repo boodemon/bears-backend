@@ -15,8 +15,31 @@
 
       <div class="card-body">
           <div class="table-responsive">
-              
-          </div>
+            <table class="table table-sm table-data table-bordered">
+              <thead>
+                <tr>
+                  <th class="multicheck">
+                    <input type="checkbox" [(ngModel)]="selectAll" (change)="onSelectAll()" />
+                  </th>
+                  <th class="w120">DATE</th>
+                  <th>NO.</th>
+                  <th>TO</th>
+                  <th class="w120">STATUS</th>
+                  <th class="w120">Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+              </tbody>
+            </table>
+    </div>
       </div>
   </div>
 </div>

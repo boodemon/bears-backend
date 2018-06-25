@@ -25,4 +25,19 @@ export class MaterialsService {
   onSearch(type,term){
       return this.http.get( this.api + '-search/' + type + '?term=' + term  + '&' + this.token )
   }
+
+  onStore(param){
+    return this.http.post( this.api,param );
+  }
+
+  onUpdate(id, param){
+    return this.http.post( this.api + '/' + id, param );
+  }
+
+  onDestroy(id,type){
+    return this.http.post( this.api + '/' + id ,{_method:'DELETE',token:this.auth.token(),type:type});
+  }
+  onExport(id){
+    return this.http.get( this.api + '/' + id + '/edit?' + this.token )
+  }
 }
