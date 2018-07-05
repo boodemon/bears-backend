@@ -22,8 +22,12 @@ export class MaterialsService {
     return this.http.get( this.api + '/' + id + '?' + this.token )
   }
 
-  onSearch(type,term){
-      return this.http.get( this.api + '-search/' + type + '?term=' + term  + '&' + this.token )
+  onSearch(type,term,status){
+      return this.http.get( this.api + '-search/' + type + '?term=' + term  + '&' + this.token + '&status=' + status  )
+  }
+
+  searchPo(term,status){
+    return this.http.get( this.api + '-search-po' + '?term=' + term  + '&' + this.token +'&status=' + status )
   }
 
   onStore(param){

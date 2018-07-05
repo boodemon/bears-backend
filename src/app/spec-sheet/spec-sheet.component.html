@@ -54,8 +54,8 @@
                     <td class="upper">{{ row.po_staff }}</td>
                     <td class="text-center">{{ row.created_at.date | date: 'MMM dd, yyyy' }}</td>
                     <td class="text-center icon-status">
-                        <a [routerLink]="['/spec-sheet/form-' + row.form_type  +'/'+ row.id]" class="text-danger" *ngIf="row.po_status!=2" ><i class="text-danger fa fa-circle"></i></a>
-                        <i class="text-success fa fa-circle" *ngIf="row.po_status==2"></i>
+                        <a [routerLink]="['/spec-sheet/form-' + row.form_type  +'/'+ row.id]" class="text-danger" *ngIf="row.po_status<2" ><i class="text-danger fa fa-circle"></i></a>
+                        <i class="text-success fa fa-circle" *ngIf="row.po_status>=2"></i>
   
                     </td>
                     <td class="action w160">

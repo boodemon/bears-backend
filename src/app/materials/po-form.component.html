@@ -1,12 +1,12 @@
 <div class="animated fadeIn">
   <div class="card">
-      <div class="card-header">
+      <div class="card-header print-hide">
           <i class="fa fa-file-text-o"></i> Materials orders form
           <span *ngIf="filter===true">[ Filter : {{ field['name'] }} = {{ keyword }} ]</span>
           <div class="pull-right">
               <button type="button" (click)="onExport()" class="btn btn-sm btn-outline-success">
                 <i class="fa fa-file-excel-o"></i> Export</button>
-              <button type="button" (click)="goPrint()" class="btn btn-sm btn-outline-dark">
+              <button type="button" (click)="onPrint()" class="btn btn-sm btn-outline-dark">
                 <i class="fa fa-printer"></i> Print</button>
               <button type="button" (click)="goBack()" class="btn btn-sm btn-outline-dark">
                 <i class="icon-arrow-left"></i> Back</button>
@@ -16,85 +16,136 @@
       <div class="card-body">
           <form (ngSubmit)="onSubmit()" class="hide-print">
               <fieldset  class="{{ isActive === true ? 'hide':'' }}">
+                  <div class="form-group row">
+                      <label class="col-md-1">DATE</label>
+                      <div class="col-md-2">
+                          <input  class="form-control" autocomplete="off"  type="text" id="head-dated"  name="date" [(ngModel)]="headField.dated_at"  bsDatepicker [bsConfig]="{ dateInputFormat: 'YYYY-MM-DD' }">
+                      </div>                    
+                      <label class="col-md-1 text-right">TO</label>
+                      <div class="col-md-2">
+                          <input  class="form-control" autocomplete="off"  type="text" id="head-to"  name="to" [(ngModel)]="headField.to">
+                      </div>
+                      <label class="col-md-1 text-right">NO.</label>
+                      <div class="col-md-2">
+                        <input  class="form-control" autocomplete="off"  type="text" id="head-no"  name="no" [(ngModel)]="headField.no">
+                      </div>
+                  </div>                
+                  <hr/>
                 <div class="form-group row">
-                    <label class="col-md-2">FOR ORDER</label>
-                    <div class="col-md-2">
-                      <input type="text" class="form-control" name="delivery" [(ngModel)]="newRow.delivery" #dp="bsDatepicker" bsDatepicker [(bsValue)]="bsValue" [bsConfig]="{ dateInputFormat: 'YYYY-MM-DD' }">
-                    </div>
-                </div>
-  
-                <div class="form-group row">
-                    <label class="col-md-2">FOR MODEL</label>
-                    <div class="col-md-4 btn-group"  dropdown #dropdown="bs-dropdown">
-                      <input  class="form-control" autocomplete="off"  type="text" id="input-material" dropdownToggle (keyup)="onSearch('spec',$event.target.value)" (focus)="onSearch('spec',$event.target.value)"  name="spec_name" [(ngModel)]="newRow.spec_name">
-                        <ul *dropdownMenu class="dropdown-menu" role="menu" aria-labelledby="input-material">
-                            <li *ngFor="let search of searches; let i = index;" role="menuitem" class="dropdown-item"  (click)="setField('newRow',i,0)">{{ search }}</li>
-                          </ul>
-                    </div>
-                    <div class="col-md-3">
-                      {{ newRow.spec_descript }}
-                    </div>
-                </div>              
-                
-                <div class="form-group row">
-                    <label class="col-md-2">ORDER</label>
-                    <div class="col-md-4 btn-group"  dropdown #dropdown="bs-dropdown">
-                      <input type="text" autocomplete="off" class="form-control" id="input-order" dropdownToggle (keyup)="onSearch('order',$event.target.value)"  (focus)="onSearch('po',$event.target.value)" name="order" [(ngModel)]="newRow.order">
-                      <ul *dropdownMenu class="dropdown-menu" role="menu" aria-labelledby="input-order">
-                        <li *ngFor="let search of searches; let i = index;" role="menuitem" class="dropdown-item"  (click)="setField('newRow',i,0)">{{ search }}</li>
+                    <label class="col-md-2">P.O. NO.</label>
+                    <div class="col-md-3 btn-group"  dropdown #dropdown="bs-dropdown">
+                      <input  class="form-control" autocomplete="off"  type="text" id="input-po" dropdownToggle (keyup)="searchPo($event.target.value)" (focus)="searchPo($event.target.value)"  name="po_no" [(ngModel)]="newRow.po_no">
+                      <ul *dropdownMenu class="dropdown-menu" role="menu" aria-labelledby="input-po">
+                          <li *ngFor="let search of searches; let i = index;" role="menuitem" class="dropdown-item"  (click)="setField('poNo',i,0)">{{ search }}</li>
                       </ul>
                     </div>
                 </div>
-  
-                <div class="form-group row">
-                    <label class="col-md-2">KMG DATE REQUIRED</label>
-                    <div class="col-md-2">
-                      <input type="number" class="form-control" name="quantity" [(ngModel)]="newRow.quantity">
+                <fieldset *ngIf="isPoSearch==true">
+                    <div class="form-group row">
+                        <label class="col-md-2">FOR ORDER</label>
+                        <div class="col-md-10">
+                            <table class="table">
+                                <thead>
+                                    <th class="w80">FOR ORDER</th>
+                                    <th class="w80">FOR MODEL</th>
+                                    <th>KMG DATE REQUIRED</th>
+                                    <th>CUSTOMER DATE REQUIRED</th>
+                                    <th colspan="2">QUANTITY</th>
+                                    <th>UNIT PRICE (KH$)</th>
+                                    <th>IMPORT INVOICE</th>
+                                    <th>DATE</th>
+                                    <th>BALANCE QUANTITY</th>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let set of newSet; let x = index;">
+                                        <td>{{ newSet[x].for_order }}</td>
+                                        <td>{{ newSet[x].for_model }}</td>
+                                        <td>
+                                            <input type="text" name="kmgDateRequired[]" [(ngModel)]="newSet[x].kmg_date_required" class="form-control" bsDatepicker [bsConfig]="{ dateInputFormat: 'YYYY-MM-DD' }">
+                                        </td>
+                                        <td>
+                                            <input type="text" class="form-control" name="customerDateRequired[]" [(ngModel)]="newSet[x].customer_date_required" bsDatepicker [bsConfig]="{ dateInputFormat: 'YYYY-MM-DD' }">
+                                        </td>
+                                        <td class="w120">
+                                            <input type="number" class="form-control" name="quantity[]" [(ngModel)]="newSet[x].quantity">
+                                        </td>
+                                        <td class="w80">
+                                            <select name="" class="form-control" name="qty_unit[]" [(ngModel)]="newSet[x].qty_unit">
+                                                <option value="set" selected>SET</option>
+                                            </select>
+                                        </td>
+                                        <td><input type="number" class="form-control" name="unit_price[]" [(ngModel)]="newSet[x].unit_price"></td>
+                                        <td><input type="text" class="form-control" name="import_invoice[]" [(ngModel)]="newSet[x].import_invoice"></td>
+                                        <td><input type="text" class="form-control"  autocomplete="off" name="dated_at[]" [(ngModel)]="newSet[x].dated_at" bsDatepicker [bsConfig]="{ dateInputFormat: 'YYYY-MM-DD' }"></td>
+                                        <td><input type="number" class="form-control" name="balance_quantity[]" [(ngModel)]="newSet[x].balance_quantity"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
-                </div>
-  
-                <div class="form-group row">
-                    <label class="col-md-2">CUSTOMER DATE REQUIRED</label>
-                    <div class="col-md-2">
-                      <input type="number" class="form-control" name="quantity" [(ngModel)]="newRow.quantity">
+                </fieldset>         
+                <fieldset *ngIf="isPoSearch==false">           
+                    <div class="form-group row">
+                        <label class="col-md-2">FOR ORDER</label>
+                        <div class="col-md-3 btn-group"  dropdown #dropdown="bs-dropdown">
+                        <input  class="form-control" autocomplete="off"  type="text" id="input-for_order" dropdownToggle (keyup)="onSearch('order',$event.target.value)" (focus)="onSearch('order',$event.target.value)"  name="for_order" [(ngModel)]="newRow.for_order">
+                            <ul *dropdownMenu class="dropdown-menu" role="menu" aria-labelledby="input-for_order">
+                                <li *ngFor="let search of searches; let i = index;" role="menuitem" class="dropdown-item"  (click)="setField('newRow',i,0)">{{ search }}</li>
+                            </ul>
+                        </div>                    
+                        <label class="col-md-2 text-right">FOR MODEL</label>
+                        <div class="col-md-3 btn-group"  dropdown #dropdown="bs-dropdown">
+                        <input  class="form-control" autocomplete="off"  type="text" id="input-for_model" dropdownToggle (keyup)="onSearch('spec',$event.target.value)" (focus)="onSearch('spec',$event.target.value)"  name="for_model" [(ngModel)]="newRow.for_model">
+                            <ul *dropdownMenu class="dropdown-menu" role="menu" aria-labelledby="input-for_model">
+                                <li *ngFor="let search of searches; let i = index;" role="menuitem" class="dropdown-item"  (click)="setField('newRow',i,0)">{{ search }}</li>
+                            </ul>
+                        </div>
+                    </div>                
+                    <div class="form-group row">
+                        <label class="col-md-2">KMG DATE REQUIRED</label>
+                        <div class="col-md-2">
+                            <input type="text" name="kmgDateRequired" [(ngModel)]="newRow.kmg_date_required" class="form-control" bsDatepicker [bsConfig]="{ dateInputFormat: 'YYYY-MM-DD' }">
+                        </div>
+                        <label class="col-md-3 text-right">CUSTOMER DATE REQUIRED</label>
+                        <div class="col-md-2">
+                            <input type="text" class="form-control" name="customerDateRequired" [(ngModel)]="newRow.customer_date_required" bsDatepicker [bsConfig]="{ dateInputFormat: 'YYYY-MM-DD' }">
+                        </div>
                     </div>
-                </div>
-  
-                <div class="form-group row">
-                    <label class="col-md-2">QUANTITY</label>
-                    <div class="col-md-2">
-                      <input type="number" class="form-control" name="quantity" [(ngModel)]="newRow.quantity">
+    
+                    <div class="form-group row">
+                        <label class="col-md-2">QUANTITY</label>
+                        <div class="col-md-2">
+                        <input type="number" class="form-control" name="quantity" [(ngModel)]="newRow.quantity">
+                        </div>
+                        <div class="col-md-1">
+                        <select name="" class="form-control" name="qty_unit" [(ngModel)]="newRow.qty_unit">
+                            <option value="set" selected>SET</option>
+                        </select>
+                        </div>
                     </div>
-                </div>
-  
-                <div class="form-group row">
-                    <label class="col-md-2">UNIT PRICE (KH$)</label>
-                    <div class="col-md-2">
-                      <input type="number" class="form-control" name="quantity" [(ngModel)]="newRow.quantity">
+    
+                    <div class="form-group row">
+                        <label class="col-md-2">UNIT PRICE (HK$)</label>
+                        <div class="col-md-2">
+                        <input type="number" class="form-control" name="unit_price_hk" [(ngModel)]="newRow.unit_price_hk">
+                        </div>
                     </div>
-                </div>
-  
-                <div class="form-group row">
-                    <label class="col-md-2">IMPORT INVOICE</label>
-                    <div class="col-md-2">
-                      <input type="number" class="form-control" name="quantity" [(ngModel)]="newRow.quantity">
+                
+                    <div class="form-group row">
+                        <label class="col-md-2">IMPORT INVOICE</label>
+                        <div class="col-md-2">
+                        <input type="text" class="form-control" name="import_invoice" [(ngModel)]="newRow.import_invoice">
+                        </div>
+                        <label class="col-md-1 text-right">DATE</label>
+                        <div class="col-md-2">
+                        <input autocomplete="off" type="text" class="form-control" name="onDate" [(ngModel)]="newRow.onDate" bsDatepicker [bsConfig]="{ dateInputFormat: 'YYYY-MM-DD' }">
+                        </div>
+                        <label class="col-md-2 text-right">BALANCE QUANTITY</label>
+                        <div class="col-md-2">
+                        <input type="number" class="form-control" name="balance_quantity" [(ngModel)]="newRow.balance_quantity">
+                        </div>
                     </div>
-                </div>
-  
-                <div class="form-group row">
-                    <label class="col-md-2">DATE</label>
-                    <div class="col-md-2">
-                      <input type="number" class="form-control" name="quantity" [(ngModel)]="newRow.quantity">
-                    </div>
-                </div>
-  
-                <div class="form-group row">
-                    <label class="col-md-2">BALANCE QUANTITY</label>
-                    <div class="col-md-2">
-                      <input type="number" class="form-control" name="quantity" [(ngModel)]="newRow.quantity">
-                    </div>
-                </div>
-
+                </fieldset>
                 <div class="form-group row">
                     <label class="col-md-2"></label>
                     <div class="col-md-3">
@@ -130,21 +181,58 @@
           </form>   
 
           <div class="table-responsive">
-              <table class="table table-berdered">
+              <table class="noboder w100p" *ngIf="isActive || isPrint">
+                <tbody>
+                    <tr>
+                        <td class="w80">DATE : </td>
+                        <td>{{ headField.dated_at | date:'dd MMMM yyyy' }}</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>TO : </td>
+                        <td>{{ headField.to }}</td>
+                        <td></td>
+                        <td class="text-right">NO. : {{ headField.no }}</td>
+                    </tr>
+                </tbody>
+              </table>
+
+              <table class="table table-berdered table-form">
                 <thead>
                   <tr>
+                    <th class="w80"  *ngIf="!isActive">#</th>
                     <th>FOR ORDER</th>
                     <th>FOR MODEL</th>
                     <th>DESCRIPTION</th>
                     <th>KMG DATE REQUIRED</th>
                     <th>CUSTOMER DATE REQUIRED</th>
                     <th>QUANTITY</th>
-                    <th>UNIT PRICE (KH$)</th>
+                    <th>UNIT PRICE (HK$)</th>
                     <th>IMPORT INVOICE</th>
                     <th>DATE</th>
                     <th>BALANCE QUANTITY</th>
                   </tr>
                 </thead>
+                <tbody>
+                    <tr *ngFor="let field of fields; let i=index;" >
+                        <td class="field-action" *ngIf="!isActive">
+                            <a (click)="removeRow(i)" class="text-danger"><i class="fa fa-minus"></i></a>
+                            <a (click)="editRow(i)" class="text-primary"><i class="fa fa-edit"></i></a>
+                        </td>
+                        <td>{{ field.for_order }}</td>
+                        <td>{{ field.for_model }}</td>
+                        <td>{{ field.description }}</td>
+                        <td>{{ field.kmg_date_required | date:'dd MMM yyyy'  }}</td>
+                        <td>{{ field.customer_date_required | date:'dd MMM yyyy'  }}</td>
+                        <td>{{ field.quantity }}</td>
+                        <td>{{ field.unit_price_hk }}</td>
+                        <td>{{ field.import_invoice }}</td>
+                        <td>
+                            <div *ngIf="field.onDate!='0000-00-00'">{{ field.onDate  | date:'dd MMM yyyy'  }}</div></td>
+                        <td>{{ field.balance_quantity }}</td>
+                    </tr>
+                </tbody>
               </table>
           </div>
       </div>

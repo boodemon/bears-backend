@@ -1,0 +1,18 @@
+.form-group{
+    table{
+        thead{
+            th{
+                background-color: #ccc;
+                color:#000;
+                font-size: 12px;
+            }
+        }
+        td {
+            input,select{
+                padding:4px;
+                height: 28px;
+                border-radius: 2px;
+            }
+        }
+    }
+}

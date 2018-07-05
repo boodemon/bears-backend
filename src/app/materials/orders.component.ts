@@ -16,6 +16,7 @@ export class OrdersComponent implements OnInit {
   frmFilter:FormGroup;
   modalRef:BsModalRef;
   rows:any=[];
+  selectAll:boolean = false;
 
   constructor(
     private http:HttpClient,
@@ -58,15 +59,49 @@ export class OrdersComponent implements OnInit {
 
     });
   }
-  onExport(id){
-    this.materials.onExport( id ).subscribe(res => {
-      console.log('export result ' , res );
-      if( res['code'] == 200){
-        window.location.href = res['file'];
+  multiDelete(){
+    if (!confirm('Please confirm delete'))
+      return false;
+
+    let getId:any = [];
+    for (var i = 0; i < this.rows.length; i++) {
+      if( this.rows[i].selected == true){
+        //console.log('rows value : ', this.rows[i] );
+        getId.push( this.rows[i].id );
       }
-    },
-    err => {
-      alert('Error !! ' + JSON.stringify( err ));
+    }
+
+    this.materials.onDestroy(getId.join('-'),'head').subscribe((response) => {
+      if (response['result'] == 'successful') {
+        this.fetchAll();
+      } else {
+        alert(response['msg']);
+      }
+    });
+  }
+  onExport(id){
+      this.materials.onExport( id ).subscribe(res => {
+        console.log('export result ' , res );
+        if( res['code'] == 200){
+          window.location.href = res['file'];
+        }
+      },
+      err => {
+        alert('Error !! ' + JSON.stringify( err ));
+      })
+  }
+
+  onSelectAll(){
+    for (var i = 0; i < this.rows.length; i++) {
+      //console.log( i , '( ', this.rows[i].selected ,')');
+      this.rows[i].selected = this.selectAll;
+    }
+  }
+
+  checkIfAllSelected() {
+    this.selectAll = this.rows.every(function (item: any) {
+      return item.selected == true;
     })
-}
+  }
+
 }

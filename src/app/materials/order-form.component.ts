@@ -4,7 +4,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
 
 import { AuthService } from '../services/auth.service';
-import { OrderSheetService } from '../services/order-sheet.service';
 import { MaterialsService } from '../services/materials.service';
 
 @Component({
@@ -15,15 +14,18 @@ import { MaterialsService } from '../services/materials.service';
 export class OrderFormComponent implements OnInit {
 
   private fields: Array<any> = [];
+  newSet:Array<any> = [];
   eIndex:number = 0;
   orderId:number = 0;
   newRow:any={};
   head:any={};
-  isEdit:boolean = false;
   searches:any = [];
   specModel:any=[];
-  isActive:boolean = false;
-  isPrinter:boolean = false;
+
+  isEdit:boolean      = false;
+  isActive:boolean    = false;
+  isPrinter:boolean   = false;
+  isPoSearch:boolean  = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -39,11 +41,10 @@ export class OrderFormComponent implements OnInit {
         this.isPrinter = params.print !== undefined ? true : false;
         console.log('params => ', params );
       });
-  }r
+  }
 
   ngOnInit() {
     this.onData();
-    
   }
 
   onData(){
@@ -58,11 +59,12 @@ export class OrderFormComponent implements OnInit {
               for(let i = 0; i <= (data.length -1 ); i++){
                 let item = [];
                 item = data[i];
-                //console.log('sheet', data[i]['sheets'],' Item = ', item);
                // item.push( item['sheets'] );
                if(item && item['sheets'])
                 this.fields.push( this.setVal( item['sheets'], item ) );
               }
+                console.log('sheet', this.fields)
+                console.log('data = ', data );
               if( this.isPrinter ){
                 setTimeout(function(){
                   window.print();
@@ -85,7 +87,7 @@ export class OrderFormComponent implements OnInit {
       let term = event;
       this.searches = [];
       if( term.length >= 1 && term !== null){
-      this.materials.onSearch(input,term).subscribe((res)=>{
+      this.materials.onSearch(input,term,2).subscribe((res)=>{
         let data = res['data'] ;
         this.specModel = res['data'];
         for(let x = 0; x < data.length; x++){
@@ -108,9 +110,59 @@ export class OrderFormComponent implements OnInit {
       }
   }
 
+  searchPo(event){
+    let term = event;
+    this.searches = [];
+    if( term.length >= 1 && term !== null){
+      this.materials.searchPo(term,2).subscribe((res)=>{
+        let data = res['data'] ;
+        this.specModel = data;
+        for(let x = 0; x < data.length; x++){
+          let header = data[x];
+            this.searches.push(header['po_no'] );
+        }
+      },
+      (err)=>{
+          alert('Error!!'+ JSON.stringify(err) );
+      });
+    }else{
+        this.searches = [];
+    }
+
+  }
+
+  deliYmd(){
+    let startDate = new Date();
+    var returnDate = new Date(
+          startDate.getFullYear(),
+          startDate.getMonth(),
+          startDate.getDate()+10,
+          startDate.getHours(),
+          startDate.getMinutes(),
+          startDate.getSeconds());
+    return returnDate;
+  }
+
   setField(field,index,node){
-    let item = this.specModel[index];
-    this.newRow = this.setVal(item,this.newRow);
+    if( field == 'newRow'){
+        this.isPoSearch = false;
+        let item        = this.specModel[index];
+        this.newRow     = this.setVal(item,this.newRow);
+    }
+
+    if( field == 'poNo'){
+      this.isPoSearch = true;
+      let sheets      = this.specModel[index]['sheets'];
+      let deli        = this.deliYmd();
+      this.newSet     = sheets;
+      for(let i=0; i <= sheets.length-1; i++){
+          this.newSet[i].delivery = deli;
+          this.newSet[i].quantity = 1; 
+          this.newSet[i] = this.setVal( sheets[i] , this.newSet[i] );
+          //this.newSet.push( this.setVal(sheets['sheets'][i],this.newSet[i] ) );
+          console.log('i = ', i ,' | ',  deli ,' | ', sheets[i]);
+      }
+    }
   }
 
   objVal(obj){
@@ -122,18 +174,25 @@ export class OrderFormComponent implements OnInit {
   }
 
   setVal(item,n){
-    console.log( 'data json ' , item, ' n ' , n );
+    console.log( 'data item ' , item, ' n ' , n );
     this.searches = [];
-    let delivery = n.delivery ? n.delivery : new Date( );
-    let quantity = n.quantity ? n.quantity : 0;
-    
+    let delivery = n.delivery ? n.delivery : this.deliYmd();
+    let quantity = n.quantity ? n.quantity : 1;
+    //let sheet_id = 0;
+    /*
+    if( this.isPoSearch == true ){
+        sheet_id = item['id'];
+    }else {
+    */
+    let sheet_id = (item['sheet_id'] !== undefined ? item['sheet_id'] : item['id'] );
+   // }
     return {
       id:(n.id !== undefined ? n.id : 0),
       mhead:this.orderId,
       delivery:delivery,
       quantity:quantity,
       order : item.order_prefix + '-' + item.order_number,
-      sheet_id:(item['sheet_id'] !== undefined ? item['sheet_id'] : 0 ),
+      sheet_id: sheet_id,
       head_id:(item['head_id'] !== undefined ? item['head_id'] : 0 ),
       type : item['type'] ? item['type'].name : '',
       material:item['material'] ? item['material'].name : '',
@@ -190,38 +249,66 @@ export class OrderFormComponent implements OnInit {
   validate(){
     let result = 'true';
     let itm = this.newRow;
-
-    if( itm.order == '' || itm.order === undefined){
-      alert('Please enter Order');
-      result = 'false';
-    }else if( itm.spec_name == '' || itm.spec_name === undefined){
-      alert('Please enter Model');
-      result = 'false';
-    }else if( itm.delivery == '' || itm.delivery === undefined){
-      alert('Please enter order delivery date');
-      result = 'false';
-    }else if( itm.quantity == '' || itm.quantity === undefined){
-      alert('Please enter quantity');
-      result = 'false';
+    if( this.isPoSearch == false ){
+        if( itm.order == '' || itm.order === undefined){
+          alert('Please enter Order');
+          result = 'false';
+        }else if( itm.spec_name == '' || itm.spec_name === undefined){
+          alert('Please enter Model');
+          result = 'false';
+        }else if( itm.delivery == '' || itm.delivery === undefined){
+          alert('Please enter order delivery date');
+          result = 'false';
+        }else if( itm.quantity == '' || itm.quantity === undefined){
+          alert('Please enter quantity');
+          result = 'false';
+        }
     }
 
     return result;
   }
+
+  checkSome(sheet_id){
+      let fields = this.fields;
+      let x:number = 0;
+      for(let i = 0; i<= (fields.length - 1); i++){
+          console.log('fields = ', fields[i].sheet_id +'|'+ sheet_id );
+          if( sheet_id == fields[i].sheet_id )
+            x++;
+      }
+      console.log('result x ', x);
+      return x;
+  }
+
   clearRow(){
     this.newRow = this.newfield();
-    this.isEdit = false;    
+    this.isEdit = false;
+    this.newSet = [];
+    this.isPoSearch = false;
   }
+
   addRow() {
     let itm = this.newRow;
     console.log('itm value => ' , itm );
     if( this.validate() == 'true' ){
-      this.fields.push(this.newRow)
+      if( this.isPoSearch == false ){
+          this.fields.push(this.newRow)
+      }else{ 
+        for(let i=0; i<= this.newSet.length-1; i++){
+          console.log(this.newSet[i])
+          let chk = this.checkSome( this.newSet[i].sheet_id );
+          if(chk == 0)
+          this.fields.push( this.newSet[i] );
+        }
+          this.isPoSearch = false;
+      }
       this.newRow = this.newfield();
       this.isEdit = false;
     }else{
       return false;
     }
   }
+
   updateRow(){
     let itm = this.newRow;
     console.log('itm value => ' , itm );
@@ -255,7 +342,7 @@ export class OrderFormComponent implements OnInit {
 
   editRow(idx){
     let field = this.fields[idx];
-    let n = this.newRow;
+    console.log( 'field edit ', field );
     this.newRow = this.fields[idx];
     this.isEdit = true;
     this.eIndex = idx;
@@ -270,12 +357,13 @@ export class OrderFormComponent implements OnInit {
   }
   onSubmit(){
       let method = this.orderId != 0 ? 'PUT' : 'POST';
+      this.head.status = this.isActive;
       let param = {
         _method:method,
         id:this.orderId,
         data: this.fields,
         token:this.auth.token(),
-        head:this.head
+        head:this.head,
       };
       let access;
       if( method == 'PUT'){

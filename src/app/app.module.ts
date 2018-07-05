@@ -32,6 +32,8 @@ import { UsersService } from './services/users.service';
 import { AuthService } from './services/auth.service';
 import { LogoutComponent } from './Auth/logout/logout.component';
 import { SpeceService} from './services/spece.service';
+import { MaterialsService } from './services/materials.service';
+import { PoService } from './services/po.service';
 
 // Child module //
 import { AppUserModule } from './users/app-user.module';
@@ -42,7 +44,6 @@ import { SearchComponent } from './shared/search.component';
 import { SheetModuleModule } from './spec-sheet/sheet-module.module';
 import { ReportComponent } from './report/report.component';
 import { MaterialsModule } from './materials/materials.module';
-import { MaterialsService } from './services/materials.service';
 
 @NgModule({
   declarations: [
@@ -90,7 +91,8 @@ import { MaterialsService } from './services/materials.service';
     UsersService,
     AuthService,
     SpeceService,
-    MaterialsService
+    MaterialsService,
+    PoService
   ],
   bootstrap: [AppComponent]
 })

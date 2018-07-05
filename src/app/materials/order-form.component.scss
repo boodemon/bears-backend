@@ -1,6 +1,9 @@
 a,.dropdown-item{
     cursor: pointer;
 }
+.margin-bottom{
+    margin-bottom: 2px;
+}
 @page {
     size: US-Legal landscape;
     margin: 5mm;
@@ -49,4 +52,5 @@ a,.dropdown-item{
         page-break-after: always;
     }
     /* ... the rest of the rules ... */
+    
 } 

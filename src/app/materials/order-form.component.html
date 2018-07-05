@@ -17,42 +17,68 @@
           <form (ngSubmit)="onSubmit()" class="hide-print">
             <fieldset  class="{{ isActive === true ? 'hide':'' }}">
               <div class="form-group row">
-                  <label class="col-md-2">DELIVERY</label>
-                  <div class="col-md-2">
-                    <input type="text" class="form-control" name="delivery" [(ngModel)]="newRow.delivery" #dp="bsDatepicker" bsDatepicker [(bsValue)]="bsValue" [bsConfig]="{ dateInputFormat: 'YYYY-MM-DD' }">
-                  </div>
-              </div>
-
-              <div class="form-group row">
-                  <label class="col-md-2">MODEL</label>
+                  <label class="col-md-2">P.O.NO.</label>
                   <div class="col-md-4 btn-group"  dropdown #dropdown="bs-dropdown">
-                    <input  class="form-control" autocomplete="off"  type="text" id="input-material" dropdownToggle (keyup)="onSearch('spec',$event.target.value)" (focus)="onSearch('spec',$event.target.value)"  name="spec_name" [(ngModel)]="newRow.spec_name">
-                      <ul *dropdownMenu class="dropdown-menu" role="menu" aria-labelledby="input-material">
-                          <li *ngFor="let search of searches; let i = index;" role="menuitem" class="dropdown-item"  (click)="setField('newRow',i,0)">{{ search }}</li>
+                    <input  class="form-control" autocomplete="off"  type="text" id="input-po" dropdownToggle (keyup)="searchPo($event.target.value)" (focus)="searchPo($event.target.value)"  name="po_no" [(ngModel)]="newSet.po_no">
+                      <ul *dropdownMenu class="dropdown-menu" role="menu" aria-labelledby="input-po">
+                          <li *ngFor="let search of searches; let i = index;" role="menuitem" class="dropdown-item"  (click)="setField('poNo',i,0)">{{ search }}</li>
                         </ul>
                   </div>
-                  <div class="col-md-3">
-                    {{ newRow.spec_descript }}
+                 
+              </div>     
+
+              <fieldset *ngIf="isPoSearch==true">
+                  <div class="form-group row">
+                      <label class="col-md-2">QUANTITY</label>
+                      <div class="col-md-10 row">
+                          <div class="col-md-3" *ngFor="let set of newSet; let x = index;">
+                                <label>{{ set.order }} ( {{ set.spec_name }} )</label>
+                                <input type="text" class="form-control margin-bottom" placeholder="DELIVERY" name="delivery[]" [(ngModel)]="newSet[x].delivery" bsDatepicker [bsConfig]="{ dateInputFormat: 'YYYY-MM-DD' }">
+                                <input type="number" class="form-control" placeholder="QUANTITY" name="quantity[]" [(ngModel)]="newSet[x].quantity">
+                          </div>
+                      </div>
                   </div>
-              </div>              
-              
-              <div class="form-group row">
-                  <label class="col-md-2">ORDER</label>
-                  <div class="col-md-4 btn-group"  dropdown #dropdown="bs-dropdown">
-                    <input type="text" autocomplete="off" class="form-control" id="input-order" dropdownToggle (keyup)="onSearch('order',$event.target.value)"  (focus)="onSearch('po',$event.target.value)" name="order" [(ngModel)]="newRow.order">
-                    <ul *dropdownMenu class="dropdown-menu" role="menu" aria-labelledby="input-order">
-                      <li *ngFor="let search of searches; let i = index;" role="menuitem" class="dropdown-item"  (click)="setField('newRow',i,0)">{{ search }}</li>
-                    </ul>
+              </fieldset>
+
+              <fieldset *ngIf="isPoSearch==false">
+                  <div class="form-group row">
+                      <label class="col-md-2">DELIVERY</label>
+                      <div class="col-md-2">
+                        <input type="text" class="form-control" name="delivery" [(ngModel)]="newRow.delivery" #dp="bsDatepicker" bsDatepicker [(bsValue)]="bsValue" [bsConfig]="{ dateInputFormat: 'YYYY-MM-DD' }">
+                      </div>
                   </div>
-              </div>
+
+                  <div class="form-group row">
+                      <label class="col-md-2">MODEL</label>
+                      <div class="col-md-4 btn-group"  dropdown #dropdown="bs-dropdown">
+                        <input  class="form-control" autocomplete="off"  type="text" id="input-material" dropdownToggle (keyup)="onSearch('spec',$event.target.value)" (focus)="onSearch('spec',$event.target.value)"  name="spec_name" [(ngModel)]="newRow.spec_name">
+                          <ul *dropdownMenu class="dropdown-menu" role="menu" aria-labelledby="input-material">
+                              <li *ngFor="let search of searches; let i = index;" role="menuitem" class="dropdown-item"  (click)="setField('newRow',i,0)">{{ search }}</li>
+                            </ul>
+                      </div>
+                      <div class="col-md-3">
+                        {{ newRow.spec_descript }}
+                      </div>
+                  </div>              
+                  
+                  <div class="form-group row">
+                      <label class="col-md-2">ORDER</label>
+                      <div class="col-md-4 btn-group"  dropdown #dropdown="bs-dropdown">
+                        <input type="text" autocomplete="off" class="form-control" id="input-order" dropdownToggle (keyup)="onSearch('order',$event.target.value)"  (focus)="onSearch('po',$event.target.value)" name="order" [(ngModel)]="newRow.order">
+                        <ul *dropdownMenu class="dropdown-menu" role="menu" aria-labelledby="input-order">
+                          <li *ngFor="let search of searches; let i = index;" role="menuitem" class="dropdown-item"  (click)="setField('newRow',i,0)">{{ search }}</li>
+                        </ul>
+                      </div>
+                  </div>
 
 
-              <div class="form-group row">
-                  <label class="col-md-2">QUANTITY</label>
-                  <div class="col-md-2">
-                    <input type="number" class="form-control" name="quantity" [(ngModel)]="newRow.quantity">
+                  <div class="form-group row">
+                      <label class="col-md-2">QUANTITY</label>
+                      <div class="col-md-2">
+                        <input type="number" class="form-control" name="quantity" [(ngModel)]="newRow.quantity">
+                      </div>
                   </div>
-              </div>
+            </fieldset>
               <div class="form-group row">
                   <label class="col-md-2"></label>
                   <div class="col-md-3">
