@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule,ReactiveFormsModule } from '@angular/forms';
 import { SheetRouteModule } from '../spec-sheet/sheet-route.module';
 import { SpecSheetComponent } from '../spec-sheet/spec-sheet.component';
 
-import { BsDropdownModule,BsDatepickerModule, TooltipModule } from 'ngx-bootstrap';
+import { BsDatepickerModule,BsDropdownModule ,TooltipModule, ModalModule} from 'ngx-bootstrap';
 import { FormCojComponent } from './form-coj.component';
 import { FormCtcComponent } from './form-ctc.component';
 import { FormStandardComponent } from './form-standard.component';
@@ -21,10 +21,12 @@ import { SpecCardComponent } from '../spec-card/spec-card.component';
   imports: [
     CommonModule,
     SheetRouteModule,
-    BsDropdownModule,
-    BsDatepickerModule,
+    BsDatepickerModule.forRoot(),
+    BsDropdownModule.forRoot(),
+    TooltipModule.forRoot(),
+    ModalModule.forRoot(),
     FormsModule,
-    TooltipModule
+    ReactiveFormsModule
   ],
   declarations: [
     SpecSheetComponent,

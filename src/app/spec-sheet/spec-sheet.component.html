@@ -24,6 +24,11 @@
     </div>
 
     <div class="card-body">
+        <div class="alert alert-info" *ngIf="isFilter">
+          <p><strong>Result </strong> <span class="text-result">{{ rows.length }}</span></p>
+          <p *ngIf="keyword.onStart"><strong>Filter on </strong>  <span class="text-result">{{ keyword.onStart | date: 'MMM dd, yyyy'  }}</span> <strong>To</strong>  <span class="text-result">{{ keyword.onEnd | date: 'MMM dd, yyyy'  }}</span></p>
+          <p *ngIf="keyword.keywords"><strong>From </strong>  <span class="text-result">{{ optName( keyword.field ) }}</span> <strong>Keyword : </strong>  <span class="text-result">{{ keyword.keywords }}</span></p>
+        </div>
         <table class="table table-data table-bordered">
             <thead>
               <tr>
@@ -32,6 +37,7 @@
                 </th>
                 <th class="w60">ID</th>
                 <th>PO NO</th>
+                <th>FORM NAME</th>
                 <th>CUSTOMER</th>
                 <th>SPEC MODEL</th>
                 <th>FORM TYPE</th>
@@ -48,6 +54,7 @@
                     </td>
                     <td>{{ row.id }}</td>
                     <td>{{ row.po_no }}</td>
+                    <td>{{ row.form_name }}</td>
                     <td>{{ row.customer }}</td>
                     <td class="text-center">{{ sheets[row.id] }}</td>
                     <td class="upper text-center">{{ row.form_type }}</td>
@@ -80,7 +87,7 @@
                       </td>
                 </tr>
                 <tr *ngIf="loading==true">
-                  <td colspan="10" class="text-center">
+                  <td colspan="11" class="text-center">
                     <i class="fa fa-spinner fa-pulse fa-3x fa-fw"></i>
                     <br>
                     PLEASE WAIT....
@@ -88,6 +95,56 @@
                 </tr>
             </tbody>
         </table>
+        <!-- :: Start paginate panel -->
+    <div class="text-center" *ngIf="lpage>1">
+      <ul class="pagination">
+        <li class="page-item"><a class="page-link" (click)="onPage( cpage-1 )" disabled >Prev</a></li>
+        <li class="page-item {{p == cpage ? 'active':''}}" *ngFor="let p of page; let i=index;">
+            <a class="page-link" (click)="onPage(p)">{{p}}</a>
+        </li>
+        <li class="page-item"><a class="page-link" (click)="onPage( cpage+1 )">Next</a></li>
+      </ul>
+    </div>
+    <!-- :: End paginate panel -->
     </div>
   </div>
 </div>
+
+
+<!-- ::
+  :: MODAL SEARCH AND FILTER SPEC MODEL ::
+  ::====================================================::
+ -->
+ <ng-template #template>
+    <div class="modal-header">
+        <h4 class="modal-title pull-left">Search & Filter</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <form class="form-horizontal" [formGroup]="frmSearch" (ngSubmit)="doSearch()">
+            <div class="form-group row">
+                <div class="col-md-6">
+                    <input type="text" class="form-control" formControlName="onStart" bsDatepicker [bsConfig]="{ dateInputFormat: 'YYYY-MM-DD' }" placeholder="Start date"/>
+                </div>
+                <div class="col-md-6">
+                    <input type="text" class="form-control" formControlName="onEnd" bsDatepicker [bsConfig]="{ dateInputFormat: 'YYYY-MM-DD' }" placeholder="End date"/>
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-md-4">
+                    <select class="form-control" formControlName="field">
+                      <option ngValue="{{ opt.field }}" *ngFor="let opt of opts; let i = index;">{{  opt.name }}</option>
+                    </select>
+                </div>
+                <div class="col-md-8">
+                    <input type="text" class="form-control" formControlName="keywords" placeholder="Keywords">
+                </div>
+            </div>
+            <div class="form-group text-right">
+                <button type="submit" class="btn btn-sm btn-info"><i class="fa fa-search"></i> Filter</button>
+            </div>
+        </form>
+    </div>
+</ng-template> 

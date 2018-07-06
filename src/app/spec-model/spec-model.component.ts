@@ -20,6 +20,7 @@ export class SpecModelComponent implements OnInit {
   field:any=[];
   page:any=[];
   cpage:number=1;
+  lpage:number=1;
   keyword:string;
   public loading = false;
   selectAll:boolean = false;
@@ -89,6 +90,7 @@ export class SpecModelComponent implements OnInit {
     this.http.get( this.api + '/spec-model' + params ).subscribe((data)=>{
         this.rows   = data['data'];
         this.cpage  = data['cpage'];
+        this.lpage  = data['lpage'];
         this.loading = false;
         console.log('spec model rows ', this.rows );
         for(let p=1; p <= parseInt( data['lpage'] ); p++ ){

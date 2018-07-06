@@ -14,8 +14,8 @@ export class MaterialsService {
 
   private token = 'token=' + this.auth.token();
 
-  onIndex(){
-    return this.http.get( this.api + '?' + this.token )
+  onIndex(param){
+    return this.http.get( this.api + '?' + this.token + param)
   }
 
   onShow(id){

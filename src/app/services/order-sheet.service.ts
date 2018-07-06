@@ -13,7 +13,7 @@ export class OrderSheetService {
   param = '?token=' + this.token;
 
   fatchAll(params){
-    return this.http.get( this.api  + this.token );
+    return this.http.get( this.api  + this.token + params );
   }
 
   fatchOne(id){

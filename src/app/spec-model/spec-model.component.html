@@ -58,7 +58,7 @@
     </div>
   </div>
   <!-- :: Start paginate panel -->
-  <div class="text-center">
+  <div class="text-center" *ngIf="lpage>1">
     <ul class="pagination">
       <li class="page-item"><a class="page-link" (click)="onPage( cpage-1 )" disabled >Prev</a></li>
       <li class="page-item {{p == cpage ? 'active':''}}" *ngFor="let p of page; let i=index;">

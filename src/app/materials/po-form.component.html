@@ -1,6 +1,6 @@
 <div class="animated fadeIn">
   <div class="card">
-      <div class="card-header print-hide">
+      <div class="card-header hide-print">
           <i class="fa fa-file-text-o"></i> Materials orders form
           <span *ngIf="filter===true">[ Filter : {{ field['name'] }} = {{ keyword }} ]</span>
           <div class="pull-right">
@@ -181,7 +181,7 @@
           </form>   
 
           <div class="table-responsive">
-              <table class="noboder w100p" *ngIf="isActive || isPrint">
+              <table class="noboder w100p" *ngIf="isActive || isPrinter">
                 <tbody>
                     <tr>
                         <td class="w80">DATE : </td>
@@ -201,7 +201,7 @@
               <table class="table table-berdered table-form">
                 <thead>
                   <tr>
-                    <th class="w80"  *ngIf="!isActive">#</th>
+                    <th class="w80 hide-print"  *ngIf="!isActive">#</th>
                     <th>FOR ORDER</th>
                     <th>FOR MODEL</th>
                     <th>DESCRIPTION</th>
@@ -216,7 +216,7 @@
                 </thead>
                 <tbody>
                     <tr *ngFor="let field of fields; let i=index;" >
-                        <td class="field-action" *ngIf="!isActive">
+                        <td class="field-action hide-print" *ngIf="!isActive">
                             <a (click)="removeRow(i)" class="text-danger"><i class="fa fa-minus"></i></a>
                             <a (click)="editRow(i)" class="text-primary"><i class="fa fa-edit"></i></a>
                         </td>

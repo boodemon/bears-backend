@@ -16,3 +16,60 @@
         }
     }
 }
+
+a,.dropdown-item{
+    cursor: pointer;
+}
+.margin-bottom{
+    margin-bottom: 2px;
+}
+@page {
+    size: US-Legal landscape;
+    margin: 5mm;
+}
+@media print {
+    html, body {
+        margin-top: 5mm;
+        margin-right: 5mm;
+        margin-bottom: .5cm;
+        margin-left: 5mm;
+        background:transparent;
+    }
+    .fadeIn,.animated,.card-body,.app-body{
+        margin:0;
+        padding:0;
+    }
+    p{
+        padding:2px;
+        margin:4px;
+        line-height: .9;
+    }
+    .table{
+        th{
+            color:#000000;
+            border:1px solid #000;
+        }
+        tbody{
+            tr{
+                td{
+                    padding:6px 8px;
+                    font-size:.8em;
+                    line-height: 1.15;
+                }
+            }
+        }
+    }
+
+
+    .card{
+        border:0;
+    }
+    .panel-haft{
+        page-break-after: always;
+    }
+    .print-area{
+        page-break-after: always;
+    }
+    /* ... the rest of the rules ... */
+    
+} 

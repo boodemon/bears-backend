@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Routes, RouterModule } from '@angular/router';
 import { OrdersComponent } from './orders.component';
-import { OrdoersPrintComponent } from './ordoers-print.component';
 import { PoComponent } from './po.component';
 import { PoFormComponent } from './po-form.component';
 import { OrderFormComponent } from './order-form.component';

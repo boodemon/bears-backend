@@ -12,8 +12,8 @@ export class PoService {
   private api = this.auth.path_api() + '/materials-po';
   private token = 'token=' + this.auth.token();
 
-  index(){
-      return this.http.get( this.api + '?' + this.token )
+  index(params){
+      return this.http.get( this.api + '?' + this.token + params )
   }
 
   create(){

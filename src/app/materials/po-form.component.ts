@@ -351,9 +351,15 @@ export class PoFormComponent implements OnInit {
   goBack(){
     this.router.navigate(['/materials/po']);
   }
+
   onPrint(){
+    this.isPrinter    = true;
     window.print();
+    setTimeout(function(){
+      this.isPrinter  = false;
+    },1000);
   }
+
   onSubmit(){
       this.headField.status = this.isActive;
       let param = {
@@ -379,7 +385,7 @@ export class PoFormComponent implements OnInit {
   }
 
   onExport(){
-      this.materials.onExport( this.orderId ).subscribe(res => {
+      this.po.onExport( this.orderId ).subscribe(res => {
         console.log('export result ' , res );
         if( res['code'] == 200){
           window.location.href = res['file'];

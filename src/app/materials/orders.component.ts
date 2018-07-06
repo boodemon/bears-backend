@@ -17,6 +17,11 @@ export class OrdersComponent implements OnInit {
   modalRef:BsModalRef;
   rows:any=[];
   selectAll:boolean = false;
+  page:any=[];
+  cpage:number=1;
+  lpage:number=1;
+  keyword:any = {};
+  isFilter:boolean=false;
 
   constructor(
     private http:HttpClient,
@@ -26,32 +31,84 @@ export class OrdersComponent implements OnInit {
     private materials: MaterialsService
   ) { 
     this.auth.online();
+    this.frmFilter = this.frm.group({
+      onStart : [''],
+      onEnd:['']
+    });
   }
 
   ngOnInit() {
-    this.frmFilter = this.frm.group({
-      field:['spec_no'],
-    });
-    this.fetchAll();
+      this.fetchAll('');
   }
   
+  Ymd(inDate){
+    let startDate = new Date(inDate);
+    let months = startDate.getMonth()+1;
+    let month = months.toString();
+    var returnDate = startDate.getFullYear() 
+                  + '-' +   ( month.length == 1 ? '0'+month : month )
+                  + '-' +   startDate.getDate();
+    return returnDate.toString();
+  }
+  
+  onPage(page){
+    console.log('page is ', page );
+    let onStart   = this.frmFilter.get('onStart').value;
+    let param = '';
+    if( page > 0 && this.page.length >= page ){
+        if( onStart.length > 0 ){
+            param += this.setParam();
+        }
+        param += '&page=' + page;
+        this.page = [];
+        this.fetchAll(param);
+        window.scroll(0,0);
+    }
+    
+  }
+
   onFilter(template: TemplateRef<any>){
-    this.filter = false;
+    this.isFilter = false;
     this.modalRef = this.modalService.show(template);
   }
-  fetchAll(){
-      this.materials.onIndex().subscribe((res) => {
-        this.rows = res['data'];
+
+  doSearch(){
+        let param = this.setParam();
+        console.log('param is ' , param );
+        this.fetchAll(param);
+        this.keyword = this.frmFilter.value;
+        console.log('search and result ' , this.frmFilter.value );
+        this.modalRef.hide();
+  }
+
+  setParam(){
+    let onStart   = this.frmFilter.get('onStart').value.toString();
+    let onEnd     = this.frmFilter.get('onEnd').value.toString();
+    this.isFilter = onStart ? true : false;
+    return '&onStart='  + (onStart ? this.Ymd(onStart) : '')
+          +  '&onEnd='    + (onEnd ? this.Ymd(onEnd) : '');
+  }
+
+  fetchAll(param){
+    this.page = [];
+    this.materials.onIndex(param).subscribe((res) => {
+        this.rows   = res['data'];
+        this.cpage  = res['cpage'];
+        this.lpage  = res['lpage'];
+        for(let p=1; p <= parseInt( res['lpage'] ); p++ ){
+          this.page.push( p );
+        }
       },
     (err) => {
       alert('Error!! ' + JSON.stringify( err ) );
     });
   }
+
   onDelete(id){
     if( confirm('Plese confirm delete this') )
     this.materials.onDestroy(id,'head').subscribe(res => {
       if( res['code'] == 200 ){
-        this.fetchAll();
+        this.fetchAll('');
       }
     },
     (err) =>{
@@ -59,6 +116,7 @@ export class OrdersComponent implements OnInit {
 
     });
   }
+
   multiDelete(){
     if (!confirm('Please confirm delete'))
       return false;
@@ -73,7 +131,7 @@ export class OrdersComponent implements OnInit {
 
     this.materials.onDestroy(getId.join('-'),'head').subscribe((response) => {
       if (response['result'] == 'successful') {
-        this.fetchAll();
+        this.fetchAll('');
       } else {
         alert(response['msg']);
       }
